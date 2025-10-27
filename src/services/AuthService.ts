@@ -6,33 +6,79 @@ const API_BASE_URL = 'http://localhost:8080/api'; // Change this to your backend
 export class AuthService {
   private static token: string | null = null;
 
+  // Demo users for testing without backend
+  private static demoUsers: User[] = [
+    {
+      id: '1',
+      firstName: 'Sarah',
+      lastName: 'Johnson',
+      email: 'parent@ktransport.com',
+      phone: '+27 21 555 0101',
+      role: 'parent',
+      verified: true,
+      createdAt: '2024-01-01T00:00:00Z',
+      updatedAt: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: '2',
+      firstName: 'Michael',
+      lastName: 'Brown',
+      email: 'staff@ktransport.com',
+      phone: '+27 21 555 0102',
+      role: 'staff',
+      verified: true,
+      createdAt: '2024-01-01T00:00:00Z',
+      updatedAt: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: '3',
+      firstName: 'David',
+      lastName: 'Wilson',
+      email: 'driver@ktransport.com',
+      phone: '+27 21 555 0103',
+      role: 'driver',
+      verified: true,
+      createdAt: '2024-01-01T00:00:00Z',
+      updatedAt: '2024-01-01T00:00:00Z',
+    },
+    {
+      id: '4',
+      firstName: 'Admin',
+      lastName: 'User',
+      email: 'admin@ktransport.com',
+      phone: '+27 21 555 0104',
+      role: 'admin',
+      verified: true,
+      createdAt: '2024-01-01T00:00:00Z',
+      updatedAt: '2024-01-01T00:00:00Z',
+    },
+  ];
+
   /**
    * Login user with email and password
    */
   static async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      });
+      // For demo purposes, use local authentication
+      const user = this.demoUsers.find(u => u.email === credentials.email);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Login failed');
+      if (!user || credentials.password !== 'demo123') {
+        throw new Error('Invalid email or password. Use demo123 as password.');
       }
 
-      const authData: AuthResponse = await response.json();
-      
+      const authData: AuthResponse = {
+        token: `demo-token-${user.id}`,
+        refreshToken: `demo-refresh-${user.id}`,
+        user: user,
+      };
+
       // Store tokens
       await AsyncStorage.setItem('authToken', authData.token);
       await AsyncStorage.setItem('refreshToken', authData.refreshToken);
       await AsyncStorage.setItem('userData', JSON.stringify(authData.user));
-      
+
       this.token = authData.token;
-      
+
       return authData;
     } catch (error) {
       console.error('Login error:', error);
@@ -59,14 +105,14 @@ export class AuthService {
       }
 
       const authData: AuthResponse = await response.json();
-      
+
       // Store tokens
       await AsyncStorage.setItem('authToken', authData.token);
       await AsyncStorage.setItem('refreshToken', authData.refreshToken);
       await AsyncStorage.setItem('userData', JSON.stringify(authData.user));
-      
+
       this.token = authData.token;
-      
+
       return authData;
     } catch (error) {
       console.error('Registration error:', error);
@@ -103,7 +149,7 @@ export class AuthService {
 
       const user: User = await response.json();
       await AsyncStorage.setItem('userData', JSON.stringify(user));
-      
+
       return user;
     } catch (error) {
       console.error('Get current user error:', error);
@@ -130,13 +176,13 @@ export class AuthService {
       if (!response.ok) return false;
 
       const authData: AuthResponse = await response.json();
-      
+
       // Update stored tokens
       await AsyncStorage.setItem('authToken', authData.token);
       await AsyncStorage.setItem('refreshToken', authData.refreshToken);
-      
+
       this.token = authData.token;
-      
+
       return true;
     } catch (error) {
       console.error('Token refresh error:', error);
@@ -150,7 +196,7 @@ export class AuthService {
   static async logout(): Promise<void> {
     try {
       const token = this.token || await AsyncStorage.getItem('authToken');
-      
+
       if (token) {
         // Notify backend about logout
         await fetch(`${API_BASE_URL}/auth/logout`, {
@@ -175,12 +221,12 @@ export class AuthService {
    */
   static async getToken(): Promise<string | null> {
     if (this.token) return this.token;
-    
+
     const token = await AsyncStorage.getItem('authToken');
     if (token) {
       this.token = token;
     }
-    
+
     return token;
   }
 

@@ -88,6 +88,18 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
             </Paragraph>
           </View>
 
+          {/* Demo Credentials */}
+          <Card style={styles.demoCard}>
+            <Card.Content>
+              <Title style={styles.demoTitle}>Demo Credentials</Title>
+              <Text style={styles.demoText}>Use password: <Text style={styles.demoPassword}>demo123</Text></Text>
+              <Text style={styles.demoEmail}>• Parent: parent@ktransport.com</Text>
+              <Text style={styles.demoEmail}>• Staff: staff@ktransport.com</Text>
+              <Text style={styles.demoEmail}>• Driver: driver@ktransport.com</Text>
+              <Text style={styles.demoEmail}>• Admin: admin@ktransport.com</Text>
+            </Card.Content>
+          </Card>
+
           {/* Login Form */}
           <Card style={styles.card}>
             <Card.Content>
@@ -200,6 +212,33 @@ const styles = StyleSheet.create({
   card: {
     marginBottom: spacing.lg,
     borderRadius: borderRadius.large,
+  },
+  demoCard: {
+    marginBottom: spacing.md,
+    borderRadius: borderRadius.large,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.secondary,
+  },
+  demoTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.secondary,
+    marginBottom: spacing.xs,
+  },
+  demoText: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+  demoPassword: {
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  demoEmail: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginBottom: 2,
   },
   input: {
     marginBottom: spacing.md,
