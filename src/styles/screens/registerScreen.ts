@@ -4,7 +4,7 @@ import { colors, spacing, borderRadius } from '../theme';
 export const registerScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: 'transparent', // Make transparent to show background image and gradient
   },
   scrollContent: {
     flexGrow: 1,

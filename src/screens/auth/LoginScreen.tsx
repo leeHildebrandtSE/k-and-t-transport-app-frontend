@@ -5,7 +5,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  Image,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   TextInput,
   Button,
@@ -80,6 +82,24 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
       style={authStyles.keyboardContainer}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
+      {/* Background Image */}
+      <Image
+        source={require('../../../assets/login_screen_background.jpg')}
+        style={authStyles.backgroundImage}
+        resizeMode="cover"
+      />
+
+      {/* Indigo to Gold Gradient Overlay - App Brand Colors */}
+      <LinearGradient
+        colors={[
+          'rgba(79, 70, 229, 0.85)', // Primary indigo with transparency
+          'rgba(245, 158, 11, 0.65)', // Secondary gold with transparency
+        ]}
+        style={authStyles.gradientOverlay}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+      />
+
       <ScrollView
         style={authStyles.container}
         contentContainerStyle={authStyles.scrollContent}

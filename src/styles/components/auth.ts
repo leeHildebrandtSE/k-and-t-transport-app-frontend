@@ -1,13 +1,36 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { colors, spacing, borderRadius, shadows, typography } from '../theme';
+
+const { width, height } = Dimensions.get('window');
 
 // Enhanced Modern Auth Screen Styles with Premium UI/UX
 export const authStyles = StyleSheet.create({
-  // Main container with elegant gradient background
+  // Main container with background image and gradient overlay
   container: {
     flex: 1,
-    backgroundColor: colors.background,
-    // Add subtle gradient feel with background layers
+    backgroundColor: 'transparent', // Make transparent to show background
+  },
+
+  // Background image container
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: width,
+    height: height,
+    opacity: 0.3, // Make image slightly opaque
+    zIndex: -2,
+  },
+
+  // Blue to gold gradient overlay
+  gradientOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+    opacity: 0.85,
   },
 
   keyboardContainer: {
@@ -403,8 +426,8 @@ export const authStyles = StyleSheet.create({
     opacity: 1,
   },
 
-  // Gradient overlay effect (using multiple Views for React Native)
-  gradientOverlay: {
+  // Decorative gradient overlay effect (using multiple Views for React Native)
+  decorativeGradientOverlay: {
     position: 'absolute',
     top: 0,
     left: 0,
