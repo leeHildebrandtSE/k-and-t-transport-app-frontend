@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Card, Title, Paragraph, Chip, Text, Avatar } from 'react-native-paper';
-import { colors, spacing, borderRadius } from '../../utils/theme';
+import { Card, Title, Paragraph, Chip, Text, Avatar, Icon } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
+import { colors, spacing, borderRadius, shadows } from '../../utils/theme';
+import { EnhancedCard, StatusIndicator } from '../ui';
 
 interface TripCardProps {
   trip: {
@@ -66,62 +68,91 @@ const TripCard: React.FC<TripCardProps> = ({
     });
   };
 
+  const getStatusMapping = () => {
+    switch (trip.status) {
+      case 'completed':
+        return 'success';
+      case 'in-progress':
+        return 'active';
+      case 'cancelled':
+        return 'cancelled';
+      case 'scheduled':
+      default:
+        return 'info';
+    }
+  };
+
   return (
-    <TouchableOpacity onPress={onPress} disabled={!onPress}>
-      <Card style={styles.card}>
-        <Card.Content>
-          <View style={styles.header}>
-            <View style={styles.routeInfo}>
-              <Text style={styles.routeName}>{trip.routeName}</Text>
-              <Text style={styles.direction}>{getDirectionIcon(trip.direction)}</Text>
-            </View>
-            <Chip
-              mode="outlined"
-              textStyle={{ color: getStatusColor(trip.status) }}
-              style={{ borderColor: getStatusColor(trip.status) }}
-            >
-              {getStatusText(trip.status)}
-            </Chip>
+    <EnhancedCard
+      onPress={onPress}
+      variant="elevated"
+      style={styles.card}
+      icon={
+        <Icon
+          source={trip.direction === 'pickup' ? 'bus' : 'home'}
+          size={24}
+          color={colors.primary}
+        />
+      }
+      title={trip.routeName}
+      subtitle={`${trip.direction === 'pickup' ? 'Pickup Service' : 'Drop-off Service'}`}
+      headerAction={
+        <StatusIndicator
+          status={getStatusMapping() as any}
+          text={getStatusText(trip.status)}
+          variant="pill"
+          size="small"
+          animated={trip.status === 'in-progress'}
+        />
+      }
+    >
+      <View style={styles.content}>
+        <View style={styles.timeInfo}>
+          <View style={styles.timeRow}>
+            <Text style={styles.timeLabel}>Scheduled:</Text>
+            <Text style={styles.timeValue}>{formatTime(trip.scheduledTime)}</Text>
           </View>
-
-          <View style={styles.timeInfo}>
+          {trip.actualTime && (
             <View style={styles.timeRow}>
-              <Text style={styles.timeLabel}>Scheduled:</Text>
-              <Text style={styles.timeValue}>{formatTime(trip.scheduledTime)}</Text>
+              <Text style={styles.timeLabel}>Actual:</Text>
+              <Text style={[styles.timeValue, { color: colors.secondary }]}>
+                {formatTime(trip.actualTime)}
+              </Text>
             </View>
-            {trip.actualTime && (
-              <View style={styles.timeRow}>
-                <Text style={styles.timeLabel}>Actual:</Text>
-                <Text style={[styles.timeValue, { color: colors.secondary }]}>
-                  {formatTime(trip.actualTime)}
-                </Text>
-              </View>
-            )}
+          )}
+        </View>
+
+        {(showDriver && trip.driverName) && (
+          <View style={styles.driverInfo}>
+            <Avatar.Text
+              size={32}
+              label={trip.driverName.charAt(0).toUpperCase()}
+              style={styles.driverAvatar}
+            />
+            <View style={styles.driverDetails}>
+              <Text style={styles.driverName}>{trip.driverName}</Text>
+              <Text style={styles.driverLabel}>Driver</Text>
+            </View>
           </View>
+        )}
 
-          {(showDriver && trip.driverName) && (
-            <View style={styles.driverInfo}>
-              <Avatar.Text
-                size={24}
-                label={trip.driverName.charAt(0)}
-                style={styles.driverAvatar}
-              />
-              <Text style={styles.driverName}>Driver: {trip.driverName}</Text>
-            </View>
-          )}
+        {trip.vehicleInfo && (
+          <View style={styles.vehicleInfo}>
+            <Icon source="car" size={16} color={colors.textSecondary} />
+            <Text style={styles.vehicleText}>{trip.vehicleInfo}</Text>
+          </View>
+        )}
 
-          {trip.vehicleInfo && (
-            <Text style={styles.vehicleInfo}>Vehicle: {trip.vehicleInfo}</Text>
-          )}
-
-          {showPassengerCount && trip.passengerCount !== undefined && (
-            <Text style={styles.passengerCount}>
-              Passengers: {trip.passengerCount}
+        {showPassengerCount && trip.passengerCount !== undefined && (
+          <View style={styles.passengerInfo}>
+            <Icon source="account-group" size={16} color={colors.textSecondary} />
+            <Text style={styles.passengerText}>
+              {trip.passengerCount} passenger{trip.passengerCount !== 1 ? 's' : ''}
             </Text>
-          )}
-        </Card.Content>
-      </Card>
-    </TouchableOpacity>
+          </View>
+        )}
+      </View>
+    </EnhancedCard>
   );
 };
 
@@ -129,40 +160,22 @@ const styles = StyleSheet.create({
   card: {
     marginVertical: spacing.xs,
     marginHorizontal: spacing.md,
-    borderRadius: borderRadius.medium,
-    elevation: 2,
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: spacing.md,
-  },
-  routeInfo: {
-    flex: 1,
-  },
-  routeName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: colors.text,
-    marginBottom: spacing.xs,
-  },
-  direction: {
-    fontSize: 14,
-    color: colors.textSecondary,
+  content: {
+    gap: spacing.md,
   },
   timeInfo: {
-    marginBottom: spacing.sm,
+    gap: spacing.xs,
   },
   timeRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing.xs,
   },
   timeLabel: {
     fontSize: 14,
     color: colors.textSecondary,
+    fontWeight: '500',
   },
   timeValue: {
     fontSize: 16,
@@ -172,25 +185,54 @@ const styles = StyleSheet.create({
   driverInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: spacing.sm,
-    marginBottom: spacing.xs,
+    backgroundColor: colors.surface,
+    padding: spacing.md,
+    borderRadius: borderRadius.medium,
+    elevation: 1,
   },
   driverAvatar: {
     backgroundColor: colors.primary,
-    marginRight: spacing.sm,
+    marginRight: spacing.md,
+  },
+  driverDetails: {
+    flex: 1,
   },
   driverName: {
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: '600',
     color: colors.text,
+    marginBottom: 2,
+  },
+  driverLabel: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   vehicleInfo: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    marginBottom: spacing.xs,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    backgroundColor: colors.background,
+    borderRadius: borderRadius.small,
   },
-  passengerCount: {
+  vehicleText: {
     fontSize: 14,
-    color: colors.textSecondary,
+    color: colors.text,
+    fontWeight: '500',
+  },
+  passengerInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    backgroundColor: colors.background,
+    borderRadius: borderRadius.small,
+  },
+  passengerText: {
+    fontSize: 14,
+    color: colors.text,
     fontWeight: '500',
   },
 });

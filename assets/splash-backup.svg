@@ -1,0 +1,91 @@
+<!-- K&T Transport Splash Screen -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <defs>
+    <!-- Hero gradient background -->
+    <linearGradient id="splashGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#EC4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Logo shadow -->
+    <filter id="logoShadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Gradient background -->
+  <rect width="1080" height="1920" fill="url(#splashGradient)"/>
+
+  <!-- Background pattern overlay -->
+  <rect width="1080" height="1920" fill="url(#splashGradient)" opacity="0.1"/>
+
+  <!-- Main logo container -->
+  <g transform="translate(540, 960)">
+    <!-- Logo background circle -->
+    <circle cx="0" cy="0" r="180" fill="white" opacity="0.15" filter="url(#logoShadow)"/>
+    <circle cx="0" cy="0" r="160" fill="white" opacity="0.1"/>
+
+    <!-- Main logo -->
+    <g transform="scale(1.2)">
+      <!-- Transport vehicle -->
+      <g transform="translate(0, 40)">
+        <!-- Main vehicle body -->
+        <rect x="-100" y="-30" width="200" height="60" rx="30" fill="white" opacity="0.95"/>
+
+        <!-- Vehicle windows -->
+        <rect x="-85" y="-25" width="35" height="20" rx="4" fill="#4F46E5" opacity="0.3"/>
+        <rect x="-35" y="-25" width="70" height="20" rx="4" fill="#4F46E5" opacity="0.3"/>
+        <rect x="50" y="-25" width="35" height="20" rx="4" fill="#4F46E5" opacity="0.3"/>
+
+        <!-- Wheels -->
+        <circle cx="-60" cy="50" r="25" fill="white"/>
+        <circle cx="-60" cy="50" r="18" fill="#374151"/>
+        <circle cx="60" cy="50" r="25" fill="white"/>
+        <circle cx="60" cy="50" r="18" fill="#374151"/>
+
+        <!-- Vehicle accent -->
+        <rect x="-8" y="0" width="16" height="30" fill="#F59E0B" rx="3"/>
+      </g>
+
+      <!-- K&T branding -->
+      <text x="0" y="-60" font-family="Arial, sans-serif" font-size="120" font-weight="900"
+            text-anchor="middle" fill="white" filter="url(#glow)">K&amp;T</text>
+    </g>
+
+    <!-- Company name -->
+    <text x="0" y="280" font-family="Arial, sans-serif" font-size="42" font-weight="700"
+          text-anchor="middle" fill="white" opacity="0.95">TRANSPORT SERVICES</text>
+
+    <!-- Tagline -->
+    <text x="0" y="330" font-family="Arial, sans-serif" font-size="24" font-weight="400"
+          text-anchor="middle" fill="white" opacity="0.8">Premium • Reliable • Professional</text>
+  </g>
+
+  <!-- Loading indicator area -->
+  <g transform="translate(540, 1600)">
+    <!-- Loading dots -->
+    <circle cx="-40" cy="0" r="8" fill="white" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite" begin="0s"/>
+    </circle>
+    <circle cx="0" cy="0" r="8" fill="white" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite" begin="0.5s"/>
+    </circle>
+    <circle cx="40" cy="0" r="8" fill="white" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite" begin="1s"/>
+    </circle>
+  </g>
+
+  <!-- Bottom accent -->
+  <rect x="0" y="1880" width="1080" height="40" fill="white" opacity="0.1"/>
+</svg>

@@ -1,0 +1,47 @@
+<!-- Android Adaptive Icon - Foreground Layer -->
+<svg xmlns="http://www.w3.org/2000/svg" width="432" height="432" viewBox="0 0 432 432">
+  <defs>
+    <!-- Icon gradient -->
+    <linearGradient id="adaptiveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Shadow filter -->
+    <filter id="adaptiveShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Main icon content centered in safe area (108dp from edges) -->
+  <g transform="translate(216, 216)">
+    <!-- Background circle -->
+    <circle cx="0" cy="0" r="120" fill="url(#adaptiveGradient)" filter="url(#adaptiveShadow)"/>
+    
+    <!-- Transport vehicle -->
+    <g transform="translate(0, 20)">
+      <!-- Vehicle body -->
+      <rect x="-45" y="-15" width="90" height="30" rx="15" fill="white" opacity="0.95"/>
+      
+      <!-- Windows -->
+      <rect x="-35" y="-12" width="20" height="10" rx="2" fill="#4F46E5" opacity="0.3"/>
+      <rect x="-10" y="-12" width="20" height="10" rx="2" fill="#4F46E5" opacity="0.3"/>
+      <rect x="15" y="-12" width="20" height="10" rx="2" fill="#4F46E5" opacity="0.3"/>
+      
+      <!-- Wheels -->
+      <circle cx="-25" cy="20" r="12" fill="white"/>
+      <circle cx="-25" cy="20" r="8" fill="#374151"/>
+      <circle cx="25" cy="20" r="12" fill="white"/>
+      <circle cx="25" cy="20" r="8" fill="#374151"/>
+    </g>
+    
+    <!-- K&T text -->
+    <text x="0" y="-30" font-family="Arial, sans-serif" font-size="48" font-weight="900" 
+          text-anchor="middle" fill="white">K&amp;T</text>
+    
+    <!-- Small accent -->
+    <text x="0" y="75" font-family="Arial, sans-serif" font-size="14" font-weight="600" 
+          text-anchor="middle" fill="white" opacity="0.8">TRANSPORT</text>
+  </g>
+</svg>

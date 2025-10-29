@@ -19,7 +19,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import { AuthService } from '../../services/AuthService';
-import { authStyles, colors } from '../../styles';
+import { authStyles, colors, spacing, borderRadius } from '../../styles';
 import { LoginCredentials, User } from '../../types/User';
 
 interface LoginScreenProps {
@@ -114,49 +114,41 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
           {/* Login Form */}
           <Card style={authStyles.formCard}>
             <Card.Content>
-              <View style={authStyles.inputContainer}>
-                <TextInput
-                  label="Email Address"
-                  value={formData.email}
-                  onChangeText={(text) => handleInputChange('email', text)}
-                  mode="outlined"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  style={authStyles.input}
-                  disabled={loading}
-                  left={<TextInput.Icon icon="email" />}
-                />
-              </View>
+              <TextInput
+                label="Email Address"
+                value={formData.email}
+                onChangeText={(text) => handleInputChange('email', text)}
+                mode="outlined"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                style={styles.input}
+                disabled={loading}
+              />
 
-              <View style={authStyles.inputContainer}>
-                <TextInput
-                  label="Password"
-                  value={formData.password}
-                  onChangeText={(text) => handleInputChange('password', text)}
-                  mode="outlined"
-                  secureTextEntry={!showPassword}
-                  style={authStyles.input}
-                  disabled={loading}
-                  left={<TextInput.Icon icon="lock" />}
-                  right={
-                    <TextInput.Icon
-                      icon={showPassword ? 'eye-off' : 'eye'}
-                      onPress={() => setShowPassword(!showPassword)}
-                    />
-                  }
-                />
-              </View>
+              <TextInput
+                label="Password"
+                value={formData.password}
+                onChangeText={(text) => handleInputChange('password', text)}
+                mode="outlined"
+                secureTextEntry={!showPassword}
+                right={
+                  <TextInput.Icon
+                    icon={showPassword ? 'eye-off' : 'eye'}
+                    onPress={() => setShowPassword(!showPassword)}
+                  />
+                }
+                style={styles.input}
+                disabled={loading}
+              />
 
               <Button
                 mode="contained"
                 onPress={handleLogin}
                 loading={loading}
                 disabled={loading}
-                style={authStyles.primaryButton}
-                contentStyle={authStyles.primaryButtonContent}
-                labelStyle={authStyles.primaryButtonText}
-                icon={loading ? undefined : 'login'}
+                style={styles.loginButton}
+                contentStyle={styles.buttonContent}
               >
                 {loading ? 'Signing In...' : 'Sign In'}
               </Button>
@@ -164,11 +156,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
               <Button
                 mode="text"
                 onPress={() => {
+                  // TODO: Implement forgot password
                   Alert.alert('Forgot Password', 'This feature will be implemented soon.');
                 }}
-                style={authStyles.forgotButton}
+                style={styles.forgotButton}
                 disabled={loading}
-                labelStyle={authStyles.textButtonText}
               >
                 Forgot Password?
               </Button>
@@ -176,26 +168,22 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
           </Card>
 
           {/* Register Link */}
-          <View style={authStyles.registerSection}>
-            <Text style={authStyles.registerText}>Don't have an account?</Text>
+          <View style={styles.registerSection}>
+            <Text style={styles.registerText}>Don't have an account?</Text>
             <Button
               mode="text"
               onPress={navigateToRegister}
               disabled={loading}
-              style={authStyles.registerButton}
-              labelStyle={authStyles.registerButtonText}
+              labelStyle={styles.registerButtonLabel}
             >
               Create Account
             </Button>
           </View>
 
-          {/* Loading Overlay */}
+          {/* Loading Indicator */}
           {loading && (
-            <View style={authStyles.loadingOverlay}>
-              <View style={authStyles.loadingContent}>
-                <ActivityIndicator size="large" color={colors.primary} />
-                <Text style={authStyles.loadingText}>Signing you in...</Text>
-              </View>
+            <View style={styles.loadingOverlay}>
+              <ActivityIndicator size="large" color={colors.primary} />
             </View>
           )}
         </View>
@@ -203,5 +191,104 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
     </KeyboardAvoidingView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  content: {
+    flex: 1,
+    padding: spacing.lg,
+    justifyContent: 'center',
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: spacing.xl,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: colors.primary,
+    marginBottom: spacing.sm,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+  card: {
+    marginBottom: spacing.lg,
+    borderRadius: borderRadius.large,
+  },
+  demoCard: {
+    marginBottom: spacing.md,
+    borderRadius: borderRadius.large,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.secondary,
+  },
+  demoTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.secondary,
+    marginBottom: spacing.xs,
+  },
+  demoText: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+  demoPassword: {
+    fontWeight: 'bold',
+    color: colors.primary,
+  },
+  demoEmail: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginBottom: 2,
+  },
+  input: {
+    marginBottom: spacing.md,
+  },
+  loginButton: {
+    marginTop: spacing.md,
+    marginBottom: spacing.sm,
+    borderRadius: borderRadius.medium,
+  },
+  buttonContent: {
+    paddingVertical: spacing.sm,
+  },
+  forgotButton: {
+    alignSelf: 'center',
+  },
+  registerSection: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: spacing.lg,
+  },
+  registerText: {
+    fontSize: 16,
+    color: colors.textSecondary,
+  },
+  registerButtonLabel: {
+    color: colors.secondary,
+    fontWeight: 'bold',
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default LoginScreen;

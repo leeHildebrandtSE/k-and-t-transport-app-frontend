@@ -7,6 +7,7 @@ import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Import screens
+import LandingPage from './src/screens/LandingPage';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import RegisterScreen from './src/screens/auth/RegisterScreen';
 import ParentDashboard from './src/screens/dashboards/ParentDashboard';
@@ -19,7 +20,7 @@ import { AuthService } from './src/services/AuthService';
 import { NotificationService } from './src/services/NotificationService';
 
 // Import theme
-import { theme } from './src/utils/theme';
+import { theme } from './src/styles';
 
 // Import types
 import { User, UserRole } from './src/types/User';
@@ -29,6 +30,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showLanding, setShowLanding] = useState(true);
 
   useEffect(() => {
     initializeApp();
@@ -47,6 +49,7 @@ export default function App() {
         const userData = await AuthService.getCurrentUser(token);
         if (userData) {
           setUser(userData);
+          setShowLanding(false); // Skip landing if user is already logged in
         }
       }
     } catch (error) {
@@ -58,11 +61,21 @@ export default function App() {
 
   const handleLogin = (userData: User) => {
     setUser(userData);
+    setShowLanding(false);
   };
 
   const handleLogout = async () => {
     await AuthService.logout();
     setUser(null);
+    setShowLanding(true); // Show landing page after logout
+  };
+
+  const navigateToLogin = () => {
+    setShowLanding(false);
+  };
+
+  const navigateToSignup = () => {
+    setShowLanding(false);
   };
 
   const getDashboardScreen = (userRole: UserRole) => {
@@ -106,30 +119,52 @@ export default function App() {
               component={getDashboardScreen(user.role)}
               options={{
                 title: 'K & T Transport',
-                headerRight: () => null, // Dashboard component will handle logout
+                headerShown: false, // Dashboard component will handle its own header
               }}
               initialParams={{ user, onLogout: handleLogout }}
             />
+          ) : showLanding ? (
+            <Stack.Screen
+              name="Landing"
+              options={{
+                headerShown: false, // Landing page has its own navbar
+              }}
+            >
+              {() => (
+                <LandingPage
+                  onLogin={navigateToLogin}
+                  onSignup={navigateToSignup}
+                />
+              )}
+            </Stack.Screen>
           ) : (
             <>
               <Stack.Screen
                 name="Login"
-                component={LoginScreen}
                 options={{
-                  title: 'Welcome to K & T Transport',
+                  title: 'Welcome Back',
                   headerShown: true,
                 }}
-                initialParams={{ onLogin: handleLogin }}
-              />
+              >
+                {() => (
+                  <LoginScreen
+                    route={{ params: { onLogin: handleLogin } }}
+                  />
+                )}
+              </Stack.Screen>
               <Stack.Screen
                 name="Register"
-                component={RegisterScreen}
                 options={{
                   title: 'Create Account',
                   headerShown: true,
                 }}
-                initialParams={{ onLogin: handleLogin }}
-              />
+              >
+                {() => (
+                  <RegisterScreen
+                    route={{ params: { onLogin: handleLogin } }}
+                  />
+                )}
+              </Stack.Screen>
             </>
           )}
         </Stack.Navigator>
