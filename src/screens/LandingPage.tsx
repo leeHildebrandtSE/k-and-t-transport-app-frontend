@@ -77,23 +77,41 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
     setActiveSection(sectionName);
     setMobileMenuOpen(false); // Close mobile menu when navigating
 
-    // Ensure we have a scroll view reference
+    // Special handling for home section - always scroll to top
+    if (sectionName === 'home') {
+      console.log('🏠 Scrolling to home (top of page)');
+
+      // For web: Use native browser scrolling (more reliable)
+      if (Platform.OS === 'web') {
+        try {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+          console.log('✅ Native browser scroll to top executed successfully');
+          return;
+        } catch (webError) {
+          console.error('❌ Native browser scroll failed:', webError);
+        }
+      }
+
+      // Fallback: React Native ScrollView method
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({
+          y: 0,
+          animated: true,
+        });
+      }
+      return;
+    }
+
+    // Ensure we have a scroll view reference for other sections
     if (!scrollViewRef.current) {
       console.error('❌ ScrollView ref not available');
       return;
     }
 
     let targetY = sectionPositions[sectionName];
-
-    // If section is home, scroll to top
-    if (sectionName === 'home') {
-      console.log('🏠 Scrolling to home (top)');
-      scrollViewRef.current.scrollTo({
-        y: 0,
-        animated: true,
-      });
-      return;
-    }
 
     // Try to measure the section position directly if not already measured
     if (targetY === 0) {
@@ -127,19 +145,37 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
     console.log(`✅ Scrolling to ${sectionName} at position ${targetY}`);
 
-    // Use a more reliable scrolling method
+    // For web: Use native browser scrolling first (more reliable than React Native Web)
+    if (Platform.OS === 'web') {
+      console.log('🌐 Using native browser scroll for web...');
+      try {
+        window.scrollTo({
+          top: Math.max(0, targetY - 80),
+          behavior: 'smooth'
+        });
+        console.log('✅ Native browser scroll executed successfully');
+        return; // Exit early if successful
+      } catch (webError) {
+        console.error('❌ Native browser scroll failed:', webError);
+      }
+    }
+
+    // Fallback: React Native ScrollView method (for native platforms or if browser scroll fails)
     try {
+      console.log('🔄 Trying React Native ScrollView method...');
       scrollViewRef.current.scrollTo({
         y: Math.max(0, targetY - 80), // Account for navbar height (80px)
         animated: true,
       });
+      console.log('✅ React Native scroll executed');
     } catch (error) {
-      console.error('❌ Scroll failed:', error);
-      // Fallback: try without animation
-      scrollViewRef.current?.scrollTo({
-        y: Math.max(0, targetY - 80),
-        animated: false,
-      });
+      console.error('❌ React Native scroll also failed:', error);
+
+      // Last resort: instant browser scroll (no animation)
+      if (Platform.OS === 'web') {
+        console.log('🆘 Last resort: instant browser scroll...');
+        window.scrollTo(0, Math.max(0, targetY - 80));
+      }
     }
   };
 
@@ -200,7 +236,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
                   landingPageStyles.navLink,
                   activeSection === item.toLowerCase() && landingPageStyles.navLinkActive
                 ]}
-                onPress={() => scrollToSection(item.toLowerCase() as keyof typeof sectionPositions)}
+                onPress={() => {
+                  console.log(`🖱️ Desktop navbar click: ${item}`);
+                  scrollToSection(item.toLowerCase() as keyof typeof sectionPositions);
+                }}
               >
                 <Text style={[
                   landingPageStyles.navLinkText,
@@ -257,7 +296,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
                   landingPageStyles.mobileNavLink,
                   activeSection === item.toLowerCase() && landingPageStyles.mobileNavLinkActive
                 ]}
-                onPress={() => scrollToSection(item.toLowerCase() as keyof typeof sectionPositions)}
+                onPress={() => {
+                  console.log(`📱 Mobile navbar click: ${item}`);
+                  scrollToSection(item.toLowerCase() as keyof typeof sectionPositions);
+                }}
               >
                 <Text style={[
                   landingPageStyles.mobileNavLinkText,

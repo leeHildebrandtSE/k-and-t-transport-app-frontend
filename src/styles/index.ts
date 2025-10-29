@@ -16,6 +16,7 @@ export { default as authStyles } from './components/auth';
 // Screen styles
 export { default as dashboardStyles } from './screens/dashboard';
 export { default as landingPageStyles } from './screens/landingPage';
+export { default as registerScreenStyles } from './screens/registerScreen';
 // export { default as bookingStyles } from './screens/booking';
 // export { default as trackingStyles } from './screens/tracking';
 

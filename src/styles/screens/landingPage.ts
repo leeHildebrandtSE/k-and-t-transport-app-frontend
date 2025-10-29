@@ -12,7 +12,7 @@ export const landingPageStyles = StyleSheet.create({
 
   // Navigation Styles
   navbar: {
-    position: 'absolute',
+    position: 'fixed' as any, // Fixed position for sticky navbar
     top: 0,
     left: 0,
     right: 0,

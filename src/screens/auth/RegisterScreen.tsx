@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
@@ -16,24 +15,27 @@ import {
   Paragraph,
   RadioButton,
   ActivityIndicator,
+  IconButton,
 } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 import { AuthService } from '../../services/AuthService';
-import { colors, spacing, borderRadius } from '../../utils/theme';
+import { registerScreenStyles } from '../../styles/screens/registerScreen';
+import { authStyles, colors } from '../../styles';
 import { RegisterData, User, UserRole } from '../../types/User';
 
 interface RegisterScreenProps {
   route: {
     params: {
       onLogin: (user: User) => void;
+      onBackToLanding?: () => void;
     };
   };
 }
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
   const navigation = useNavigation();
-  const { onLogin } = route.params;
+  const { onLogin, onBackToLanding } = route.params;
 
   const [formData, setFormData] = useState<RegisterData>({
     email: '',
@@ -56,7 +58,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
   };
 
   const validateForm = (): boolean => {
-    if (!formData.email || !formData.phone || !formData.firstName || 
+    if (!formData.email || !formData.phone || !formData.firstName ||
         !formData.lastName || !formData.password || !confirmPassword) {
       Alert.alert('Error', 'Please fill in all fields');
       return false;
@@ -111,29 +113,42 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={registerScreenStyles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <View style={styles.content}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Title style={styles.title}>Create Account</Title>
-            <Paragraph style={styles.subtitle}>
+      <ScrollView contentContainerStyle={registerScreenStyles.scrollContent}>
+        <View style={registerScreenStyles.content}>
+          {/* Back to Landing Button */}
+          {onBackToLanding && (
+            <View style={registerScreenStyles.backButtonContainer}>
+              <IconButton
+                icon="arrow-left"
+                size={24}
+                onPress={onBackToLanding}
+                style={registerScreenStyles.backButton}
+              />
+              <Text style={registerScreenStyles.backText}>Back to Home</Text>
+            </View>
+          )}
+
+          {/* Enhanced Header */}
+          <View style={registerScreenStyles.header}>
+            <Title style={[registerScreenStyles.title, authStyles.modernTitle]}>Create Account</Title>
+            <Paragraph style={[registerScreenStyles.subtitle, authStyles.modernSubtitle]}>
               Join K & T Transport for reliable school and staff transport
             </Paragraph>
           </View>
 
-          {/* Registration Form */}
-          <Card style={styles.card}>
+          {/* Enhanced Registration Form */}
+          <Card style={[registerScreenStyles.card, authStyles.floatingElement]}>
             <Card.Content>
-              <View style={styles.nameRow}>
+              <View style={registerScreenStyles.nameRow}>
                 <TextInput
                   label="First Name"
                   value={formData.firstName}
                   onChangeText={(text) => handleInputChange('firstName', text)}
                   mode="outlined"
-                  style={[styles.input, styles.nameInput]}
+                  style={[registerScreenStyles.input, registerScreenStyles.nameInput]}
                   disabled={loading}
                 />
                 <TextInput
@@ -141,7 +156,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                   value={formData.lastName}
                   onChangeText={(text) => handleInputChange('lastName', text)}
                   mode="outlined"
-                  style={[styles.input, styles.nameInput]}
+                  style={[registerScreenStyles.input, registerScreenStyles.nameInput]}
                   disabled={loading}
                 />
               </View>
@@ -154,7 +169,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
-                style={styles.input}
+                style={registerScreenStyles.input}
                 disabled={loading}
               />
 
@@ -165,7 +180,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                 mode="outlined"
                 keyboardType="phone-pad"
                 placeholder="+27 xx xxx xxxx"
-                style={styles.input}
+                style={registerScreenStyles.input}
                 disabled={loading}
               />
 
@@ -181,7 +196,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                     onPress={() => setShowPassword(!showPassword)}
                   />
                 }
-                style={styles.input}
+                style={registerScreenStyles.input}
                 disabled={loading}
               />
 
@@ -197,28 +212,28 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                     onPress={() => setShowConfirmPassword(!showConfirmPassword)}
                   />
                 }
-                style={styles.input}
+                style={registerScreenStyles.input}
                 disabled={loading}
               />
 
               {/* User Role Selection */}
-              <View style={styles.roleSection}>
-                <Text style={styles.roleTitle}>I am a:</Text>
+              <View style={registerScreenStyles.roleSection}>
+                <Text style={registerScreenStyles.roleTitle}>I am a:</Text>
                 <RadioButton.Group
                   onValueChange={(value) => handleInputChange('role', value as UserRole)}
                   value={formData.role}
                 >
-                  <View style={styles.roleOption}>
+                  <View style={registerScreenStyles.roleOption}>
                     <RadioButton value="parent" disabled={loading} />
-                    <Text style={styles.roleLabel}>Parent/Guardian</Text>
+                    <Text style={registerScreenStyles.roleLabel}>Parent/Guardian</Text>
                   </View>
-                  <View style={styles.roleOption}>
+                  <View style={registerScreenStyles.roleOption}>
                     <RadioButton value="staff" disabled={loading} />
-                    <Text style={styles.roleLabel}>Staff/Employee</Text>
+                    <Text style={registerScreenStyles.roleLabel}>Staff/Employee</Text>
                   </View>
-                  <View style={styles.roleOption}>
+                  <View style={registerScreenStyles.roleOption}>
                     <RadioButton value="driver" disabled={loading} />
-                    <Text style={styles.roleLabel}>Driver</Text>
+                    <Text style={registerScreenStyles.roleLabel}>Driver</Text>
                   </View>
                 </RadioButton.Group>
               </View>
@@ -228,8 +243,8 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                 onPress={handleRegister}
                 loading={loading}
                 disabled={loading}
-                style={styles.registerButton}
-                contentStyle={styles.buttonContent}
+                style={registerScreenStyles.registerButton}
+                contentStyle={registerScreenStyles.buttonContent}
               >
                 {loading ? 'Creating Account...' : 'Create Account'}
               </Button>
@@ -237,13 +252,13 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
           </Card>
 
           {/* Login Link */}
-          <View style={styles.loginSection}>
-            <Text style={styles.loginText}>Already have an account?</Text>
+          <View style={registerScreenStyles.loginSection}>
+            <Text style={registerScreenStyles.loginText}>Already have an account?</Text>
             <Button
               mode="text"
               onPress={navigateToLogin}
               disabled={loading}
-              labelStyle={styles.loginButtonLabel}
+              labelStyle={registerScreenStyles.loginButtonLabel}
             >
               Sign In
             </Button>
@@ -251,7 +266,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
 
           {/* Loading Indicator */}
           {loading && (
-            <View style={styles.loadingOverlay}>
+            <View style={registerScreenStyles.loadingOverlay}>
               <ActivityIndicator size="large" color={colors.primary} />
             </View>
           )}
@@ -260,100 +275,5 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  scrollContent: {
-    flexGrow: 1,
-  },
-  content: {
-    flex: 1,
-    padding: spacing.lg,
-    paddingTop: spacing.xl,
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: spacing.xl,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: colors.primary,
-    marginBottom: spacing.sm,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: colors.textSecondary,
-    textAlign: 'center',
-  },
-  card: {
-    marginBottom: spacing.lg,
-    borderRadius: borderRadius.large,
-  },
-  nameRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  nameInput: {
-    flex: 1,
-    marginHorizontal: spacing.xs,
-  },
-  input: {
-    marginBottom: spacing.md,
-  },
-  roleSection: {
-    marginBottom: spacing.lg,
-  },
-  roleTitle: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: colors.text,
-    marginBottom: spacing.sm,
-  },
-  roleOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.xs,
-  },
-  roleLabel: {
-    fontSize: 16,
-    color: colors.text,
-    marginLeft: spacing.sm,
-  },
-  registerButton: {
-    marginTop: spacing.md,
-    borderRadius: borderRadius.medium,
-  },
-  buttonContent: {
-    paddingVertical: spacing.sm,
-  },
-  loginSection: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: spacing.lg,
-  },
-  loginText: {
-    fontSize: 16,
-    color: colors.textSecondary,
-  },
-  loginButtonLabel: {
-    color: colors.secondary,
-    fontWeight: 'bold',
-  },
-  loadingOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default RegisterScreen;

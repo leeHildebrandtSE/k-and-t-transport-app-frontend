@@ -15,6 +15,7 @@ import {
   Paragraph,
   ActivityIndicator,
   Icon,
+  IconButton,
 } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
@@ -26,13 +27,14 @@ interface LoginScreenProps {
   route: {
     params: {
       onLogin: (user: User) => void;
+      onBackToLanding?: () => void;
     };
   };
 }
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
   const navigation = useNavigation();
-  const { onLogin } = route.params;
+  const { onLogin, onBackToLanding } = route.params;
 
   const [formData, setFormData] = useState<LoginCredentials>({
     email: '',
@@ -78,25 +80,38 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
       style={authStyles.keyboardContainer}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView 
+      <ScrollView
         style={authStyles.container}
         contentContainerStyle={authStyles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <View style={authStyles.content}>
-          {/* Header with Logo */}
-          <View style={authStyles.header}>
-            <View style={authStyles.logo}>
-              <Icon source="truck" size={40} color={colors.textInverse} />
+          {/* Back to Landing Button */}
+          {onBackToLanding && (
+            <View style={authStyles.backButtonContainer}>
+              <IconButton
+                icon="arrow-left"
+                size={24}
+                onPress={onBackToLanding}
+                style={authStyles.backButton}
+              />
+              <Text style={authStyles.backText}>Back to Home</Text>
             </View>
-            <Title style={authStyles.title}>Welcome Back</Title>
-            <Paragraph style={authStyles.subtitle}>
+          )}
+
+          {/* Enhanced Header with Logo */}
+          <View style={authStyles.header}>
+            <View style={[authStyles.logo, authStyles.floatingElement]}>
+              <Icon source="truck" size={44} color={colors.textInverse} />
+            </View>
+            <Title style={authStyles.modernTitle}>Welcome Back</Title>
+            <Paragraph style={authStyles.modernSubtitle}>
               Sign in to access your K & T Transport account and manage your journey with us
             </Paragraph>
           </View>
 
-          {/* Demo Credentials */}
-          <Card style={authStyles.demoCard}>
+          {/* Enhanced Demo Credentials */}
+          <Card style={authStyles.enhancedDemoCard}>
             <Card.Content>
               <Title style={authStyles.demoTitle}>✨ Demo Credentials</Title>
               <Text style={authStyles.demoText}>

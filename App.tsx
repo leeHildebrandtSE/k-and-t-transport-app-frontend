@@ -78,6 +78,10 @@ export default function App() {
     setShowLanding(false);
   };
 
+  const navigateToLanding = () => {
+    setShowLanding(true);
+  };
+
   const getDashboardScreen = (userRole: UserRole) => {
     switch (userRole) {
       case 'parent':
@@ -148,7 +152,7 @@ export default function App() {
               >
                 {() => (
                   <LoginScreen
-                    route={{ params: { onLogin: handleLogin } }}
+                    route={{ params: { onLogin: handleLogin, onBackToLanding: navigateToLanding } }}
                   />
                 )}
               </Stack.Screen>
@@ -161,7 +165,7 @@ export default function App() {
               >
                 {() => (
                   <RegisterScreen
-                    route={{ params: { onLogin: handleLogin } }}
+                    route={{ params: { onLogin: handleLogin, onBackToLanding: navigateToLanding } }}
                   />
                 )}
               </Stack.Screen>

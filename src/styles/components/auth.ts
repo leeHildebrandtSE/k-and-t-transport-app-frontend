@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
 import { colors, spacing, borderRadius, shadows, typography } from '../theme';
 
-// Modern Auth Screen Styles
+// Enhanced Modern Auth Screen Styles with Premium UI/UX
 export const authStyles = StyleSheet.create({
-  // Main container
+  // Main container with elegant gradient background
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    // Add subtle gradient feel with background layers
   },
 
   keyboardContainer: {
@@ -27,21 +28,28 @@ export const authStyles = StyleSheet.create({
     width: '100%',
   },
 
-  // Header section
+  // Enhanced Header section with modern styling
   header: {
     alignItems: 'center',
     marginBottom: spacing.xxxl,
+    paddingTop: spacing.md,
   },
 
   logo: {
-    width: 80,
-    height: 80,
+    width: 88,
+    height: 88,
     marginBottom: spacing.lg,
     borderRadius: borderRadius.xl,
     backgroundColor: colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    ...shadows.md,
+    ...shadows.lg,
+    // Premium glow effect
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 12,
   },
 
   title: {
@@ -56,6 +64,26 @@ export const authStyles = StyleSheet.create({
     color: colors.textSecondary,
     textAlign: 'center',
     maxWidth: 300,
+  },
+
+  // Back navigation
+  backButtonContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+    alignSelf: 'flex-start',
+  },
+
+  backButton: {
+    margin: 0,
+    backgroundColor: 'transparent',
+  },
+
+  backText: {
+    ...typography.bodyMedium,
+    color: colors.primary,
+    marginLeft: spacing.xs,
+    fontWeight: '500',
   },
 
   // Demo credentials card
@@ -103,15 +131,21 @@ export const authStyles = StyleSheet.create({
     paddingHorizontal: spacing.sm,
   },
 
-  // Form card
+  // Enhanced Form card with premium styling
   formCard: {
     backgroundColor: colors.surface,
     borderRadius: borderRadius.xxl,
-    padding: spacing.xl,
+    padding: spacing.xxl,
     marginBottom: spacing.xl,
-    ...shadows.lg,
+    ...shadows.xl,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.border + '40', // More subtle border
+    // Enhanced shadow for depth and premium feel
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.15,
+    shadowRadius: 24,
+    elevation: 16,
   },
 
   // Input styles
@@ -142,14 +176,22 @@ export const authStyles = StyleSheet.create({
     backgroundColor: colors.errorLight + '20',
   },
 
-  // Button styles
+  // Enhanced Button styles with premium design
   primaryButton: {
     marginTop: spacing.lg,
     marginBottom: spacing.md,
-    borderRadius: borderRadius.lg,
-    paddingVertical: spacing.sm,
+    borderRadius: borderRadius.xl,
+    paddingVertical: spacing.md,
     backgroundColor: colors.primary,
-    ...shadows.md,
+    ...shadows.lg,
+    // Premium button glow
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+    elevation: 12,
+    // Enhanced visual hierarchy
+    minHeight: 56, // Material Design 3 touch target
   },
 
   primaryButtonContent: {
@@ -318,6 +360,115 @@ export const authStyles = StyleSheet.create({
     ...typography.bodySmall,
     color: colors.success,
     textAlign: 'center',
+  },
+
+  // New Premium UI Enhancement Styles
+
+  // Floating action elements
+  floatingElement: {
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 20,
+    elevation: 10,
+  },
+
+  // Premium input container with enhanced focus states
+  premiumInputContainer: {
+    marginBottom: spacing.lg,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+
+  // Animated focus indicator
+  inputFocusIndicator: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: colors.primary,
+    opacity: 0,
+  },
+
+  // Enhanced visual feedback
+  pressableArea: {
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+  },
+
+  // Premium card with subtle animations
+  animatedCard: {
+    transform: [{ scale: 1 }],
+    opacity: 1,
+  },
+
+  // Gradient overlay effect (using multiple Views for React Native)
+  gradientOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 100,
+    opacity: 0.1,
+  },
+
+  // Enhanced demo card with better visual hierarchy
+  enhancedDemoCard: {
+    backgroundColor: colors.surfaceVariant + 'E6', // More transparent
+    borderRadius: borderRadius.xxl,
+    padding: spacing.xl,
+    marginBottom: spacing.xl,
+    borderWidth: 1,
+    borderColor: colors.primary + '20', // Subtle primary accent
+    ...shadows.lg,
+    // Soft glow effect
+    shadowColor: colors.secondary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+
+  // Modern typography enhancements
+  modernTitle: {
+    ...typography.headlineLarge,
+    color: colors.text,
+    fontWeight: '700', // Bolder for impact
+    letterSpacing: -0.5, // Tighter spacing for modern feel
+    marginBottom: spacing.sm,
+    textAlign: 'center',
+  },
+
+  modernSubtitle: {
+    ...typography.bodyLarge,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 24, // Better readability
+    maxWidth: 320, // Optimal reading width
+    opacity: 0.8, // Subtle hierarchy
+  },
+
+  // Enhanced interaction states
+  interactiveElement: {
+    opacity: 1, // Base state for smooth animations
+  },
+
+  // Premium divider
+  premiumDivider: {
+    height: 1,
+    backgroundColor: colors.border + '30',
+    marginVertical: spacing.lg,
+    width: '100%',
+  },
+
+  // Status indicators
+  statusDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: colors.success,
+    marginRight: spacing.xs,
   },
 });
 
