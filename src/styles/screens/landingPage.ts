@@ -879,6 +879,49 @@ export const landingPageStyles = StyleSheet.create({
     color: colors.textSecondary,
     textAlign: 'center',
   },
+
+  // Enhanced Animation Styles
+  animatedCard: {
+    transform: [{ scale: 1 }],
+    opacity: 1,
+  },
+
+  animatedButton: {
+    transform: [{ scale: 1 }],
+  },
+
+  fadeInUp: {
+    opacity: 1,
+    transform: [{ translateY: 0 }],
+  },
+
+  floatingAnimation: {
+    // Placeholder for floating animation (handled by Animated.Value)
+    opacity: 1,
+  },
+
+  pulseAnimation: {
+    // Placeholder for pulse animation (handled by Animated.Value)
+    opacity: 1,
+  },
+
+  // Enhanced Feature Card with animations
+  animatedFeatureCard: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xl,
+    padding: spacing.lg,
+    marginBottom: spacing.md,
+    ...shadows.xl, // Enhanced shadow for better depth
+    transform: [{ scale: 1 }, { translateY: 0 }],
+  },
+
+  // Enhanced CTA Button with glow effect
+  enhancedCTA: {
+    borderRadius: borderRadius.lg,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.xl,
+    ...shadows.lg, // Enhanced shadow for buttons
+  },
 });
 
 export default landingPageStyles;

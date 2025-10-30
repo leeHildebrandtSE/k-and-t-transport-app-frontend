@@ -11,13 +11,15 @@ export const authStyles = StyleSheet.create({
     backgroundColor: 'transparent', // Make transparent to show background
   },
 
-  // Background image container
+  // Background image container - full screen coverage
   backgroundImage: {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: width,
-    height: height,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
     opacity: 0.3, // Make image slightly opaque
     zIndex: -2,
   },
@@ -31,6 +33,17 @@ export const authStyles = StyleSheet.create({
     bottom: 0,
     zIndex: -1,
     opacity: 0.85,
+  },
+
+  // Blue opaque overlay for better text visibility
+  blueOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(79, 70, 229, 0.75)', // Primary brand blue with opacity
+    zIndex: -1,
   },
 
   keyboardContainer: {
@@ -182,6 +195,36 @@ export const authStyles = StyleSheet.create({
     fontSize: 16,
   },
 
+  inputWithIcon: {
+    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  inputWithLeftIcon: {
+    paddingLeft: 45,
+  },
+
+  inputWithBothIcons: {
+    paddingLeft: 45,
+    paddingRight: 45,
+  },
+
+  inputIconLeft: {
+    position: 'absolute',
+    left: 12,
+    zIndex: 1,
+    paddingTop: 16,
+  },
+
+  inputIconRight: {
+    position: 'absolute',
+    right: 12,
+    zIndex: 1,
+    paddingTop: 16,
+    padding: 4,
+  },
+
   inputOutlined: {
     backgroundColor: colors.surface,
     borderWidth: 1,
@@ -228,6 +271,14 @@ export const authStyles = StyleSheet.create({
     ...typography.labelLarge,
     color: colors.textInverse,
     fontWeight: '600',
+  },
+
+  primaryButtonDisabled: {
+    opacity: 0.6,
+  },
+
+  buttonIcon: {
+    marginRight: spacing.xs,
   },
 
   secondaryButton: {

@@ -6,8 +6,8 @@ import {
   Platform,
   Alert,
   Image,
+  Pressable,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   TextInput,
   Button,
@@ -19,6 +19,7 @@ import {
   Icon,
   IconButton,
 } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 import { AuthService } from '../../services/AuthService';
@@ -89,16 +90,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
         resizeMode="cover"
       />
 
-      {/* Indigo to Gold Gradient Overlay - App Brand Colors */}
-      <LinearGradient
-        colors={[
-          'rgba(79, 70, 229, 0.85)', // Primary indigo with transparency
-          'rgba(245, 158, 11, 0.65)', // Secondary gold with transparency
-        ]}
-        style={authStyles.gradientOverlay}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      />
+      {/* Blue Overlay - App Brand Color */}
+      <View style={authStyles.blueOverlay} />
 
       <ScrollView
         style={authStyles.container}
@@ -109,12 +102,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
           {/* Back to Landing Button */}
           {onBackToLanding && (
             <View style={authStyles.backButtonContainer}>
-              <IconButton
-                icon="arrow-left"
-                size={24}
-                onPress={onBackToLanding}
-                style={authStyles.backButton}
-              />
+              <Pressable onPress={onBackToLanding} style={authStyles.backButton}>
+                <MaterialCommunityIcons
+                  name="arrow-left"
+                  size={24}
+                  color={colors.primary}
+                />
+              </Pressable>
               <Text style={authStyles.backText}>Back to Home</Text>
             </View>
           )}
@@ -122,7 +116,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
           {/* Enhanced Header with Logo */}
           <View style={authStyles.header}>
             <View style={[authStyles.logo, authStyles.floatingElement]}>
-              <Icon source="truck" size={44} color={colors.textInverse} />
+              <MaterialCommunityIcons
+                name="truck"
+                size={44}
+                color={colors.textInverse}
+              />
             </View>
             <Title style={authStyles.modernTitle}>Welcome Back</Title>
             <Paragraph style={authStyles.modernSubtitle}>
@@ -150,51 +148,70 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
           <Card style={authStyles.formCard}>
             <Card.Content>
               <View style={authStyles.inputContainer}>
-                <TextInput
-                  label="Email Address"
-                  value={formData.email}
-                  onChangeText={(text) => handleInputChange('email', text)}
-                  mode="outlined"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  style={authStyles.input}
-                  disabled={loading}
-                  left={<TextInput.Icon icon="email" />}
-                />
+                <View style={authStyles.inputWithIcon}>
+                  <View style={authStyles.inputIconLeft}>
+                    <MaterialCommunityIcons name="email" size={20} color="#666" />
+                  </View>
+                  <TextInput
+                    label="Email Address"
+                    value={formData.email}
+                    onChangeText={(text) => handleInputChange('email', text)}
+                    mode="outlined"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    style={[authStyles.input, authStyles.inputWithLeftIcon]}
+                    disabled={loading}
+                  />
+                </View>
               </View>
 
               <View style={authStyles.inputContainer}>
-                <TextInput
-                  label="Password"
-                  value={formData.password}
-                  onChangeText={(text) => handleInputChange('password', text)}
-                  mode="outlined"
-                  secureTextEntry={!showPassword}
-                  style={authStyles.input}
-                  disabled={loading}
-                  left={<TextInput.Icon icon="lock" />}
-                  right={
-                    <TextInput.Icon
-                      icon={showPassword ? 'eye-off' : 'eye'}
-                      onPress={() => setShowPassword(!showPassword)}
+                <View style={authStyles.inputWithIcon}>
+                  <View style={authStyles.inputIconLeft}>
+                    <MaterialCommunityIcons name="lock" size={20} color="#666" />
+                  </View>
+                  <TextInput
+                    label="Password"
+                    value={formData.password}
+                    onChangeText={(text) => handleInputChange('password', text)}
+                    mode="outlined"
+                    secureTextEntry={!showPassword}
+                    style={[authStyles.input, authStyles.inputWithBothIcons]}
+                    disabled={loading}
+                  />
+                  <Pressable
+                    style={authStyles.inputIconRight}
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    <MaterialCommunityIcons
+                      name={showPassword ? 'eye-off' : 'eye'}
+                      size={20}
+                      color="#666"
                     />
-                  }
-                />
+                  </Pressable>
+                </View>
               </View>
 
-              <Button
-                mode="contained"
+              <Pressable
                 onPress={handleLogin}
-                loading={loading}
                 disabled={loading}
-                style={authStyles.primaryButton}
-                contentStyle={authStyles.primaryButtonContent}
-                labelStyle={authStyles.primaryButtonText}
-                icon={loading ? undefined : 'login'}
+                style={[authStyles.primaryButton, loading && authStyles.primaryButtonDisabled]}
               >
-                {loading ? 'Signing In...' : 'Sign In'}
-              </Button>
+                <View style={authStyles.primaryButtonContent}>
+                  {!loading && (
+                    <MaterialCommunityIcons
+                      name="login"
+                      size={20}
+                      color="#FFFFFF"
+                      style={authStyles.buttonIcon}
+                    />
+                  )}
+                  <Text style={authStyles.primaryButtonText}>
+                    {loading ? 'Signing In...' : 'Sign In'}
+                  </Text>
+                </View>
+              </Pressable>
 
               <Button
                 mode="text"

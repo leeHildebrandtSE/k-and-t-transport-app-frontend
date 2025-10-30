@@ -18,6 +18,7 @@ import {
   Chip,
   Surface,
 } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
@@ -37,9 +38,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
 
-  // Animation values
+  // Enhanced Animation values
   const fadeAnim = useState(new Animated.Value(0))[0];
   const slideAnim = useState(new Animated.Value(50))[0];
+  const heroFadeAnim = useState(new Animated.Value(0))[0];
+  const heroSlideAnim = useState(new Animated.Value(30))[0];
+  const featuresFadeAnim = useState(new Animated.Value(0))[0];
+  const featuresSlideAnim = useState(new Animated.Value(40))[0];
+  const buttonScaleAnim = useState(new Animated.Value(1))[0];
+  const logoRotateAnim = useState(new Animated.Value(0))[0];
 
   // Section refs and positions for scroll-to functionality
   const sectionRefs = {
@@ -68,6 +75,86 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Animation initialization
+  useEffect(() => {
+    // Hero section entrance animation
+    Animated.parallel([
+      Animated.timing(heroFadeAnim, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }),
+      Animated.timing(heroSlideAnim, {
+        toValue: 0,
+        duration: 800,
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    // Logo rotation animation
+    Animated.loop(
+      Animated.timing(logoRotateAnim, {
+        toValue: 1,
+        duration: 20000,
+        useNativeDriver: true,
+      })
+    ).start();
+
+    // Staggered feature cards animation
+    setTimeout(() => {
+      Animated.parallel([
+        Animated.timing(featuresFadeAnim, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(featuresSlideAnim, {
+          toValue: 0,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    }, 500);
+  }, []);
+
+  // Interactive animation functions
+  const animateButtonPress = () => {
+    Animated.sequence([
+      Animated.timing(buttonScaleAnim, {
+        toValue: 0.95,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(buttonScaleAnim, {
+        toValue: 1,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  const createFadeInUpAnimation = (delay: number = 0) => {
+    const fadeValue = new Animated.Value(0);
+    const slideValue = new Animated.Value(30);
+
+    setTimeout(() => {
+      Animated.parallel([
+        Animated.timing(fadeValue, {
+          toValue: 1,
+          duration: 600,
+          useNativeDriver: true,
+        }),
+        Animated.timing(slideValue, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    }, delay);
+
+    return { fadeValue, slideValue };
   };
 
   const scrollToSection = (sectionName: keyof typeof sectionPositions) => {
@@ -220,9 +307,21 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
       <View style={landingPageStyles.navContent}>
         {/* Logo */}
         <View style={landingPageStyles.logoContainer}>
-          <View style={landingPageStyles.logoIcon}>
+          <Animated.View
+            style={[
+              landingPageStyles.logoIcon,
+              {
+                transform: [{
+                  rotate: logoRotateAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: ['0deg', '360deg'],
+                  }),
+                }],
+              }
+            ]}
+          >
             <Text style={landingPageStyles.logoText}>K&T</Text>
-          </View>
+          </Animated.View>
           <Text style={landingPageStyles.logoTitle}>Transport</Text>
         </View>
 
@@ -254,12 +353,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
         {/* Mobile Menu Button */}
         {(Platform.OS !== 'web' || width <= 768) && (
-          <IconButton
-            icon={mobileMenuOpen ? 'close' : 'menu'}
-            size={24}
-            onPress={toggleMobileMenu}
-            style={landingPageStyles.mobileMenuButton}
-          />
+          <Pressable onPress={toggleMobileMenu} style={landingPageStyles.mobileMenuButton}>
+            <MaterialCommunityIcons
+              name={mobileMenuOpen ? 'close' : 'menu'}
+              size={24}
+              color={colors.text}
+            />
+          </Pressable>
         )}
 
         {/* Desktop Auth Buttons */}
@@ -397,8 +497,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
           style={[
             landingPageStyles.heroContent,
             {
-              opacity: fadeAnim,
-              transform: [{ translateY: slideAnim }]
+              opacity: heroFadeAnim,
+              transform: [
+                { translateY: heroSlideAnim },
+                { scale: buttonScaleAnim }
+              ]
             }
           ]}
         >
@@ -418,19 +521,37 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
             <View style={landingPageStyles.heroCTAContainer}>
               <Button
                 mode="contained"
-                onPress={onSignup}
+                onPress={() => {
+                  animateButtonPress();
+                  onSignup();
+                }}
                 style={landingPageStyles.primaryCTA}
                 labelStyle={landingPageStyles.primaryCTAText}
-                icon="rocket-launch"
+                icon={() => (
+                  <MaterialCommunityIcons
+                    name="rocket-launch"
+                    size={18}
+                    color={colors.textInverse}
+                  />
+                )}
               >
                 Start Your Journey
               </Button>
               <Button
                 mode="outlined"
-                onPress={() => scrollToSection('features')}
+                onPress={() => {
+                  animateButtonPress();
+                  scrollToSection('features');
+                }}
                 style={landingPageStyles.secondaryCTA}
                 labelStyle={landingPageStyles.secondaryCTAText}
-                icon="play-circle-outline"
+                icon={() => (
+                  <MaterialCommunityIcons
+                    name="play-circle-outline"
+                    size={18}
+                    color={colors.primary}
+                  />
+                )}
               >
                 Learn More
               </Button>
@@ -497,7 +618,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         </Text>
       </View>
 
-      <View style={landingPageStyles.featuresGrid}>
+      <Animated.View
+        style={[
+          landingPageStyles.featuresGrid,
+          {
+            opacity: featuresFadeAnim,
+            transform: [{ translateY: featuresSlideAnim }]
+          }
+        ]}
+      >
         {[
           {
             icon: 'shield-check',
@@ -535,22 +664,33 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
             description: 'Special care for children and families with dedicated safety protocols.',
             color: colors.secondaryAccent,
           },
-        ].map((feature, index) => (
-          <Card key={index} style={landingPageStyles.featureCard}>
+        ].map((feature, index) => {
+          const cardAnimation = createFadeInUpAnimation(index * 150);
+          return (
+            <Animated.View
+              key={index}
+              style={{
+                opacity: cardAnimation.fadeValue,
+                transform: [{ translateY: cardAnimation.slideValue }],
+              }}
+            >
+              <Card style={[landingPageStyles.featureCard, landingPageStyles.animatedFeatureCard]}>
             <Card.Content style={landingPageStyles.featureCardContent}>
               <View style={[landingPageStyles.featureIcon, { backgroundColor: `${feature.color}15` }]}>
-                <IconButton
-                  icon={feature.icon}
+                <MaterialCommunityIcons
+                  name={feature.icon as any}
                   size={32}
-                  iconColor={feature.color}
+                  color={feature.color}
                 />
               </View>
               <Text style={landingPageStyles.featureTitle}>{feature.title}</Text>
               <Text style={landingPageStyles.featureDescription}>{feature.description}</Text>
             </Card.Content>
           </Card>
-        ))}
-      </View>
+        </Animated.View>
+        );
+        })}
+      </Animated.View>
     </View>
   );
 
@@ -635,7 +775,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
             onPress={onSignup}
             style={landingPageStyles.ctaPrimary}
             labelStyle={landingPageStyles.ctaPrimaryText}
-            icon="rocket-launch"
+            icon={() => (
+              <MaterialCommunityIcons
+                name="rocket-launch"
+                size={18}
+                color={colors.textInverse}
+              />
+            )}
           >
             Get Started Today
           </Button>
@@ -663,11 +809,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         <View style={landingPageStyles.aboutGrid}>
           <View style={landingPageStyles.aboutCard}>
             <View style={landingPageStyles.aboutIconContainer}>
-              <IconButton
-                icon="shield-check"
+              <MaterialCommunityIcons
+                name="shield-check"
                 size={32}
-                iconColor={colors.primary}
-                style={landingPageStyles.aboutIcon}
+                color={colors.primary}
               />
             </View>
             <Text style={landingPageStyles.aboutCardTitle}>15+ Years Experience</Text>
@@ -678,11 +823,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
           <View style={landingPageStyles.aboutCard}>
             <View style={landingPageStyles.aboutIconContainer}>
-              <IconButton
-                icon="account-group"
+              <MaterialCommunityIcons
+                name="account-group"
                 size={32}
-                iconColor={colors.primary}
-                style={landingPageStyles.aboutIcon}
+                color={colors.primary}
               />
             </View>
             <Text style={landingPageStyles.aboutCardTitle}>10,000+ Happy Customers</Text>
@@ -693,11 +837,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
           <View style={landingPageStyles.aboutCard}>
             <View style={landingPageStyles.aboutIconContainer}>
-              <IconButton
-                icon="car-multiple"
+              <MaterialCommunityIcons
+                name="car-multiple"
                 size={32}
-                iconColor={colors.primary}
-                style={landingPageStyles.aboutIcon}
+                color={colors.primary}
               />
             </View>
             <Text style={landingPageStyles.aboutCardTitle}>Modern Fleet</Text>
@@ -708,11 +851,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
           <View style={landingPageStyles.aboutCard}>
             <View style={landingPageStyles.aboutIconContainer}>
-              <IconButton
-                icon="clock-check"
+              <MaterialCommunityIcons
+                name="clock-check"
                 size={32}
-                iconColor={colors.primary}
-                style={landingPageStyles.aboutIcon}
+                color={colors.primary}
               />
             </View>
             <Text style={landingPageStyles.aboutCardTitle}>99.8% On-Time Record</Text>
@@ -766,11 +908,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         <View style={landingPageStyles.contactGrid}>
           <View style={landingPageStyles.contactCard}>
             <View style={landingPageStyles.contactIconContainer}>
-              <IconButton
-                icon="phone"
+              <MaterialCommunityIcons
+                name="phone"
                 size={24}
-                iconColor={colors.textInverse}
-                style={landingPageStyles.contactIcon}
+                color={colors.textInverse}
               />
             </View>
             <Text style={landingPageStyles.contactMethod}>Call Us</Text>
@@ -780,11 +921,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
           <View style={landingPageStyles.contactCard}>
             <View style={landingPageStyles.contactIconContainer}>
-              <IconButton
-                icon="email"
+              <MaterialCommunityIcons
+                name="email"
                 size={24}
-                iconColor={colors.textInverse}
-                style={landingPageStyles.contactIcon}
+                color={colors.textInverse}
               />
             </View>
             <Text style={landingPageStyles.contactMethod}>Email Us</Text>
@@ -794,11 +934,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
           <View style={landingPageStyles.contactCard}>
             <View style={landingPageStyles.contactIconContainer}>
-              <IconButton
-                icon="map-marker"
+              <MaterialCommunityIcons
+                name="map-marker"
                 size={24}
-                iconColor={colors.textInverse}
-                style={landingPageStyles.contactIcon}
+                color={colors.textInverse}
               />
             </View>
             <Text style={landingPageStyles.contactMethod}>Visit Us</Text>
@@ -810,10 +949,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         <View style={landingPageStyles.emergencyContact}>
           <Surface style={landingPageStyles.emergencyCard} elevation={4}>
             <View style={landingPageStyles.emergencyHeader}>
-              <IconButton
-                icon="phone-alert"
+              <MaterialCommunityIcons
+                name="phone-alert"
                 size={24}
-                iconColor={colors.error}
+                color={colors.error}
               />
               <Text style={landingPageStyles.emergencyTitle}>24/7 Emergency Support</Text>
             </View>

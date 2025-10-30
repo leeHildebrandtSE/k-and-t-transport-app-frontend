@@ -6,8 +6,8 @@ import {
   Platform,
   Alert,
   Image,
+  Pressable,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import {
   TextInput,
   Button,
@@ -17,8 +17,8 @@ import {
   Paragraph,
   RadioButton,
   ActivityIndicator,
-  IconButton,
 } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 import { AuthService } from '../../services/AuthService';
@@ -125,28 +125,24 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
         resizeMode="cover"
       />
 
-      {/* Indigo to Gold Gradient Overlay - App Brand Colors */}
-      <LinearGradient
-        colors={[
-          'rgba(79, 70, 229, 0.85)', // Primary indigo with transparency
-          'rgba(245, 158, 11, 0.65)', // Secondary gold with transparency
-        ]}
-        style={authStyles.gradientOverlay}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      />
+      {/* Blue Overlay - App Brand Color */}
+      <View style={authStyles.blueOverlay} />
 
       <ScrollView contentContainerStyle={registerScreenStyles.scrollContent}>
         <View style={registerScreenStyles.content}>
           {/* Back to Landing Button */}
           {onBackToLanding && (
             <View style={registerScreenStyles.backButtonContainer}>
-              <IconButton
-                icon="arrow-left"
-                size={24}
+              <Pressable
                 onPress={onBackToLanding}
                 style={registerScreenStyles.backButton}
-              />
+              >
+                <MaterialCommunityIcons
+                  name="arrow-left"
+                  size={24}
+                  color="#666"
+                />
+              </Pressable>
               <Text style={registerScreenStyles.backText}>Back to Home</Text>
             </View>
           )}
@@ -204,37 +200,54 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                 disabled={loading}
               />
 
-              <TextInput
-                label="Password"
-                value={formData.password}
-                onChangeText={(text) => handleInputChange('password', text)}
-                mode="outlined"
-                secureTextEntry={!showPassword}
-                right={
-                  <TextInput.Icon
-                    icon={showPassword ? 'eye-off' : 'eye'}
-                    onPress={() => setShowPassword(!showPassword)}
+              <View style={authStyles.inputWithIcon}>
+                <View style={authStyles.inputIconLeft}>
+                  <MaterialCommunityIcons name="lock" size={20} color="#666" />
+                </View>
+                <TextInput
+                  label="Password"
+                  value={formData.password}
+                  onChangeText={(text) => handleInputChange('password', text)}
+                  mode="outlined"
+                  secureTextEntry={!showPassword}
+                  style={[registerScreenStyles.input, authStyles.inputWithBothIcons]}
+                  disabled={loading}
+                />
+                <Pressable
+                  style={authStyles.inputIconRight}
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  <MaterialCommunityIcons
+                    name={showPassword ? 'eye-off' : 'eye'}
+                    size={20}
+                    color="#666"
                   />
-                }
-                style={registerScreenStyles.input}
-                disabled={loading}
-              />
+                </Pressable>
+              </View>
 
-              <TextInput
-                label="Confirm Password"
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                mode="outlined"
-                secureTextEntry={!showConfirmPassword}
-                right={
-                  <TextInput.Icon
-                    icon={showConfirmPassword ? 'eye-off' : 'eye'}
-                    onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+              <View style={authStyles.inputWithIcon}>
+                <View style={authStyles.inputIconLeft}>
+                  <MaterialCommunityIcons name="lock" size={20} color="#666" />
+                </View>
+                <TextInput
+                  label="Confirm Password"
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+                  mode="outlined"
+                  secureTextEntry={!showConfirmPassword}
+                  style={[registerScreenStyles.input, authStyles.inputWithBothIcons]}
+                />
+                <Pressable
+                  style={authStyles.inputIconRight}
+                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  <MaterialCommunityIcons
+                    name={showConfirmPassword ? 'eye-off' : 'eye'}
+                    size={20}
+                    color="#666"
                   />
-                }
-                style={registerScreenStyles.input}
-                disabled={loading}
-              />
+                </Pressable>
+              </View>
 
               {/* User Role Selection */}
               <View style={registerScreenStyles.roleSection}>
