@@ -20,7 +20,7 @@ export const authStyles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: '100%',
-    opacity: 0.3, // Make image slightly opaque
+    opacity: 0.7, // Higher opacity to show more of the beautiful background image
     zIndex: -2,
   },
 
@@ -42,7 +42,7 @@ export const authStyles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(79, 70, 229, 0.75)', // Primary brand blue with opacity
+    backgroundColor: 'rgba(79, 70, 229, 0.6)', // Reduced opacity to show more background image
     zIndex: -1,
   },
 
@@ -117,7 +117,7 @@ export const authStyles = StyleSheet.create({
 
   backText: {
     ...typography.bodyMedium,
-    color: colors.primary,
+    color: colors.textInverse, // White text for better contrast on blue overlay
     marginLeft: spacing.xs,
     fontWeight: '500',
   },
@@ -322,8 +322,9 @@ export const authStyles = StyleSheet.create({
 
   registerText: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: colors.textInverse, // White text for better contrast on blue overlay
     marginRight: spacing.xs,
+    opacity: 0.9,
   },
 
   registerButton: {
@@ -333,8 +334,9 @@ export const authStyles = StyleSheet.create({
 
   registerButtonText: {
     ...typography.labelLarge,
-    color: colors.secondary,
+    color: colors.textInverse, // White text for better contrast
     fontWeight: '600',
+    textDecorationLine: 'underline', // Make it clear it's a link
   },
 
   // Loading states
@@ -357,8 +359,9 @@ export const authStyles = StyleSheet.create({
 
   loadingText: {
     ...typography.bodyMedium,
-    color: colors.primary,
+    color: colors.textInverse, // White text for better visibility
     marginTop: spacing.md,
+    fontWeight: '500',
   },
 
   // Social login section (for future use)
@@ -507,20 +510,26 @@ export const authStyles = StyleSheet.create({
   // Modern typography enhancements
   modernTitle: {
     ...typography.headlineLarge,
-    color: colors.text,
+    color: colors.textInverse, // White text for better contrast on blue overlay
     fontWeight: '700', // Bolder for impact
     letterSpacing: -0.5, // Tighter spacing for modern feel
     marginBottom: spacing.sm,
     textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)', // Subtle shadow for depth
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 
   modernSubtitle: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: colors.textInverse, // White text for better contrast
     textAlign: 'center',
     lineHeight: 24, // Better readability
     maxWidth: 320, // Optimal reading width
-    opacity: 0.8, // Subtle hierarchy
+    opacity: 0.9, // High opacity for readability on overlay
+    textShadowColor: 'rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 1,
   },
 
   // Enhanced interaction states

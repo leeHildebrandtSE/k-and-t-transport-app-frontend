@@ -915,12 +915,48 @@ export const landingPageStyles = StyleSheet.create({
     transform: [{ scale: 1 }, { translateY: 0 }],
   },
 
+  // Hover effect styles for feature cards
+  featureCardHovered: {
+    backgroundColor: colors.surfaceElevated,
+    ...shadows.xl, // Enhanced shadow on hover
+    transform: [{ scale: 1.03 }, { translateY: -4 }], // Subtle lift effect
+    borderWidth: 1,
+    borderColor: colors.primaryLight,
+  },
+
+  featureCardPressed: {
+    transform: [{ scale: 0.98 }, { translateY: 2 }], // Slight press effect
+    ...shadows.md,
+  },
+
   // Enhanced CTA Button with glow effect
   enhancedCTA: {
     borderRadius: borderRadius.lg,
     paddingVertical: spacing.md,
     paddingHorizontal: spacing.xl,
     ...shadows.lg, // Enhanced shadow for buttons
+  },
+
+  // Floating Graphics Styles
+  floatingGraphicsContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    pointerEvents: 'none', // Don't interfere with user interactions
+    zIndex: 1,
+  },
+
+  floatingGraphic: {
+    position: 'absolute',
+    pointerEvents: 'none',
+    // Add subtle glow effect for better visibility
+    shadowColor: 'rgba(79, 70, 229, 0.3)', // Primary blue glow
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    elevation: 3,
   },
 });
 

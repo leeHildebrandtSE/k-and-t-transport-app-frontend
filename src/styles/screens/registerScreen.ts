@@ -78,11 +78,13 @@ export const registerScreenStyles = StyleSheet.create({
   },
   loginText: {
     fontSize: 16,
-    color: colors.textSecondary,
+    color: colors.textInverse, // White text for better contrast on blue overlay
+    opacity: 0.9,
   },
   loginButtonLabel: {
-    color: colors.secondary,
+    color: colors.textInverse, // White text for better contrast
     fontWeight: 'bold',
+    textDecorationLine: 'underline', // Make it clear it's a link
   },
   loadingOverlay: {
     position: 'absolute',

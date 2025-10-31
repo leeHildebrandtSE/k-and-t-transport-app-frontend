@@ -140,10 +140,10 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                 <MaterialCommunityIcons
                   name="arrow-left"
                   size={24}
-                  color="#666"
+                  color="#FFFFFF"
                 />
               </Pressable>
-              <Text style={registerScreenStyles.backText}>Back to Home</Text>
+              <Text style={authStyles.backText}>Back to Home</Text>
             </View>
           )}
 

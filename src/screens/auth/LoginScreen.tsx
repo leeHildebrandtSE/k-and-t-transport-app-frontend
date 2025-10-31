@@ -106,7 +106,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
                 <MaterialCommunityIcons
                   name="arrow-left"
                   size={24}
-                  color={colors.primary}
+                  color={colors.textInverse}
                 />
               </Pressable>
               <Text style={authStyles.backText}>Back to Home</Text>

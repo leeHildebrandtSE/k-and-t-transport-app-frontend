@@ -38,6 +38,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
 
+  // Hover state for feature cards
+  const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
+
   // Enhanced Animation values
   const fadeAnim = useState(new Animated.Value(0))[0];
   const slideAnim = useState(new Animated.Value(50))[0];
@@ -48,7 +51,26 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const buttonScaleAnim = useState(new Animated.Value(1))[0];
   const logoRotateAnim = useState(new Animated.Value(0))[0];
 
-  // Section refs and positions for scroll-to functionality
+  // Feature card hover animations (one for each card)
+  const cardHoverAnimations = useState(() =>
+    Array.from({ length: 6 }, () => ({
+      scale: new Animated.Value(1),
+      translateY: new Animated.Value(0),
+      shadowOpacity: new Animated.Value(0.15),
+    }))
+  )[0];
+
+  // Floating graphics animations
+  const floatingAnimations = useState(() => ({
+    float1: new Animated.Value(0),
+    float2: new Animated.Value(0),
+    float3: new Animated.Value(0),
+    float4: new Animated.Value(0),
+    rotate1: new Animated.Value(0),
+    rotate2: new Animated.Value(0),
+    rotate3: new Animated.Value(0),
+    rotate4: new Animated.Value(0),
+  }))[0];  // Section refs and positions for scroll-to functionality
   const sectionRefs = {
     home: useRef<View>(null),
     features: useRef<View>(null),
@@ -117,7 +139,43 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         }),
       ]).start();
     }, 500);
+
+    // Start floating graphics animations
+    startFloatingAnimations();
   }, []);
+
+  // Floating background graphics animations
+  const startFloatingAnimations = () => {
+    // Vertical floating animations with different speeds
+    [1, 2, 3, 4].forEach((num, index) => {
+      const floatKey = `float${num}` as keyof typeof floatingAnimations;
+      const rotateKey = `rotate${num}` as keyof typeof floatingAnimations;
+
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(floatingAnimations[floatKey], {
+            toValue: 1,
+            duration: 3000 + (index * 500), // Different speeds
+            useNativeDriver: true,
+          }),
+          Animated.timing(floatingAnimations[floatKey], {
+            toValue: 0,
+            duration: 3000 + (index * 500),
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
+
+      // Rotation animations
+      Animated.loop(
+        Animated.timing(floatingAnimations[rotateKey], {
+          toValue: 1,
+          duration: 8000 + (index * 2000), // Different rotation speeds
+          useNativeDriver: true,
+        })
+      ).start();
+    });
+  };
 
   // Interactive animation functions
   const animateButtonPress = () => {
@@ -155,6 +213,120 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
     }, delay);
 
     return { fadeValue, slideValue };
+  };
+
+  // Fast and smooth hover animations for feature cards
+  const animateCardHover = (cardIndex: number, isHovering: boolean) => {
+    const animation = cardHoverAnimations[cardIndex];
+    if (!animation) return;
+
+    Animated.parallel([
+      Animated.spring(animation.scale, {
+        toValue: isHovering ? 1.03 : 1,
+        damping: 15,
+        mass: 1,
+        stiffness: 300, // Higher stiffness for quicker response
+        useNativeDriver: true,
+      }),
+      Animated.spring(animation.translateY, {
+        toValue: isHovering ? -4 : 0,
+        damping: 15,
+        mass: 1,
+        stiffness: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(animation.shadowOpacity, {
+        toValue: isHovering ? 0.25 : 0.15,
+        duration: 150, // Quick shadow transition
+        useNativeDriver: false, // Shadow animations can't use native driver
+      }),
+    ]).start();
+  };
+
+  const handleCardHover = (cardIndex: number, isHovering: boolean) => {
+    if (Platform.OS === 'web') {
+      setHoveredCardIndex(isHovering ? cardIndex : null);
+      animateCardHover(cardIndex, isHovering);
+    }
+  };
+
+  const handleCardPress = (cardIndex: number, isPressed: boolean) => {
+    setHoveredCardIndex(isPressed ? cardIndex : null);
+    animateCardHover(cardIndex, isPressed);
+  };
+
+  // Floating Abstract Graphics Component
+  const FloatingGraphics = ({ sectionType }: { sectionType: 'features' | 'services' | 'about' | 'contact' }) => {
+    const getGraphicsForSection = () => {
+      switch (sectionType) {
+        case 'features':
+          return [
+            { icon: 'hexagon-outline', color: colors.primaryLight, size: 90, position: { top: '10%', right: '15%' }, animIndex: 1 },
+            { icon: 'triangle-outline', color: colors.secondaryLight, size: 70, position: { top: '60%', left: '8%' }, animIndex: 2 },
+            { icon: 'circle-outline', color: colors.tertiary, size: 110, position: { bottom: '20%', right: '10%' }, animIndex: 3 },
+          ];
+        case 'services':
+          return [
+            { icon: 'rhombus-outline', color: colors.secondary, size: 100, position: { top: '15%', left: '12%' }, animIndex: 1 },
+            { icon: 'star-outline', color: colors.primaryAccent, size: 80, position: { top: '50%', right: '20%' }, animIndex: 4 },
+            { icon: 'hexagon-slice-6', color: colors.tertiaryLight, size: 60, position: { bottom: '25%', left: '15%' }, animIndex: 2 },
+          ];
+        case 'about':
+          return [
+            { icon: 'octagon-outline', color: colors.primary, size: 95, position: { top: '20%', right: '18%' }, animIndex: 3 },
+            { icon: 'square-outline', color: colors.secondaryAccent, size: 75, position: { bottom: '30%', left: '10%' }, animIndex: 1 },
+          ];
+        case 'contact':
+          return [
+            { icon: 'pentagon-outline', color: colors.tertiary, size: 85, position: { top: '25%', left: '20%' }, animIndex: 2 },
+            { icon: 'diamond-outline', color: colors.primaryLight, size: 105, position: { bottom: '15%', right: '12%' }, animIndex: 4 },
+          ];
+        default:
+          return [];
+      }
+    };
+
+    return (
+      <View style={landingPageStyles.floatingGraphicsContainer}>
+        {getGraphicsForSection().map((graphic, index) => {
+          const floatAnim = floatingAnimations[`float${graphic.animIndex}` as keyof typeof floatingAnimations];
+          const rotateAnim = floatingAnimations[`rotate${graphic.animIndex}` as keyof typeof floatingAnimations];
+
+          return (
+            <Animated.View
+              key={index}
+              style={[
+                landingPageStyles.floatingGraphic,
+                graphic.position,
+                {
+                  transform: [
+                    {
+                      translateY: floatAnim.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [-15, 15],
+                      }),
+                    },
+                    {
+                      rotate: rotateAnim.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: ['0deg', '360deg'],
+                      }),
+                    },
+                  ],
+                  opacity: 0.4, // Increased from 0.15 to 0.4 for better visibility
+                },
+              ]}
+            >
+              <MaterialCommunityIcons
+                name={graphic.icon as any}
+                size={graphic.size * 1.3} // Made graphics 30% larger
+                color={graphic.color}
+              />
+            </Animated.View>
+          );
+        })}
+      </View>
+    );
   };
 
   const scrollToSection = (sectionName: keyof typeof sectionPositions) => {
@@ -611,6 +783,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const FeaturesSection = () => (
     <View style={landingPageStyles.featuresContainer}>
+      <FloatingGraphics sectionType="features" />
       <View style={landingPageStyles.sectionHeader}>
         <Text style={landingPageStyles.sectionTitle}>Why Choose K&T Transport?</Text>
         <Text style={landingPageStyles.sectionSubtitle}>
@@ -674,20 +847,46 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
                 transform: [{ translateY: cardAnimation.slideValue }],
               }}
             >
-              <Card style={[landingPageStyles.featureCard, landingPageStyles.animatedFeatureCard]}>
-            <Card.Content style={landingPageStyles.featureCardContent}>
-              <View style={[landingPageStyles.featureIcon, { backgroundColor: `${feature.color}15` }]}>
-                <MaterialCommunityIcons
-                  name={feature.icon as any}
-                  size={32}
-                  color={feature.color}
-                />
-              </View>
-              <Text style={landingPageStyles.featureTitle}>{feature.title}</Text>
-              <Text style={landingPageStyles.featureDescription}>{feature.description}</Text>
-            </Card.Content>
-          </Card>
-        </Animated.View>
+              <Pressable
+                onHoverIn={() => handleCardHover(index, true)}
+                onHoverOut={() => handleCardHover(index, false)}
+                onPressIn={() => handleCardPress(index, true)}
+                onPressOut={() => handleCardPress(index, false)}
+              >
+                <Animated.View
+                  style={[
+                    landingPageStyles.featureCard,
+                    landingPageStyles.animatedFeatureCard,
+                    {
+                      transform: [
+                        { scale: cardHoverAnimations[index]?.scale || 1 },
+                        { translateY: cardHoverAnimations[index]?.translateY || 0 },
+                      ],
+                      shadowOpacity: cardHoverAnimations[index]?.shadowOpacity || 0.15,
+                      shadowColor: '#000000',
+                      shadowOffset: { width: 0, height: 12 },
+                      shadowRadius: 24,
+                      elevation: 12,
+                      borderWidth: hoveredCardIndex === index ? 1 : 0,
+                      borderColor: colors.primaryLight,
+                      backgroundColor: hoveredCardIndex === index ? colors.surfaceElevated : colors.surface,
+                    },
+                  ]}
+                >
+                  <View style={landingPageStyles.featureCardContent}>
+                    <View style={[landingPageStyles.featureIcon, { backgroundColor: `${feature.color}15` }]}>
+                      <MaterialCommunityIcons
+                        name={feature.icon as any}
+                        size={32}
+                        color={feature.color}
+                      />
+                    </View>
+                    <Text style={landingPageStyles.featureTitle}>{feature.title}</Text>
+                    <Text style={landingPageStyles.featureDescription}>{feature.description}</Text>
+                  </View>
+                </Animated.View>
+              </Pressable>
+            </Animated.View>
         );
         })}
       </Animated.View>
@@ -696,6 +895,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const ServicesSection = () => (
     <View style={landingPageStyles.servicesContainer}>
+      <FloatingGraphics sectionType="services" />
       <View style={landingPageStyles.sectionHeader}>
         <Text style={landingPageStyles.sectionTitle}>Our Services</Text>
         <Text style={landingPageStyles.sectionSubtitle}>
@@ -800,6 +1000,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const AboutSection = () => (
     <View style={landingPageStyles.aboutContainer}>
+      <FloatingGraphics sectionType="about" />
       <View style={landingPageStyles.aboutContent}>
         <Text style={landingPageStyles.sectionTitle}>About K & T Transport</Text>
         <Text style={landingPageStyles.sectionSubtitle}>
@@ -899,6 +1100,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const ContactSection = () => (
     <View style={landingPageStyles.contactContainer}>
+      <FloatingGraphics sectionType="contact" />
       <View style={landingPageStyles.contactContent}>
         <Text style={landingPageStyles.sectionTitle}>Get In Touch</Text>
         <Text style={landingPageStyles.sectionSubtitle}>
