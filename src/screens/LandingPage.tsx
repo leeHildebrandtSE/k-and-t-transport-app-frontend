@@ -830,25 +830,29 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
           {
             title: 'School Transport',
             description: 'Safe and reliable daily transport for students with door-to-door service.',
-            image: '🚌',
+            imageUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
             features: ['GPS Tracking', 'Trained Drivers', 'Safety Protocols', 'Parent Updates'],
           },
           {
             title: 'Corporate Shuttle',
             description: 'Professional staff transport solutions for businesses of all sizes.',
-            image: '🚐',
+            imageUrl: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
             features: ['Flexible Schedules', 'Multiple Routes', 'Cost Effective', 'Reliable Service'],
           },
           {
             title: 'Private Hire',
             description: 'Premium private transport for special events and personal needs.',
-            image: '🚗',
+            imageUrl: 'https://images.unsplash.com/photo-1549317336-206569e8475c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
             features: ['Luxury Vehicles', 'Professional Chauffeurs', 'Custom Routes', '24/7 Available'],
           },
         ].map((service, index) => (
           <Card key={index} style={landingPageStyles.serviceCard}>
+            <Image
+              source={{ uri: service.imageUrl }}
+              style={landingPageStyles.serviceImage}
+              resizeMode="cover"
+            />
             <Card.Content style={landingPageStyles.serviceCardContent}>
-              <Text style={landingPageStyles.serviceEmoji}>{service.image}</Text>
               <Text style={landingPageStyles.serviceTitle}>{service.title}</Text>
               <Text style={landingPageStyles.serviceDescription}>{service.description}</Text>
 

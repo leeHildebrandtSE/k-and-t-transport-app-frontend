@@ -584,14 +584,19 @@ export const landingPageStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.surface,
     ...shadows.md,
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden', // Ensures image corners are rounded
   },
   serviceCardContent: {
     padding: spacing.xl,
     alignItems: 'center',
   },
-  serviceEmoji: {
-    fontSize: 64,
-    marginBottom: spacing.lg,
+  serviceImage: {
+    width: '100%',
+    height: 200,
+    borderTopLeftRadius: borderRadius.lg,
+    borderTopRightRadius: borderRadius.lg,
+    marginBottom: 0,
   },
   serviceTitle: {
     ...typography.headlineSmall,
