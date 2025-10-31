@@ -583,13 +583,29 @@ export const landingPageStyles = StyleSheet.create({
   serviceCard: {
     flex: 1,
     backgroundColor: colors.surface,
-    ...shadows.md,
     borderRadius: borderRadius.lg,
     overflow: 'hidden', // Ensures image corners are rounded
+    // Enhanced 3D floating effect
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 12,
+    // Floating transform for 3D effect
+    transform: [{ translateY: -6 }, { scale: 1.02 }],
+    // Subtle border with primary color hint
+    borderWidth: 1,
+    borderColor: `${colors.primaryLight}15`, // Very subtle primary tint
+    // Enhanced spacing
+    marginVertical: spacing.md,
+    marginHorizontal: spacing.xs,
   },
   serviceCardContent: {
     padding: spacing.xl,
     alignItems: 'center',
+    backgroundColor: colors.surfaceElevated,
+    // Add subtle inner spacing for premium feel
+    paddingTop: spacing.xxl,
   },
   serviceImage: {
     width: '100%',
@@ -597,6 +613,12 @@ export const landingPageStyles = StyleSheet.create({
     borderTopLeftRadius: borderRadius.lg,
     borderTopRightRadius: borderRadius.lg,
     marginBottom: 0,
+    // Add subtle inner shadow for depth
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   serviceTitle: {
     ...typography.headlineSmall,
