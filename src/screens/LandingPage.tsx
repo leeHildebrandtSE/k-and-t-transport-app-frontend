@@ -221,8 +221,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
           ];
         case 'about':
           return [
-            { icon: 'octagon-outline', color: colors.primary, size: 95, position: { top: '20%', right: '18%' }, animIndex: 3 },
-            { icon: 'square-outline', color: colors.secondaryAccent, size: 75, position: { bottom: '30%', left: '10%' }, animIndex: 1 },
+            { icon: 'octagon-outline', color: colors.primary, size: 95, position: { top: '5%', left: '5%' }, animIndex: 3 },
+            { icon: 'square-outline', color: colors.secondaryAccent, size: 75, position: { bottom: '10%', right: '8%' }, animIndex: 1 },
           ];
         case 'contact':
           return [
