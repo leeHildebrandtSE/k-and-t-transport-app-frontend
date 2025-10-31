@@ -38,9 +38,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
 
-  // Hover state for feature cards
-  const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
-
   // Enhanced Animation values
   const fadeAnim = useState(new Animated.Value(0))[0];
   const slideAnim = useState(new Animated.Value(50))[0];
@@ -49,18 +46,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const featuresFadeAnim = useState(new Animated.Value(0))[0];
   const featuresSlideAnim = useState(new Animated.Value(40))[0];
   const buttonScaleAnim = useState(new Animated.Value(1))[0];
-  const logoRotateAnim = useState(new Animated.Value(0))[0];
-
-  // Feature card hover animations (one for each card)
-  const cardHoverAnimations = useState(() =>
-    Array.from({ length: 6 }, () => ({
-      scale: new Animated.Value(1),
-      translateY: new Animated.Value(0),
-      shadowOpacity: new Animated.Value(0.15),
-    }))
-  )[0];
-
-  // Floating graphics animations
+  const logoRotateAnim = useState(new Animated.Value(0))[0];  // Floating graphics animations
   const floatingAnimations = useState(() => ({
     float1: new Animated.Value(0),
     float2: new Animated.Value(0),
@@ -215,45 +201,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
     return { fadeValue, slideValue };
   };
 
-  // Fast and smooth hover animations for feature cards
-  const animateCardHover = (cardIndex: number, isHovering: boolean) => {
-    const animation = cardHoverAnimations[cardIndex];
-    if (!animation) return;
 
-    Animated.parallel([
-      Animated.spring(animation.scale, {
-        toValue: isHovering ? 1.03 : 1,
-        damping: 15,
-        mass: 1,
-        stiffness: 300, // Higher stiffness for quicker response
-        useNativeDriver: true,
-      }),
-      Animated.spring(animation.translateY, {
-        toValue: isHovering ? -4 : 0,
-        damping: 15,
-        mass: 1,
-        stiffness: 300,
-        useNativeDriver: true,
-      }),
-      Animated.timing(animation.shadowOpacity, {
-        toValue: isHovering ? 0.25 : 0.15,
-        duration: 150, // Quick shadow transition
-        useNativeDriver: false, // Shadow animations can't use native driver
-      }),
-    ]).start();
-  };
-
-  const handleCardHover = (cardIndex: number, isHovering: boolean) => {
-    if (Platform.OS === 'web') {
-      setHoveredCardIndex(isHovering ? cardIndex : null);
-      animateCardHover(cardIndex, isHovering);
-    }
-  };
-
-  const handleCardPress = (cardIndex: number, isPressed: boolean) => {
-    setHoveredCardIndex(isPressed ? cardIndex : null);
-    animateCardHover(cardIndex, isPressed);
-  };
 
   // Floating Abstract Graphics Component
   const FloatingGraphics = ({ sectionType }: { sectionType: 'features' | 'services' | 'about' | 'contact' }) => {
@@ -847,45 +795,19 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
                 transform: [{ translateY: cardAnimation.slideValue }],
               }}
             >
-              <Pressable
-                onHoverIn={() => handleCardHover(index, true)}
-                onHoverOut={() => handleCardHover(index, false)}
-                onPressIn={() => handleCardPress(index, true)}
-                onPressOut={() => handleCardPress(index, false)}
-              >
-                <Animated.View
-                  style={[
-                    landingPageStyles.featureCard,
-                    landingPageStyles.animatedFeatureCard,
-                    {
-                      transform: [
-                        { scale: cardHoverAnimations[index]?.scale || 1 },
-                        { translateY: cardHoverAnimations[index]?.translateY || 0 },
-                      ],
-                      shadowOpacity: cardHoverAnimations[index]?.shadowOpacity || 0.15,
-                      shadowColor: '#000000',
-                      shadowOffset: { width: 0, height: 12 },
-                      shadowRadius: 24,
-                      elevation: 12,
-                      borderWidth: hoveredCardIndex === index ? 1 : 0,
-                      borderColor: colors.primaryLight,
-                      backgroundColor: hoveredCardIndex === index ? colors.surfaceElevated : colors.surface,
-                    },
-                  ]}
-                >
-                  <View style={landingPageStyles.featureCardContent}>
-                    <View style={[landingPageStyles.featureIcon, { backgroundColor: `${feature.color}15` }]}>
-                      <MaterialCommunityIcons
-                        name={feature.icon as any}
-                        size={32}
-                        color={feature.color}
-                      />
-                    </View>
-                    <Text style={landingPageStyles.featureTitle}>{feature.title}</Text>
-                    <Text style={landingPageStyles.featureDescription}>{feature.description}</Text>
+              <View style={[landingPageStyles.featureCard, landingPageStyles.elevated3DCard]}>
+                <View style={landingPageStyles.featureCardContent}>
+                  <View style={[landingPageStyles.featureIcon, { backgroundColor: `${feature.color}15` }]}>
+                    <MaterialCommunityIcons
+                      name={feature.icon as any}
+                      size={32}
+                      color={feature.color}
+                    />
                   </View>
-                </Animated.View>
-              </Pressable>
+                  <Text style={landingPageStyles.featureTitle}>{feature.title}</Text>
+                  <Text style={landingPageStyles.featureDescription}>{feature.description}</Text>
+                </View>
+              </View>
             </Animated.View>
         );
         })}

@@ -915,18 +915,23 @@ export const landingPageStyles = StyleSheet.create({
     transform: [{ scale: 1 }, { translateY: 0 }],
   },
 
-  // Hover effect styles for feature cards
-  featureCardHovered: {
-    backgroundColor: colors.surfaceElevated,
-    ...shadows.xl, // Enhanced shadow on hover
-    transform: [{ scale: 1.03 }, { translateY: -4 }], // Subtle lift effect
+  // Enhanced 3D Floating Card Effect
+  elevated3DCard: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xl,
+    // Dramatic 3D shadow effect - multiple layers
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 12 },
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 12,
+    // Subtle border with primary color hint
     borderWidth: 1,
-    borderColor: colors.primaryLight,
-  },
-
-  featureCardPressed: {
-    transform: [{ scale: 0.98 }, { translateY: 2 }], // Slight press effect
-    ...shadows.md,
+    borderColor: `${colors.primaryLight}20`, // Subtle primary color tint
+    // Enhanced spacing and floating effect
+    marginVertical: spacing.md,
+    // Combined transforms for 3D floating effect
+    transform: [{ translateY: -4 }, { scale: 1.02 }],
   },
 
   // Enhanced CTA Button with glow effect
