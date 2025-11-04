@@ -17,7 +17,6 @@ import {
   Paragraph,
   ActivityIndicator,
   Icon,
-  IconButton,
 } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -113,19 +112,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
             </View>
           )}
 
-          {/* Enhanced Header with Logo */}
-          <View style={authStyles.header}>
-            <View style={[authStyles.logo, authStyles.floatingElement]}>
+          {/* K&T Transport Business Logo */}
+          <View style={authStyles.logoHeader}>
+            <View style={authStyles.businessLogo}>
               <MaterialCommunityIcons
                 name="truck"
-                size={44}
+                size={48}
                 color={colors.textInverse}
               />
             </View>
-            <Title style={authStyles.modernTitle}>Welcome Back</Title>
-            <Paragraph style={authStyles.modernSubtitle}>
-              Sign in to access your K & T Transport account and manage your journey with us
-            </Paragraph>
+            <Text style={authStyles.logoText}>K & T Transport</Text>
+            <Text style={authStyles.logoTagline}>Your Trusted Journey Partner</Text>
           </View>
 
           {/* Enhanced Demo Credentials */}
@@ -136,8 +133,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
                 Use password: <Text style={authStyles.demoPassword}>demo123</Text> for any account
               </Text>
               <View style={authStyles.demoEmailContainer}>
-                <Text style={authStyles.demoEmail}>👨‍👩‍👧‍👦 Parent: parent@ktransport.com</Text>
-                <Text style={authStyles.demoEmail}>👔 Staff: staff@ktransport.com</Text>
+                <Text style={authStyles.demoEmail}>🚶 Commuter: commuter@ktransport.com</Text>
                 <Text style={authStyles.demoEmail}>🚐 Driver: driver@ktransport.com</Text>
                 <Text style={authStyles.demoEmail}>⚙️ Admin: admin@ktransport.com</Text>
               </View>

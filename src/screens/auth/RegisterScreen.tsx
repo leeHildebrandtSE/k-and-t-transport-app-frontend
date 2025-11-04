@@ -45,7 +45,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
     firstName: '',
     lastName: '',
     password: '',
-    role: 'parent',
+    role: 'commuter',
   });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -147,12 +147,17 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
             </View>
           )}
 
-          {/* Enhanced Header */}
-          <View style={registerScreenStyles.header}>
-            <Title style={[registerScreenStyles.title, authStyles.modernTitle]}>Create Account</Title>
-            <Paragraph style={[registerScreenStyles.subtitle, authStyles.modernSubtitle]}>
-              Join K & T Transport for reliable school and staff transport
-            </Paragraph>
+          {/* K&T Transport Business Logo */}
+          <View style={authStyles.logoHeader}>
+            <View style={authStyles.businessLogo}>
+              <MaterialCommunityIcons
+                name="truck"
+                size={48}
+                color="#FFFFFF"
+              />
+            </View>
+            <Text style={authStyles.logoText}>K & T Transport</Text>
+            <Text style={authStyles.logoTagline}>Your Trusted Journey Partner</Text>
           </View>
 
           {/* Enhanced Registration Form */}
@@ -257,16 +262,16 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                   value={formData.role}
                 >
                   <View style={registerScreenStyles.roleOption}>
-                    <RadioButton value="parent" disabled={loading} />
-                    <Text style={registerScreenStyles.roleLabel}>Parent/Guardian</Text>
-                  </View>
-                  <View style={registerScreenStyles.roleOption}>
-                    <RadioButton value="staff" disabled={loading} />
-                    <Text style={registerScreenStyles.roleLabel}>Staff/Employee</Text>
+                    <RadioButton value="commuter" disabled={loading} />
+                    <Text style={registerScreenStyles.roleLabel}>Commuter</Text>
                   </View>
                   <View style={registerScreenStyles.roleOption}>
                     <RadioButton value="driver" disabled={loading} />
                     <Text style={registerScreenStyles.roleLabel}>Driver</Text>
+                  </View>
+                  <View style={registerScreenStyles.roleOption}>
+                    <RadioButton value="admin" disabled={loading} />
+                    <Text style={registerScreenStyles.roleLabel}>Administrator</Text>
                   </View>
                 </RadioButton.Group>
               </View>

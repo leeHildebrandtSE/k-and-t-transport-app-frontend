@@ -88,6 +88,49 @@ export const authStyles = StyleSheet.create({
     elevation: 12,
   },
 
+  // Business Logo Header
+  logoHeader: {
+    alignItems: 'center',
+    marginBottom: spacing.xxl,
+    paddingVertical: spacing.lg,
+  },
+
+  businessLogo: {
+    width: 100,
+    height: 100,
+    borderRadius: borderRadius.full,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+    // Enhanced glow effect for branding
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 24,
+    elevation: 15,
+  },
+
+  logoTitle: {
+    ...typography.headlineLarge,
+    color: colors.textInverse,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: spacing.xs,
+    letterSpacing: 1,
+    textShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
+  },
+
+  logoTagline: {
+    ...typography.bodyLarge,
+    color: colors.textInverse,
+    textAlign: 'center',
+    opacity: 0.9,
+    fontStyle: 'italic',
+    letterSpacing: 0.5,
+    textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
+  },
+
   title: {
     ...typography.headlineLarge,
     color: colors.text,
@@ -515,9 +558,7 @@ export const authStyles = StyleSheet.create({
     letterSpacing: -0.5, // Tighter spacing for modern feel
     marginBottom: spacing.sm,
     textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)', // Subtle shadow for depth
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: '0px 1px 2px rgba(0, 0, 0, 0.3)', // Subtle shadow for depth
   },
 
   modernSubtitle: {
@@ -527,9 +568,7 @@ export const authStyles = StyleSheet.create({
     lineHeight: 24, // Better readability
     maxWidth: 320, // Optimal reading width
     opacity: 0.9, // High opacity for readability on overlay
-    textShadowColor: 'rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 1,
+    textShadow: '0px 1px 1px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
   },
 
   // Enhanced interaction states

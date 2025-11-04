@@ -1,4 +1,18 @@
-export type UserRole = 'parent' | 'staff' | 'driver' | 'admin';
+export type UserRole = 'commuter' | 'driver' | 'admin';
+
+export type CommuterType = 'school_transport' | 'work_transport' | 'lift_club' | 'general_commuting';
+
+export interface CommuterPreferences {
+  commuterType: CommuterType;
+  preferredRoutes?: string[];
+  schoolName?: string;
+  workLocation?: string;
+  schedule?: {
+    days: string[];
+    pickupTime?: string;
+    dropoffTime?: string;
+  };
+}
 
 export interface User {
   id: string;
@@ -10,6 +24,8 @@ export interface User {
   verified: boolean;
   createdAt: string;
   updatedAt: string;
+  // Commuter-specific preferences (only populated for commuter role)
+  commuterPreferences?: CommuterPreferences;
 }
 
 export interface AuthResponse {

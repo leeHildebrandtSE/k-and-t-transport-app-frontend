@@ -8,6 +8,8 @@ export const landingPageStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    minHeight: '100vh' as any, // Ensure full viewport height on web
+    width: '100%',
   },
 
   // Navigation Styles
@@ -29,6 +31,7 @@ export const landingPageStyles = StyleSheet.create({
     maxWidth: 1200,
     alignSelf: 'center',
     width: '100%',
+    minHeight: 60, // Ensure consistent navigation height
   },
   logoContainer: {
     flexDirection: 'row',
@@ -154,8 +157,10 @@ export const landingPageStyles = StyleSheet.create({
     flex: 1,
   },
   heroContainer: {
-    height: height * 0.9,
+    minHeight: '90vh' as any, // Use viewport height instead of static calculations
     marginTop: 70, // Account for navbar
+    width: '100%',
+    position: 'relative',
   },
   heroGradient: {
     flex: 1,
@@ -207,9 +212,9 @@ export const landingPageStyles = StyleSheet.create({
   primaryCTA: {
     backgroundColor: colors.secondary,
     paddingHorizontal: spacing.xl,
-    height: width <= 768 ? 48 : 56,
     minHeight: 48, // Ensure touch-friendly size
-    width: width <= 768 ? '100%' : 'auto',
+    height: 'auto',
+    borderRadius: borderRadius.lg,
   },
   primaryCTAText: {
     ...typography.labelLarge,
@@ -219,9 +224,9 @@ export const landingPageStyles = StyleSheet.create({
   secondaryCTA: {
     borderColor: colors.textOnColor,
     paddingHorizontal: spacing.xl,
-    height: width <= 768 ? 48 : 56,
     minHeight: 48, // Ensure touch-friendly size
-    width: width <= 768 ? '100%' : 'auto',
+    height: 'auto',
+    borderRadius: borderRadius.lg,
   },
   secondaryCTAText: {
     color: colors.textOnColor,
@@ -969,26 +974,317 @@ export const landingPageStyles = StyleSheet.create({
     ...shadows.lg, // Enhanced shadow for buttons
   },
 
-  // Floating Graphics Styles
-  floatingGraphicsContainer: {
+  // Modern Professional Background Styles
+  modernBackgroundContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    pointerEvents: 'none', // Don't interfere with user interactions
+    pointerEvents: 'none',
     zIndex: 1,
   },
 
-  floatingGraphic: {
+  modernGradientOverlay: {
     position: 'absolute',
-    pointerEvents: 'none',
-    // Add subtle glow effect for better visibility
-    shadowColor: 'rgba(79, 70, 229, 0.3)', // Primary blue glow
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 1,
-    shadowRadius: 8,
-    elevation: 3,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.6,
+  },
+
+  geometricPattern: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden',
+  },
+
+  geometricElement: {
+    position: 'absolute',
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    top: '10%',
+    right: '-10%',
+    transform: [{ rotate: '15deg' }],
+    opacity: 0.8,
+  },
+
+  geometricElement2: {
+    width: 150,
+    height: 150,
+    borderRadius: borderRadius.lg,
+    top: '60%',
+    left: '-8%',
+    transform: [{ rotate: '-25deg' }],
+    opacity: 0.6,
+  },
+
+  geometricElement3: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    bottom: '15%',
+    right: '-5%',
+    transform: [{ rotate: '45deg' }],
+    opacity: 0.4,
+  },
+
+  // Professional grid pattern
+  gridPattern: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflow: 'hidden',
+  },
+
+  gridLine: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    width: 1,
+    opacity: 0.1,
+  },
+
+  // Professional Footer Styles
+  footerContainer: {
+    backgroundColor: colors.text, // Using dark text color for footer background
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+  },
+
+  footerContent: {
+    maxWidth: 1200,
+    alignSelf: 'center',
+    width: '100%',
+    paddingHorizontal: spacing.lg,
+  },
+
+  footerMain: {
+    flexDirection: width > 768 ? 'row' : 'column',
+    justifyContent: 'space-between',
+    paddingVertical: spacing.huge,
+    gap: spacing.xl,
+  },
+
+  footerSection: {
+    flex: 1,
+    marginBottom: width <= 768 ? spacing.xl : 0,
+  },
+
+  footerLogo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+  },
+
+  footerLogoIcon: {
+    width: 32,
+    height: 32,
+    backgroundColor: colors.primarySoft,
+    borderRadius: borderRadius.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.sm,
+  },
+
+  footerCompanyName: {
+    ...typography.titleMedium,
+    color: colors.textInverse,
+    fontWeight: 'bold',
+  },
+
+  footerTagline: {
+    ...typography.bodyMedium,
+    color: colors.textMuted,
+    marginBottom: spacing.sm,
+    lineHeight: 22,
+  },
+
+  footerDescription: {
+    ...typography.bodySmall,
+    color: colors.textMuted,
+    marginBottom: spacing.lg,
+    lineHeight: 20,
+  },
+
+  footerSectionTitle: {
+    ...typography.titleSmall,
+    color: colors.textInverse,
+    fontWeight: '600',
+    marginBottom: spacing.md,
+  },
+
+  footerLink: {
+    paddingVertical: spacing.xs,
+  },
+
+  footerLinkText: {
+    ...typography.bodyMedium,
+    color: colors.textMuted,
+    lineHeight: 20,
+  },
+
+  footerContactItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+    gap: spacing.sm,
+  },
+
+  footerContactText: {
+    ...typography.bodySmall,
+    color: colors.textMuted,
+  },
+
+  socialLinks: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+  },
+
+  socialButton: {
+    width: 36,
+    height: 36,
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+
+  trustBadges: {
+    marginTop: spacing.md,
+    gap: spacing.sm,
+  },
+
+  trustBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
+
+  trustBadgeText: {
+    ...typography.bodySmall,
+    color: colors.success,
+    fontSize: 12,
+  },
+
+  // Newsletter Section
+  newsletterSection: {
+    backgroundColor: colors.primarySoft,
+    borderRadius: borderRadius.lg,
+    padding: spacing.xl,
+    marginVertical: spacing.xl,
+    alignItems: 'center',
+  },
+
+  newsletterTitle: {
+    ...typography.titleMedium,
+    color: colors.text,
+    fontWeight: '600',
+    marginBottom: spacing.sm,
+  },
+
+  newsletterSubtitle: {
+    ...typography.bodyMedium,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    marginBottom: spacing.lg,
+  },
+
+  newsletterForm: {
+    flexDirection: width > 480 ? 'row' : 'column',
+    width: '100%',
+    maxWidth: 400,
+    gap: spacing.md,
+  },
+
+  newsletterInput: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.md,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+    gap: spacing.sm,
+  },
+
+  newsletterPlaceholder: {
+    ...typography.bodyMedium,
+    color: colors.placeholder,
+    flex: 1,
+  },
+
+  newsletterButton: {
+    backgroundColor: colors.primary,
+    borderRadius: borderRadius.md,
+    minHeight: 48,
+  },
+
+  newsletterButtonText: {
+    color: colors.textOnColor,
+    fontWeight: '600',
+  },
+
+  // Footer Bottom
+  footerBottom: {
+    flexDirection: width > 768 ? 'row' : 'column',
+    justifyContent: 'space-between',
+    alignItems: width > 768 ? 'center' : 'flex-start',
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xl,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    gap: width <= 768 ? spacing.md : 0,
+  },
+
+  footerBottomLeft: {
+    gap: spacing.xs,
+  },
+
+  copyrightText: {
+    ...typography.bodySmall,
+    color: colors.textMuted,
+    fontSize: 12,
+  },
+
+  establishedText: {
+    ...typography.bodySmall,
+    color: colors.textMuted,
+    fontSize: 11,
+    fontStyle: 'italic',
+  },
+
+  footerBottomRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+
+  legalLink: {
+    paddingVertical: spacing.xs,
+  },
+
+  legalLinkText: {
+    ...typography.bodySmall,
+    color: colors.textMuted,
+    fontSize: 12,
+  },
+
+  legalSeparator: {
+    ...typography.bodySmall,
+    color: colors.textMuted,
+    fontSize: 12,
   },
 });
 

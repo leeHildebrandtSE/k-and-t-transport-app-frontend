@@ -1,25 +1,25 @@
 import { DefaultTheme } from 'react-native-paper';
 
-// 2025 Modern K & T Transport brand colors - Premium professional aesthetic
+// Cape Town Inspired K & T Transport colors - Ocean, Nature & Sunshine
 export const colors = {
-  // Primary Brand Colors - Electric & Sophisticated
-  primary: '#4F46E5', // Vibrant indigo - 2025 trendsetting
-  primaryLight: '#6366F1', // Electric indigo - energetic
-  primaryDark: '#3730A3', // Deep indigo - authority
-  primaryAccent: '#7C3AED', // Purple accent - creativity
-  primarySoft: '#EEF2FF', // Ultra-light indigo tint
+  // Primary Brand Colors - Atlantic Ocean Blue
+  primary: '#0EA5E9', // Cape Town ocean blue - symbolizing beautiful beaches
+  primaryLight: '#38BDF8', // Light ocean blue - coastal breeze
+  primaryDark: '#0284C7', // Deep ocean blue - Table Bay depths
+  primaryAccent: '#0891B2', // Teal accent - ocean meets sky
+  primarySoft: '#F0F9FF', // Ultra-light ocean tint
 
-  // Secondary Brand Colors - Warm & Energetic
-  secondary: '#F59E0B', // Golden amber - premium feel
-  secondaryLight: '#FBBF24', // Bright gold - optimism
-  secondaryDark: '#D97706', // Rich amber - reliability
-  secondaryAccent: '#FB7185', // Coral accent - warmth
-  secondarySoft: '#FFFBEB', // Ultra-light amber tint
+  // Secondary Brand Colors - Cape Town Sunshine
+  secondary: '#F59E0B', // Golden sunshine - beautiful Cape Town weather
+  secondaryLight: '#FCD34D', // Bright sunshine - summer days
+  secondaryDark: '#D97706', // Rich golden hour - sunset over Signal Hill
+  secondaryAccent: '#FBBF24', // Warm yellow - morning light on Table Mountain
+  secondarySoft: '#FFFBEB', // Ultra-light sunshine tint
 
-  // Tertiary Colors - Fresh & Modern
-  tertiary: '#06B6D4', // Cyan - innovation
-  tertiaryLight: '#22D3EE', // Bright cyan - freshness
-  tertiaryDark: '#0891B2', // Deep cyan - trust
+  // Tertiary Colors - Fynbos & Mountain Green
+  tertiary: '#059669', // Table Mountain green - scenic nature routes
+  tertiaryLight: '#10B981', // Fresh fynbos green - indigenous vegetation
+  tertiaryDark: '#047857', // Deep mountain green - Twelve Apostles
 
   // Background & Surface - Layered hierarchy
   background: '#FFFFFF', // Pure white - premium
@@ -29,22 +29,22 @@ export const colors = {
   surfaceElevated: '#FFFFFF', // Elevated cards
   surfaceHover: '#F9FAFB', // Interactive states
 
-  // Status Colors - Modern & Clear
-  success: '#10B981', // Emerald success
-  successLight: '#34D399', // Bright success
-  successSoft: '#ECFDF5', // Light success bg
+  // Status Colors - Cape Town Nature Inspired
+  success: '#059669', // Fynbos green - Cape floral kingdom success
+  successLight: '#10B981', // Bright nature green - thriving vegetation
+  successSoft: '#ECFDF5', // Light green bg - morning mountain mist
 
-  error: '#EF4444', // Clear error red
-  errorLight: '#F87171', // Light error
-  errorSoft: '#FEF2F2', // Light error bg
+  error: '#DC2626', // Mountain fire red - safety alert
+  errorLight: '#EF4444', // Light error - sunset warning
+  errorSoft: '#FEF2F2', // Light error bg - gentle alert
 
-  warning: '#F59E0B', // Amber warning
-  warningLight: '#FBBF24', // Light warning
-  warningSoft: '#FFFBEB', // Light warning bg
+  warning: '#F59E0B', // Cape sunshine warning - golden hour alert
+  warningLight: '#FBBF24', // Light warning - afternoon sun
+  warningSoft: '#FFFBEB', // Light warning bg - sunrise glow
 
-  info: '#06B6D4', // Cyan info
-  infoLight: '#22D3EE', // Light info
-  infoSoft: '#ECFEFF', // Light info bg
+  info: '#0EA5E9', // Atlantic blue info - ocean information
+  infoLight: '#38BDF8', // Light ocean info - clear skies
+  infoSoft: '#F0F9FF', // Light info bg - morning ocean mist
 
   // Text Colors - Hierarchical & Clear
   text: '#0F172A', // Rich black - primary text
@@ -57,7 +57,7 @@ export const colors = {
   // Interactive Elements - Refined & Responsive
   border: '#E5E7EB', // Subtle borders
   borderLight: '#F3F4F6', // Ultra-light borders
-  borderFocus: '#4F46E5', // Focus border (primary)
+  borderFocus: '#0EA5E9', // Focus border (Cape Town ocean blue)
   borderHover: '#D1D5DB', // Hover borders
   disabled: '#D1D5DB', // Disabled state
   placeholder: '#9CA3AF', // Placeholder text
@@ -73,14 +73,14 @@ export const colors = {
   shadowMedium: 'rgba(0, 0, 0, 0.1)',
   shadowStrong: 'rgba(0, 0, 0, 0.2)',
 
-  // Premium Gradients - 2025 trending
-  gradientHero: ['#4F46E5', '#7C3AED', '#EC4899'], // Hero gradient
-  gradientPrimary: ['#4F46E5', '#6366F1'], // Primary gradient
-  gradientSecondary: ['#F59E0B', '#FBBF24'], // Secondary gradient
-  gradientSuccess: ['#10B981', '#34D399'], // Success gradient
-  gradientSunset: ['#F59E0B', '#EF4444', '#EC4899'], // Sunset gradient
-  gradientOcean: ['#06B6D4', '#3B82F6', '#6366F1'], // Ocean gradient
-  gradientSurface: ['#FFFFFF', '#F9FAFB'], // Surface gradient
+  // Cape Town Inspired Gradients
+  gradientHero: ['#0EA5E9', '#059669', '#F59E0B'], // Ocean to mountain to sun
+  gradientPrimary: ['#0EA5E9', '#38BDF8'], // Atlantic Ocean gradient
+  gradientSecondary: ['#F59E0B', '#FCD34D'], // Cape sunshine gradient
+  gradientSuccess: ['#059669', '#10B981'], // Table Mountain green gradient
+  gradientSunset: ['#F59E0B', '#FBBF24', '#FCD34D'], // Cape Town sunset over Table Bay
+  gradientOcean: ['#0EA5E9', '#38BDF8', '#0891B2'], // Atlantic Ocean depths
+  gradientSurface: ['#FFFFFF', '#F9FAFB'], // Cloud-covered Table Mountain
 };
 
 // Modern typography system

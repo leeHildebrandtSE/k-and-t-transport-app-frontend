@@ -12,41 +12,30 @@ export class AuthService {
       id: '1',
       firstName: 'Sarah',
       lastName: 'Johnson',
-      email: 'parent@ktransport.com',
+      email: 'commuter@ktransport.com',
       phone: '+27 21 555 0101',
-      role: 'parent',
+      role: 'commuter',
       verified: true,
       createdAt: '2024-01-01T00:00:00Z',
       updatedAt: '2024-01-01T00:00:00Z',
     },
     {
       id: '2',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      email: 'staff@ktransport.com',
-      phone: '+27 21 555 0102',
-      role: 'staff',
-      verified: true,
-      createdAt: '2024-01-01T00:00:00Z',
-      updatedAt: '2024-01-01T00:00:00Z',
-    },
-    {
-      id: '3',
       firstName: 'David',
       lastName: 'Wilson',
       email: 'driver@ktransport.com',
-      phone: '+27 21 555 0103',
+      phone: '+27 21 555 0102',
       role: 'driver',
       verified: true,
       createdAt: '2024-01-01T00:00:00Z',
       updatedAt: '2024-01-01T00:00:00Z',
     },
     {
-      id: '4',
+      id: '3',
       firstName: 'Admin',
       lastName: 'User',
       email: 'admin@ktransport.com',
-      phone: '+27 21 555 0104',
+      phone: '+27 21 555 0103',
       role: 'admin',
       verified: true,
       createdAt: '2024-01-01T00:00:00Z',
@@ -128,6 +117,16 @@ export class AuthService {
       const authToken = token || this.token || await AsyncStorage.getItem('authToken');
       if (!authToken) return null;
 
+      // For demo mode, check if token is a demo token
+      if (authToken.startsWith('demo-token-')) {
+        const userId = authToken.replace('demo-token-', '');
+        const demoUser = this.demoUsers.find(user => user.id === userId);
+        if (demoUser) {
+          await AsyncStorage.setItem('userData', JSON.stringify(demoUser));
+          return demoUser;
+        }
+      }
+
       const response = await fetch(`${API_BASE_URL}/auth/me`, {
         method: 'GET',
         headers: {
@@ -153,7 +152,13 @@ export class AuthService {
       return user;
     } catch (error) {
       console.error('Get current user error:', error);
-      return null;
+      // In demo mode, try to get user from storage
+      try {
+        const userData = await AsyncStorage.getItem('userData');
+        return userData ? JSON.parse(userData) : null;
+      } catch {
+        return null;
+      }
     }
   }
 

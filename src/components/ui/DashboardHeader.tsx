@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Pressable, Platform } from 'react-native';
-import { Text, Avatar, IconButton, Badge, Surface } from 'react-native-paper';
+import { View, StyleSheet, Pressable, Platform, TouchableOpacity } from 'react-native';
+import { Text, Avatar, Badge, Surface } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, spacing, borderRadius, shadows, typography } from '../../styles/theme';
 import { User } from '../../types/User';
@@ -40,10 +41,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
   const getUserRoleDisplay = () => {
     switch (user.role) {
-      case 'parent':
-        return 'Parent Account';
-      case 'staff':
-        return 'Staff Account';
+      case 'commuter':
+        return 'Commuter Account';
       case 'driver':
         return 'Driver Account';
       case 'admin':
@@ -62,13 +61,16 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
       {/* Left Section */}
       <View style={styles.leftSection}>
         {Platform.OS !== 'web' && (
-          <IconButton
-            icon="menu"
-            size={24}
-            iconColor={showGradient ? colors.textInverse : colors.text}
+          <TouchableOpacity
             onPress={onMenuPress}
             style={styles.menuButton}
-          />
+          >
+            <MaterialCommunityIcons
+              name="menu"
+              size={24}
+              color={showGradient ? colors.textInverse : colors.text}
+            />
+          </TouchableOpacity>
         )}
 
         <View style={styles.headerInfo}>
@@ -106,12 +108,16 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
         {/* Notifications */}
         <View style={styles.notificationContainer}>
-          <IconButton
-            icon="bell"
-            size={24}
-            iconColor={showGradient ? colors.textInverse : colors.text}
+          <TouchableOpacity
             onPress={onNotificationPress}
-          />
+            style={styles.notificationButton}
+          >
+            <MaterialCommunityIcons
+              name="bell"
+              size={24}
+              color={showGradient ? colors.textInverse : colors.text}
+            />
+          </TouchableOpacity>
           {notificationCount > 0 && (
             <Badge
               style={[styles.badge, { backgroundColor: colors.error }]}
@@ -204,6 +210,17 @@ const styles = StyleSheet.create({
 
   menuButton: {
     marginRight: spacing.sm,
+    padding: spacing.xs,
+    borderRadius: borderRadius.sm,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  notificationButton: {
+    padding: spacing.xs,
+    borderRadius: borderRadius.sm,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   headerInfo: {

@@ -5,6 +5,8 @@ import {
   ScrollView,
   RefreshControl,
   Dimensions,
+  Animated,
+  TouchableOpacity,
 } from 'react-native';
 import {
   Card,
@@ -15,13 +17,15 @@ import {
   Chip,
   Text,
   Avatar,
-  IconButton,
 } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { User } from '../../types/User';
 import { Booking } from '../../types/Booking';
 import { colors, spacing, borderRadius } from '../../utils/theme';
+import { staffDashboardStyles } from '../../styles/screens/dashboards/staffDashboard';
+import DashboardHeader from '../../components/ui/DashboardHeader';
 
 interface StaffDashboardProps {
   route: {
@@ -47,8 +51,15 @@ const StaffHomeScreen: React.FC<{ user: User }> = ({ user }) => {
 
   return (
     <View style={styles.container}>
+      {/* Floating Graphics Background */}
+      <View style={styles.floatingGraphicsContainer}>
+        <Animated.View style={[styles.floatingCircle1, { backgroundColor: `${colors.primary}15` }]} />
+        <Animated.View style={[styles.floatingCircle2, { backgroundColor: `${colors.secondary}10` }]} />
+        <Animated.View style={[styles.floatingTriangle, { backgroundColor: `${colors.success}08` }]} />
+      </View>
+
       <ScrollView
-        style={styles.scrollView}
+        style={styles.scrollContainer}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
@@ -98,6 +109,33 @@ const StaffHomeScreen: React.FC<{ user: User }> = ({ user }) => {
                 Track Vehicle
               </Button>
             </View>
+
+            {/* Staff Lift Club Actions */}
+            <View style={styles.liftClubSection}>
+              <Text style={styles.sectionLabel}>Staff Lift Clubs</Text>
+              <View style={styles.quickActions}>
+                <Button
+                  mode="contained"
+                  icon="car-multiple"
+                  onPress={() => {/* Navigate to staff lift club browse */}}
+                  style={[styles.actionButton, styles.liftClubButton]}
+                  contentStyle={styles.actionButtonContent}
+                  buttonColor={colors.info}
+                >
+                  Browse Staff Clubs
+                </Button>
+                <Button
+                  mode="outlined"
+                  icon="plus-circle"
+                  onPress={() => {/* Navigate to create staff request */}}
+                  style={styles.actionButton}
+                  contentStyle={styles.actionButtonContent}
+                  textColor={colors.info}
+                >
+                  Request New Club
+                </Button>
+              </View>
+            </View>
           </Card.Content>
         </Card>
 
@@ -117,13 +155,18 @@ const StaffHomeScreen: React.FC<{ user: User }> = ({ user }) => {
                   <Text style={styles.scheduleLocation}>From: Residential Area</Text>
                   <Text style={styles.scheduleStatus}>Status: Confirmed</Text>
                 </View>
-                <IconButton
-                  icon="bell"
-                  size={20}
+                <TouchableOpacity
+                  style={[styles.reminderButton, { backgroundColor: colors.primary }]}
                   onPress={() => {/* Set reminder */}}
-                />
+                >
+                  <MaterialCommunityIcons
+                    name="bell"
+                    size={20}
+                    color="#ffffff"
+                  />
+                </TouchableOpacity>
               </View>
-              
+
               <View style={styles.scheduleItem}>
                 <View style={styles.scheduleTime}>
                   <Text style={styles.scheduleTimeText}>17:30</Text>
@@ -135,11 +178,16 @@ const StaffHomeScreen: React.FC<{ user: User }> = ({ user }) => {
                   <Text style={styles.scheduleLocation}>To: Residential Area</Text>
                   <Text style={styles.scheduleStatus}>Status: Confirmed</Text>
                 </View>
-                <IconButton
-                  icon="bell"
-                  size={20}
+                <TouchableOpacity
+                  style={[styles.reminderButton, { backgroundColor: colors.primary }]}
                   onPress={() => {/* Set reminder */}}
-                />
+                >
+                  <MaterialCommunityIcons
+                    name="bell"
+                    size={20}
+                    color="#ffffff"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </Card.Content>
@@ -158,7 +206,7 @@ const StaffHomeScreen: React.FC<{ user: User }> = ({ user }) => {
                 View All
               </Button>
             </View>
-            
+
             {bookings.length === 0 ? (
               <View style={styles.emptyState}>
                 <Text style={styles.emptyText}>No active bookings</Text>
@@ -232,7 +280,7 @@ const StaffBookingsScreen: React.FC = () => {
         <Paragraph style={styles.placeholderSubtext}>
           Manage your work transport schedules and bookings
         </Paragraph>
-        
+
         <Card style={styles.card}>
           <Card.Content>
             <Title style={styles.cardTitle}>Booking Options</Title>
@@ -270,7 +318,7 @@ const StaffTrackingScreen: React.FC = () => {
         <Paragraph style={styles.placeholderSubtext}>
           Track your work transport vehicle in real-time
         </Paragraph>
-        
+
         <Card style={styles.card}>
           <Card.Content>
             <Title style={styles.cardTitle}>Current Trip</Title>
@@ -298,73 +346,162 @@ const StaffTrackingScreen: React.FC = () => {
 const StaffProfileScreen: React.FC<{ user: User; onLogout: () => void }> = ({ user, onLogout }) => {
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <Card style={styles.card}>
-          <Card.Content>
-            <View style={styles.profileHeader}>
-              <Avatar.Text
-                size={80}
-                label={`${user.firstName[0]}${user.lastName[0]}`}
-                style={{ backgroundColor: colors.primary }}
-              />
-              <View style={styles.profileInfo}>
-                <Title>{user.firstName} {user.lastName}</Title>
-                <Paragraph>{user.email}</Paragraph>
-                <Paragraph>{user.phone}</Paragraph>
-                <Chip mode="outlined" style={styles.roleChip}>
-                  Staff Member
-                </Chip>
-              </View>
-            </View>
-          </Card.Content>
-        </Card>
+      <ScrollView
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Premium Profile Hero Card */}
+        <View style={styles.profileHeroCard}>
+          <View style={styles.profileHeroBackground}>
+            <View style={styles.profileHeroGradient} />
+          </View>
 
-        <Card style={styles.card}>
-          <Card.Content>
-            <Title style={styles.cardTitle}>Account Settings</Title>
-            <Button
-              mode="outlined"
-              icon="account-edit"
+          <View style={styles.profileHeroContent}>
+            <Avatar.Text
+              size={100}
+              label={`${user.firstName[0]}${user.lastName[0]}`}
+              style={styles.profileAvatar}
+            />
+
+            <Text style={styles.profileName}>
+              {user.firstName} {user.lastName}
+            </Text>
+
+            <View style={styles.profileContactInfo}>
+              <Text style={styles.profileEmail}>{user.email}</Text>
+              <Text style={styles.profilePhone}>{user.phone}</Text>
+            </View>
+
+            <Chip
+              mode="flat"
+              style={styles.profileRoleChip}
+              textStyle={{ color: colors.primary, fontWeight: '600' }}
+            >
+              Staff Member
+            </Chip>
+          </View>
+        </View>
+
+        {/* Premium Settings Card */}
+        <View style={styles.profileSettingsCard}>
+          <View style={styles.profileSettingsHeader}>
+            <Text style={styles.profileSettingsTitle}>Account Settings</Text>
+          </View>
+
+          <View style={styles.profileSettingsContent}>
+            <TouchableOpacity
+              style={styles.profileSettingButton}
               onPress={() => {/* Edit profile */}}
-              style={styles.settingButton}
             >
-              Edit Profile
-            </Button>
-            <Button
-              mode="outlined"
-              icon="office-building"
+              <View style={styles.profileSettingButtonContent}>
+                <View style={styles.profileSettingIcon}>
+                  <MaterialCommunityIcons
+                    name="account-edit"
+                    size={20}
+                    color={colors.primary}
+                  />
+                </View>
+                <View style={styles.profileSettingInfo}>
+                  <Text style={styles.profileSettingTitle}>Edit Profile</Text>
+                  <Text style={styles.profileSettingSubtitle}>Update your personal information</Text>
+                </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={24}
+                  color={colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.profileSettingButton}
               onPress={() => {/* Work details */}}
-              style={styles.settingButton}
             >
-              Work Details
-            </Button>
-            <Button
-              mode="outlined"
-              icon="bell"
-              onPress={() => {/* Notification settings */}}
-              style={styles.settingButton}
+              <View style={styles.profileSettingButtonContent}>
+                <View style={styles.profileSettingIcon}>
+                  <MaterialCommunityIcons
+                    name="office-building"
+                    size={20}
+                    color={colors.primary}
+                  />
+                </View>
+                <View style={styles.profileSettingInfo}>
+                  <Text style={styles.profileSettingTitle}>Work Details</Text>
+                  <Text style={styles.profileSettingSubtitle}>Manage your work information</Text>
+                </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={24}
+                  color={colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.profileSettingButton}
+              onPress={() => {/* Notifications */}}
             >
-              Notifications
-            </Button>
-            <Button
-              mode="outlined"
-              icon="help-circle"
-              onPress={() => {/* Help & support */}}
-              style={styles.settingButton}
+              <View style={styles.profileSettingButtonContent}>
+                <View style={styles.profileSettingIcon}>
+                  <MaterialCommunityIcons
+                    name="bell"
+                    size={20}
+                    color={colors.primary}
+                  />
+                </View>
+                <View style={styles.profileSettingInfo}>
+                  <Text style={styles.profileSettingTitle}>Notifications</Text>
+                  <Text style={styles.profileSettingSubtitle}>Configure your notification preferences</Text>
+                </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={24}
+                  color={colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.profileSettingButton}
+              onPress={() => {/* Help & Support */}}
             >
-              Help & Support
-            </Button>
-            <Button
-              mode="contained"
-              icon="logout"
+              <View style={styles.profileSettingButtonContent}>
+                <View style={styles.profileSettingIcon}>
+                  <MaterialCommunityIcons
+                    name="help-circle"
+                    size={20}
+                    color={colors.primary}
+                  />
+                </View>
+                <View style={styles.profileSettingInfo}>
+                  <Text style={styles.profileSettingTitle}>Help & Support</Text>
+                  <Text style={styles.profileSettingSubtitle}>Get help or contact support</Text>
+                </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={24}
+                  color={colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.profileLogoutButton}
               onPress={onLogout}
-              style={[styles.settingButton, styles.logoutButton]}
-              buttonColor={colors.error}
             >
-              Logout
-            </Button>
-          </Card.Content>
-        </Card>
+              <View style={styles.profileLogoutButtonContent}>
+                <View style={styles.profileLogoutIcon}>
+                  <MaterialCommunityIcons
+                    name="logout"
+                    size={20}
+                    color={colors.error}
+                  />
+                </View>
+                <Text style={styles.profileLogoutText}>Logout</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -397,7 +534,7 @@ const StaffDashboard: React.FC<StaffDashboardProps> = ({ route }) => {
               iconName = 'circle';
           }
 
-          return <IconButton icon={iconName} size={size} iconColor={color} />;
+          return <MaterialCommunityIcons name={iconName as any} size={size} color={color} />;
         },
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textSecondary,
@@ -416,7 +553,10 @@ const StaffDashboard: React.FC<StaffDashboardProps> = ({ route }) => {
   );
 };
 
-const styles = StyleSheet.create({
+// Using external styles for enhanced design and maintainability
+const styles = staffDashboardStyles;
+
+const legacyStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,6 @@ import { Video, ResizeMode } from 'expo-av';
 import {
   Button,
   Card,
-  IconButton,
   Chip,
   Surface,
 } from 'react-native-paper';
@@ -29,14 +28,25 @@ interface LandingPageProps {
   onSignup: () => void;
 }
 
-const { width, height } = Dimensions.get('window');
-
 const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const navigation = useNavigation();
   const [scrollY] = useState(new Animated.Value(0));
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
+
+  // Responsive dimensions state
+  const [dimensions, setDimensions] = useState(() => {
+    const { width, height } = Dimensions.get('window');
+    return { width, height };
+  });
+
+  // Responsive breakpoints
+  const isTablet = dimensions.width >= 768;
+  const isDesktop = dimensions.width >= 1024;
+  const isMobile = dimensions.width < 768;
+
+
 
   // Enhanced Animation values
   const fadeAnim = useState(new Animated.Value(0))[0];
@@ -46,17 +56,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const featuresFadeAnim = useState(new Animated.Value(0))[0];
   const featuresSlideAnim = useState(new Animated.Value(40))[0];
   const buttonScaleAnim = useState(new Animated.Value(1))[0];
-  const logoRotateAnim = useState(new Animated.Value(0))[0];  // Floating graphics animations
-  const floatingAnimations = useState(() => ({
-    float1: new Animated.Value(0),
-    float2: new Animated.Value(0),
-    float3: new Animated.Value(0),
-    float4: new Animated.Value(0),
-    rotate1: new Animated.Value(0),
-    rotate2: new Animated.Value(0),
-    rotate3: new Animated.Value(0),
-    rotate4: new Animated.Value(0),
-  }))[0];  // Section refs and positions for scroll-to functionality
+  const logoRotateAnim = useState(new Animated.Value(0))[0];  // Modern background elements (replacing floating graphics)  // Section refs and positions for scroll-to functionality
   const sectionRefs = {
     home: useRef<View>(null),
     features: useRef<View>(null),
@@ -84,6 +84,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+
+  // Responsive dimensions listener
+  useEffect(() => {
+    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+      setDimensions({ width: window.width, height: window.height });
+    });
+
+    return () => subscription?.remove();
+  }, []);
 
   // Animation initialization
   useEffect(() => {
@@ -126,42 +135,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
       ]).start();
     }, 500);
 
-    // Start floating graphics animations
-    startFloatingAnimations();
   }, []);
-
-  // Floating background graphics animations
-  const startFloatingAnimations = () => {
-    // Vertical floating animations with different speeds
-    [1, 2, 3, 4].forEach((num, index) => {
-      const floatKey = `float${num}` as keyof typeof floatingAnimations;
-      const rotateKey = `rotate${num}` as keyof typeof floatingAnimations;
-
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(floatingAnimations[floatKey], {
-            toValue: 1,
-            duration: 3000 + (index * 500), // Different speeds
-            useNativeDriver: true,
-          }),
-          Animated.timing(floatingAnimations[floatKey], {
-            toValue: 0,
-            duration: 3000 + (index * 500),
-            useNativeDriver: true,
-          }),
-        ])
-      ).start();
-
-      // Rotation animations
-      Animated.loop(
-        Animated.timing(floatingAnimations[rotateKey], {
-          toValue: 1,
-          duration: 8000 + (index * 2000), // Different rotation speeds
-          useNativeDriver: true,
-        })
-      ).start();
-    });
-  };
 
   // Interactive animation functions
   const animateButtonPress = () => {
@@ -203,81 +177,60 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
 
 
-  // Floating Abstract Graphics Component
-  const FloatingGraphics = ({ sectionType }: { sectionType: 'features' | 'services' | 'about' | 'contact' }) => {
-    const getGraphicsForSection = () => {
+  // Modern Professional Background Component
+  const ModernBackground = ({ sectionType }: { sectionType: 'hero' | 'features' | 'services' | 'about' | 'contact' }) => {
+    const getGradientForSection = () => {
       switch (sectionType) {
+        case 'hero':
+          return colors.gradientHero;
         case 'features':
-          return [
-            { icon: 'hexagon-outline', color: colors.primaryLight, size: 90, position: { top: '10%', right: '15%' }, animIndex: 1 },
-            { icon: 'triangle-outline', color: colors.secondaryLight, size: 70, position: { top: '60%', left: '8%' }, animIndex: 2 },
-            { icon: 'circle-outline', color: colors.tertiary, size: 110, position: { bottom: '20%', right: '10%' }, animIndex: 3 },
-          ];
+          return colors.gradientPrimary;
         case 'services':
-          return [
-            { icon: 'rhombus-outline', color: colors.secondary, size: 100, position: { top: '15%', left: '12%' }, animIndex: 1 },
-            { icon: 'star-outline', color: colors.primaryAccent, size: 80, position: { top: '50%', right: '20%' }, animIndex: 4 },
-            { icon: 'hexagon-slice-6', color: colors.tertiaryLight, size: 60, position: { bottom: '25%', left: '15%' }, animIndex: 2 },
-          ];
+          return colors.gradientSecondary;
         case 'about':
-          return [
-            { icon: 'octagon-outline', color: colors.primary, size: 95, position: { top: '5%', left: '5%' }, animIndex: 3 },
-            { icon: 'square-outline', color: colors.secondaryAccent, size: 75, position: { bottom: '10%', right: '8%' }, animIndex: 1 },
-          ];
+          return colors.gradientOcean;
         case 'contact':
-          return [
-            { icon: 'pentagon-outline', color: colors.tertiary, size: 85, position: { top: '25%', left: '20%' }, animIndex: 2 },
-            { icon: 'diamond-outline', color: colors.primaryLight, size: 105, position: { bottom: '15%', right: '12%' }, animIndex: 4 },
-          ];
+          return colors.gradientSuccess;
         default:
-          return [];
+          return colors.gradientSurface;
       }
     };
 
     return (
-      <View style={landingPageStyles.floatingGraphicsContainer}>
-        {getGraphicsForSection().map((graphic, index) => {
-          const floatAnim = floatingAnimations[`float${graphic.animIndex}` as keyof typeof floatingAnimations];
-          const rotateAnim = floatingAnimations[`rotate${graphic.animIndex}` as keyof typeof floatingAnimations];
+      <View style={landingPageStyles.modernBackgroundContainer}>
+        {/* Subtle radial gradient overlay */}
+        <LinearGradient
+          colors={['transparent', ...getGradientForSection().map(color => `${color}06`), 'transparent']}
+          style={landingPageStyles.modernGradientOverlay}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        />
 
-          return (
-            <Animated.View
-              key={index}
+        {/* Professional geometric elements */}
+        <View style={landingPageStyles.geometricPattern}>
+          <View style={[landingPageStyles.geometricElement, { backgroundColor: `${colors.primary}04` }]} />
+          <View style={[landingPageStyles.geometricElement, landingPageStyles.geometricElement2, { backgroundColor: `${colors.secondary}04` }]} />
+          <View style={[landingPageStyles.geometricElement, landingPageStyles.geometricElement3, { backgroundColor: `${colors.tertiary}03` }]} />
+        </View>
+
+        {/* Subtle grid pattern for professionalism */}
+        <View style={landingPageStyles.gridPattern}>
+          {Array.from({ length: 12 }).map((_, i) => (
+            <View
+              key={i}
               style={[
-                landingPageStyles.floatingGraphic,
-                graphic.position,
+                landingPageStyles.gridLine,
                 {
-                  transform: [
-                    {
-                      translateY: floatAnim.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [-15, 15],
-                      }),
-                    },
-                    {
-                      rotate: rotateAnim.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: ['0deg', '360deg'],
-                      }),
-                    },
-                  ],
-                  opacity: 0.4, // Increased from 0.15 to 0.4 for better visibility
-                },
+                  left: `${(i * 8.33) + 4.16}%`,
+                  backgroundColor: `${colors.border}30`,
+                }
               ]}
-            >
-              <MaterialCommunityIcons
-                name={graphic.icon as any}
-                size={graphic.size * 1.3} // Made graphics 30% larger
-                color={graphic.color}
-              />
-            </Animated.View>
-          );
-        })}
+            />
+          ))}
+        </View>
       </View>
     );
-  };
-
-  const scrollToSection = (sectionName: keyof typeof sectionPositions) => {
+  };  const scrollToSection = (sectionName: keyof typeof sectionPositions) => {
     console.log(`🔗 Navigation: Attempting to scroll to "${sectionName}"`);
     console.log('📍 Current section positions:', sectionPositions);
 
@@ -341,10 +294,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
     if (targetY === 0) {
       const fallbackPositions = {
         home: 0,
-        features: height * 0.85, // Account for hero section
-        services: height * 1.7,
-        about: height * 2.5,
-        contact: height * 3.3,
+        features: dimensions.height * 0.85, // Account for hero section
+        services: dimensions.height * 1.7,
+        about: dimensions.height * 2.5,
+        contact: dimensions.height * 3.3,
       };
       targetY = fallbackPositions[sectionName];
       console.log(`🎯 Using fallback position for ${sectionName}: ${targetY}`);
@@ -446,7 +399,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         </View>
 
         {/* Desktop Navigation */}
-        {Platform.OS === 'web' && width > 768 && (
+        {Platform.OS === 'web' && isTablet && (
           <View style={landingPageStyles.navLinks}>
             {['Home', 'Features', 'Services', 'About', 'Contact'].map((item) => (
               <Pressable
@@ -472,7 +425,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         )}
 
         {/* Mobile Menu Button */}
-        {(Platform.OS !== 'web' || width <= 768) && (
+        {(Platform.OS !== 'web' || isMobile) && (
           <Pressable onPress={toggleMobileMenu} style={landingPageStyles.mobileMenuButton}>
             <MaterialCommunityIcons
               name={mobileMenuOpen ? 'close' : 'menu'}
@@ -483,7 +436,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         )}
 
         {/* Desktop Auth Buttons */}
-        {Platform.OS === 'web' && width > 768 && (
+        {Platform.OS === 'web' && isTablet && (
           <View style={landingPageStyles.authButtons}>
             <Button
               mode="outlined"
@@ -506,7 +459,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
       </View>
 
       {/* Mobile Navigation Menu */}
-      {(Platform.OS !== 'web' || width <= 768) && mobileMenuOpen && (
+      {(Platform.OS !== 'web' || isMobile) && mobileMenuOpen && (
         <Surface style={landingPageStyles.mobileMenu} elevation={4}>
           <View style={landingPageStyles.mobileMenuContent}>
             {['Home', 'Features', 'Services', 'About', 'Contact'].map((item) => (
@@ -557,6 +510,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const HeroSection = () => (
     <View style={landingPageStyles.heroContainer}>
+      <ModernBackground sectionType="hero" />
       <LinearGradient
         colors={colors.gradientHero}
         start={{ x: 0, y: 0 }}
@@ -731,7 +685,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const FeaturesSection = () => (
     <View style={landingPageStyles.featuresContainer}>
-      <FloatingGraphics sectionType="features" />
+      <ModernBackground sectionType="features" />
       <View style={landingPageStyles.sectionHeader}>
         <Text style={landingPageStyles.sectionTitle}>Why Choose K&T Transport?</Text>
         <Text style={landingPageStyles.sectionSubtitle}>
@@ -817,7 +771,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const ServicesSection = () => (
     <View style={landingPageStyles.servicesContainer}>
-      <FloatingGraphics sectionType="services" />
+      <ModernBackground sectionType="services" />
       <View style={landingPageStyles.sectionHeader}>
         <Text style={landingPageStyles.sectionTitle}>Our Services</Text>
         <Text style={landingPageStyles.sectionSubtitle}>
@@ -884,6 +838,169 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
     </View>
   );
 
+  const FooterSection = () => (
+    <View style={landingPageStyles.footerContainer}>
+      <View style={landingPageStyles.footerContent}>
+
+        {/* Main Footer Content */}
+        <View style={landingPageStyles.footerMain}>
+
+          {/* Company Info Section */}
+          <View style={landingPageStyles.footerSection}>
+            <View style={landingPageStyles.footerLogo}>
+              <View style={landingPageStyles.footerLogoIcon}>
+                <MaterialCommunityIcons name="car" size={24} color={colors.primary} />
+              </View>
+              <Text style={landingPageStyles.footerCompanyName}>K&T Transport</Text>
+            </View>
+            <Text style={landingPageStyles.footerTagline}>
+              Professional transport services across Cape Town and the Western Cape since 2020.
+            </Text>
+            <Text style={landingPageStyles.footerDescription}>
+              Personally managed by Mr. Taswill Heynes, delivering excellence in every journey.
+            </Text>
+
+            {/* Social Media Links */}
+            <View style={landingPageStyles.socialLinks}>
+              <Pressable style={landingPageStyles.socialButton}>
+                <MaterialCommunityIcons name="facebook" size={20} color={colors.primary} />
+              </Pressable>
+              <Pressable style={landingPageStyles.socialButton}>
+                <MaterialCommunityIcons name="instagram" size={20} color={colors.primary} />
+              </Pressable>
+              <Pressable style={landingPageStyles.socialButton}>
+                <MaterialCommunityIcons name="whatsapp" size={20} color={colors.primary} />
+              </Pressable>
+              <Pressable style={landingPageStyles.socialButton}>
+                <MaterialCommunityIcons name="linkedin" size={20} color={colors.primary} />
+              </Pressable>
+            </View>
+          </View>
+
+          {/* Quick Links */}
+          <View style={landingPageStyles.footerSection}>
+            <Text style={landingPageStyles.footerSectionTitle}>Quick Links</Text>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>Home</Text>
+            </Pressable>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>Services</Text>
+            </Pressable>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>About Us</Text>
+            </Pressable>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>Contact</Text>
+            </Pressable>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>Book Now</Text>
+            </Pressable>
+          </View>
+
+          {/* Services */}
+          <View style={landingPageStyles.footerSection}>
+            <Text style={landingPageStyles.footerSectionTitle}>Our Services</Text>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>School Transport</Text>
+            </Pressable>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>Corporate Shuttle</Text>
+            </Pressable>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>Daily Commute</Text>
+            </Pressable>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>Special Events</Text>
+            </Pressable>
+            <Pressable style={landingPageStyles.footerLink}>
+              <Text style={landingPageStyles.footerLinkText}>Live Tracking</Text>
+            </Pressable>
+          </View>
+
+          {/* Contact & Legal */}
+          <View style={landingPageStyles.footerSection}>
+            <Text style={landingPageStyles.footerSectionTitle}>Business Info</Text>
+
+            {/* Contact Info */}
+            <View style={landingPageStyles.footerContactItem}>
+              <MaterialCommunityIcons name="phone" size={16} color={colors.textSecondary} />
+              <Text style={landingPageStyles.footerContactText}>+27 78 778 4182</Text>
+            </View>
+            <View style={landingPageStyles.footerContactItem}>
+              <MaterialCommunityIcons name="email" size={16} color={colors.textSecondary} />
+              <Text style={landingPageStyles.footerContactText}>info@ktransport.co.za</Text>
+            </View>
+            <View style={landingPageStyles.footerContactItem}>
+              <MaterialCommunityIcons name="map-marker" size={16} color={colors.textSecondary} />
+              <Text style={landingPageStyles.footerContactText}>Mitchell's Plain, Cape Town</Text>
+            </View>
+
+            {/* Trust Signals */}
+            <View style={landingPageStyles.trustBadges}>
+              <View style={landingPageStyles.trustBadge}>
+                <MaterialCommunityIcons name="shield-check" size={16} color={colors.success} />
+                <Text style={landingPageStyles.trustBadgeText}>Fully Insured</Text>
+              </View>
+              <View style={landingPageStyles.trustBadge}>
+                <MaterialCommunityIcons name="certificate" size={16} color={colors.success} />
+                <Text style={landingPageStyles.trustBadgeText}>Licensed</Text>
+              </View>
+            </View>
+          </View>
+
+        </View>
+
+        {/* Newsletter Signup */}
+        <View style={landingPageStyles.newsletterSection}>
+          <Text style={landingPageStyles.newsletterTitle}>Stay Updated</Text>
+          <Text style={landingPageStyles.newsletterSubtitle}>
+            Get the latest news and service updates delivered to your inbox
+          </Text>
+          <View style={landingPageStyles.newsletterForm}>
+            <View style={landingPageStyles.newsletterInput}>
+              <MaterialCommunityIcons name="email-outline" size={20} color={colors.textSecondary} />
+              <Text style={landingPageStyles.newsletterPlaceholder}>Enter your email address</Text>
+            </View>
+            <Button
+              mode="contained"
+              style={landingPageStyles.newsletterButton}
+              labelStyle={landingPageStyles.newsletterButtonText}
+            >
+              Subscribe
+            </Button>
+          </View>
+        </View>
+
+        {/* Footer Bottom */}
+        <View style={landingPageStyles.footerBottom}>
+          <View style={landingPageStyles.footerBottomLeft}>
+            <Text style={landingPageStyles.copyrightText}>
+              © 2024 K&T Transport. All rights reserved.
+            </Text>
+            <Text style={landingPageStyles.establishedText}>
+              Established 2020 • Beacon Valley, Mitchell's Plain
+            </Text>
+          </View>
+
+          <View style={landingPageStyles.footerBottomRight}>
+            <Pressable style={landingPageStyles.legalLink}>
+              <Text style={landingPageStyles.legalLinkText}>Privacy Policy</Text>
+            </Pressable>
+            <Text style={landingPageStyles.legalSeparator}>•</Text>
+            <Pressable style={landingPageStyles.legalLink}>
+              <Text style={landingPageStyles.legalLinkText}>Terms of Service</Text>
+            </Pressable>
+            <Text style={landingPageStyles.legalSeparator}>•</Text>
+            <Pressable style={landingPageStyles.legalLink}>
+              <Text style={landingPageStyles.legalLinkText}>Cookie Policy</Text>
+            </Pressable>
+          </View>
+        </View>
+
+      </View>
+    </View>
+  );
+
   const CTASection = () => (
     <LinearGradient
       colors={colors.gradientPrimary}
@@ -926,7 +1043,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const AboutSection = () => (
     <View style={landingPageStyles.aboutContainer}>
-      <FloatingGraphics sectionType="about" />
+      <ModernBackground sectionType="about" />
       <View style={landingPageStyles.aboutContent}>
         <Text style={landingPageStyles.sectionTitle}>About K & T Transport</Text>
         <Text style={landingPageStyles.sectionSubtitle}>
@@ -1026,7 +1143,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
 
   const ContactSection = () => (
     <View style={landingPageStyles.contactContainer}>
-      <FloatingGraphics sectionType="contact" />
+      <ModernBackground sectionType="contact" />
       <View style={landingPageStyles.contactContent}>
         <Text style={landingPageStyles.sectionTitle}>Get In Touch</Text>
         <Text style={landingPageStyles.sectionSubtitle}>
@@ -1095,12 +1212,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   );
 
   return (
-    <View style={landingPageStyles.container}>
+    <View style={[landingPageStyles.container, { overflow: 'hidden' }]}>
       <NavigationBar />
 
       <Animated.ScrollView
         ref={scrollViewRef}
         style={landingPageStyles.scrollContainer}
+        contentContainerStyle={{ flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
@@ -1159,6 +1277,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
           <ContactSection />
         </View>
         <CTASection />
+        <FooterSection />
       </Animated.ScrollView>
     </View>
   );

@@ -6,6 +6,7 @@ import {
   RefreshControl,
   Dimensions,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import {
   Card,
@@ -16,16 +17,18 @@ import {
   Chip,
   Text,
   Avatar,
-  IconButton,
   DataTable,
   Searchbar,
 } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { User } from '../../types/User';
 import { Booking } from '../../types/Booking';
 import { Route, Driver } from '../../types/Transport';
 import { colors, spacing, borderRadius } from '../../utils/theme';
+import { adminDashboardStyles } from '../../styles/screens/dashboards/adminDashboard';
+import DashboardHeader from '../../components/ui/DashboardHeader';
 
 interface AdminDashboardProps {
   route: {
@@ -66,42 +69,35 @@ const AdminOverviewScreen: React.FC<{ user: User }> = ({ user }) => {
 
   return (
     <View style={styles.container}>
+      {/* Modern Dashboard Header */}
+      <DashboardHeader
+        user={user}
+        title="Admin Dashboard"
+        subtitle="System Management & Analytics"
+        notificationCount={5}
+        onNotificationPress={() => {/* Navigate to notifications */}}
+        onProfilePress={() => {/* Navigate to profile */}}
+        showGradient={true}
+      />
+
       <ScrollView
         style={styles.scrollView}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {/* Welcome Header */}
-        <Card style={styles.welcomeCard}>
-          <Card.Content>
-            <View style={styles.welcomeHeader}>
-              <Avatar.Text
-                size={50}
-                label={`${user.firstName[0]}${user.lastName[0]}`}
-                style={{ backgroundColor: colors.primary }}
-              />
-              <View style={styles.welcomeText}>
-                <Title style={styles.welcomeTitle}>
-                  Admin Dashboard
-                </Title>
-                <Paragraph style={styles.welcomeSubtitle}>
-                  Welcome back, {user.firstName}!
-                </Paragraph>
-              </View>
-            </View>
-          </Card.Content>
-        </Card>
 
         {/* Statistics Cards */}
         <View style={styles.statsContainer}>
           <Card style={styles.statCard}>
             <Card.Content style={styles.statContent}>
-              <IconButton 
-                icon="account-group" 
-                size={30} 
-                iconColor={colors.primary}
-              />
+              <View style={[styles.statIcon, { backgroundColor: `${colors.primary}15` }]}>
+                <MaterialCommunityIcons
+                  name="account-group"
+                  size={24}
+                  color={colors.primary}
+                />
+              </View>
               <View>
                 <Text style={styles.statNumber}>{stats.totalUsers}</Text>
                 <Text style={styles.statLabel}>Total Users</Text>
@@ -111,11 +107,13 @@ const AdminOverviewScreen: React.FC<{ user: User }> = ({ user }) => {
 
           <Card style={styles.statCard}>
             <Card.Content style={styles.statContent}>
-              <IconButton 
-                icon="calendar-check" 
-                size={30} 
-                iconColor={colors.secondary}
-              />
+              <View style={[styles.statIcon, { backgroundColor: `${colors.secondary}15` }]}>
+                <MaterialCommunityIcons
+                  name="calendar-check"
+                  size={24}
+                  color={colors.secondary}
+                />
+              </View>
               <View>
                 <Text style={styles.statNumber}>{stats.activeBookings}</Text>
                 <Text style={styles.statLabel}>Active Bookings</Text>
@@ -125,11 +123,13 @@ const AdminOverviewScreen: React.FC<{ user: User }> = ({ user }) => {
 
           <Card style={styles.statCard}>
             <Card.Content style={styles.statContent}>
-              <IconButton 
-                icon="car" 
-                size={30} 
-                iconColor={colors.success}
-              />
+              <View style={[styles.statIcon, { backgroundColor: `${colors.success}15` }]}>
+                <MaterialCommunityIcons
+                  name="car"
+                  size={24}
+                  color={colors.success}
+                />
+              </View>
               <View>
                 <Text style={styles.statNumber}>{stats.totalDrivers}</Text>
                 <Text style={styles.statLabel}>Active Drivers</Text>
@@ -139,14 +139,16 @@ const AdminOverviewScreen: React.FC<{ user: User }> = ({ user }) => {
 
           <Card style={styles.statCard}>
             <Card.Content style={styles.statContent}>
-              <IconButton 
-                icon="currency-usd" 
-                size={30} 
-                iconColor={colors.warning}
-              />
+              <View style={[styles.statIcon, { backgroundColor: `${colors.warning}15` }]}>
+                <MaterialCommunityIcons
+                  name="currency-usd"
+                  size={24}
+                  color={colors.warning}
+                />
+              </View>
               <View>
                 <Text style={styles.statNumber}>R{stats.revenue.toLocaleString()}</Text>
-                <Text style={styles.statLabel}>Monthly Revenue</Text>
+                <Text style={styles.statLabel}>Total Revenue</Text>
               </View>
             </Card.Content>
           </Card>
@@ -192,6 +194,31 @@ const AdminOverviewScreen: React.FC<{ user: User }> = ({ user }) => {
                 Reports
               </Button>
             </View>
+
+            {/* Lift Club Management */}
+            <View style={styles.liftClubSection}>
+              <Text style={styles.sectionLabel}>Lift Club Management</Text>
+              <View style={styles.quickActions}>
+                <Button
+                  mode="contained"
+                  icon="car-multiple"
+                  onPress={() => {/* Navigate to lift club management */}}
+                  style={[styles.actionButton, styles.liftClubButton]}
+                  buttonColor={colors.warning}
+                >
+                  Manage Requests
+                </Button>
+                <Button
+                  mode="outlined"
+                  icon="chart-line"
+                  onPress={() => {/* View lift club analytics */}}
+                  style={styles.actionButton}
+                  textColor={colors.warning}
+                >
+                  Analytics
+                </Button>
+              </View>
+            </View>
           </Card.Content>
         </Card>
 
@@ -201,21 +228,39 @@ const AdminOverviewScreen: React.FC<{ user: User }> = ({ user }) => {
             <Title style={styles.cardTitle}>Recent Activities</Title>
             <View style={styles.activityList}>
               <View style={styles.activityItem}>
-                <IconButton icon="account-plus" size={20} />
+                <View style={[styles.activityIcon, { backgroundColor: `${colors.primary}15` }]}>
+                  <MaterialCommunityIcons
+                    name="account-plus"
+                    size={20}
+                    color={colors.primary}
+                  />
+                </View>
                 <View style={styles.activityDetails}>
                   <Text style={styles.activityText}>New user registered: John Smith</Text>
                   <Text style={styles.activityTime}>2 hours ago</Text>
                 </View>
               </View>
               <View style={styles.activityItem}>
-                <IconButton icon="calendar-plus" size={20} />
+                <View style={[styles.activityIcon, { backgroundColor: `${colors.secondary}15` }]}>
+                  <MaterialCommunityIcons
+                    name="calendar-plus"
+                    size={20}
+                    color={colors.secondary}
+                  />
+                </View>
                 <View style={styles.activityDetails}>
                   <Text style={styles.activityText}>New booking created by Mary Johnson</Text>
                   <Text style={styles.activityTime}>4 hours ago</Text>
                 </View>
               </View>
               <View style={styles.activityItem}>
-                <IconButton icon="car-wrench" size={20} />
+                <View style={[styles.activityIcon, { backgroundColor: `${colors.success}15` }]}>
+                  <MaterialCommunityIcons
+                    name="car-wrench"
+                    size={20}
+                    color={colors.success}
+                  />
+                </View>
                 <View style={styles.activityDetails}>
                   <Text style={styles.activityText}>Vehicle maintenance completed: BUS-001</Text>
                   <Text style={styles.activityTime}>1 day ago</Text>
@@ -288,7 +333,7 @@ const AdminUsersScreen: React.FC = () => {
         <Card style={styles.card}>
           <Card.Content>
             <Title style={styles.cardTitle}>User Management</Title>
-            
+
             <DataTable>
               <DataTable.Header>
                 <DataTable.Title>Name</DataTable.Title>
@@ -307,11 +352,16 @@ const AdminUsersScreen: React.FC = () => {
                   </Chip>
                 </DataTable.Cell>
                 <DataTable.Cell>
-                  <IconButton
-                    icon="pencil"
-                    size={16}
+                  <TouchableOpacity
+                    style={[adminDashboardStyles.editButton, { backgroundColor: colors.primary }]}
                     onPress={() => {/* Edit user */}}
-                  />
+                  >
+                    <MaterialCommunityIcons
+                      name="pencil"
+                      size={16}
+                      color="#ffffff"
+                    />
+                  </TouchableOpacity>
                 </DataTable.Cell>
               </DataTable.Row>
 
@@ -324,11 +374,16 @@ const AdminUsersScreen: React.FC = () => {
                   </Chip>
                 </DataTable.Cell>
                 <DataTable.Cell>
-                  <IconButton
-                    icon="pencil"
-                    size={16}
+                  <TouchableOpacity
+                    style={[adminDashboardStyles.editButton, { backgroundColor: colors.primary }]}
                     onPress={() => {/* Edit user */}}
-                  />
+                  >
+                    <MaterialCommunityIcons
+                      name="pencil"
+                      size={16}
+                      color="#ffffff"
+                    />
+                  </TouchableOpacity>
                 </DataTable.Cell>
               </DataTable.Row>
 
@@ -341,11 +396,16 @@ const AdminUsersScreen: React.FC = () => {
                   </Chip>
                 </DataTable.Cell>
                 <DataTable.Cell>
-                  <IconButton
-                    icon="pencil"
-                    size={16}
+                  <TouchableOpacity
+                    style={[adminDashboardStyles.editButton, { backgroundColor: colors.primary }]}
                     onPress={() => {/* Edit user */}}
-                  />
+                  >
+                    <MaterialCommunityIcons
+                      name="pencil"
+                      size={16}
+                      color="#ffffff"
+                    />
+                  </TouchableOpacity>
                 </DataTable.Cell>
               </DataTable.Row>
             </DataTable>
@@ -378,7 +438,7 @@ const AdminBookingsScreen: React.FC = () => {
         <Card style={styles.card}>
           <Card.Content>
             <Title style={styles.cardTitle}>Recent Bookings</Title>
-            
+
             <DataTable>
               <DataTable.Header>
                 <DataTable.Title>User</DataTable.Title>
@@ -550,7 +610,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ route }) => {
               iconName = 'circle';
           }
 
-          return <IconButton icon={iconName} size={size} iconColor={color} />;
+          return <MaterialCommunityIcons name={iconName as any} size={size} color={color} />;
         },
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textSecondary,
@@ -572,167 +632,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ route }) => {
 const { width } = Dimensions.get('window');
 const isTablet = width > 768;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  welcomeCard: {
-    margin: spacing.md,
-    borderRadius: borderRadius.large,
-    backgroundColor: colors.primaryLight,
-  },
-  welcomeHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  welcomeText: {
-    marginLeft: spacing.md,
-    flex: 1,
-  },
-  welcomeTitle: {
-    color: colors.background,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  welcomeSubtitle: {
-    color: colors.background,
-    opacity: 0.9,
-  },
-  statsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingHorizontal: spacing.md,
-  },
-  statCard: {
-    width: isTablet ? '23%' : '48%',
-    marginBottom: spacing.md,
-    borderRadius: borderRadius.medium,
-  },
-  statContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: spacing.sm,
-  },
-  statNumber: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.text,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: colors.textSecondary,
-  },
-  card: {
-    margin: spacing.md,
-    marginTop: spacing.xs,
-    borderRadius: borderRadius.large,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: colors.text,
-  },
-  quickActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: spacing.md,
-  },
-  actionButton: {
-    flex: 1,
-    marginHorizontal: spacing.xs,
-    borderRadius: borderRadius.medium,
-  },
-  activityList: {
-    marginTop: spacing.md,
-  },
-  activityItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  activityDetails: {
-    flex: 1,
-    marginLeft: spacing.sm,
-  },
-  activityText: {
-    fontSize: 14,
-    color: colors.text,
-    marginBottom: spacing.xs,
-  },
-  activityTime: {
-    fontSize: 12,
-    color: colors.textSecondary,
-  },
-  statusList: {
-    marginTop: spacing.md,
-  },
-  statusItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  statusLabel: {
-    fontSize: 16,
-    color: colors.text,
-  },
-  searchContainer: {
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.md,
-  },
-  searchBar: {
-    backgroundColor: colors.surface,
-  },
-  placeholderText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: colors.text,
-    textAlign: 'center',
-    marginTop: spacing.xxl,
-    marginBottom: spacing.md,
-  },
-  placeholderSubtext: {
-    color: colors.textSecondary,
-    textAlign: 'center',
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.xl,
-  },
-  fab: {
-    position: 'absolute',
-    margin: spacing.md,
-    right: 0,
-    bottom: 0,
-    backgroundColor: colors.secondary,
-  },
-  profileHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.lg,
-  },
-  profileInfo: {
-    marginLeft: spacing.lg,
-    flex: 1,
-  },
-  roleChip: {
-    alignSelf: 'flex-start',
-    marginTop: spacing.sm,
-  },
-  settingButton: {
-    marginBottom: spacing.md,
-    borderRadius: borderRadius.medium,
-  },
-  logoutButton: {
-    marginTop: spacing.md,
-  },
-});
+// Using external styles for enhanced design and maintainability
+const styles = adminDashboardStyles;
 
 export default AdminDashboard;

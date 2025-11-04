@@ -10,8 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LandingPage from './src/screens/LandingPage';
 import LoginScreen from './src/screens/auth/LoginScreen';
 import RegisterScreen from './src/screens/auth/RegisterScreen';
-import ParentDashboard from './src/screens/dashboards/ParentDashboard';
-import StaffDashboard from './src/screens/dashboards/StaffDashboard';
+import CommuterDashboard from './src/screens/dashboards/CommuterDashboard';
 import DriverDashboard from './src/screens/dashboards/DriverDashboard';
 import AdminDashboard from './src/screens/dashboards/AdminDashboard';
 
@@ -84,16 +83,14 @@ export default function App() {
 
   const getDashboardScreen = (userRole: UserRole) => {
     switch (userRole) {
-      case 'parent':
-        return ParentDashboard;
-      case 'staff':
-        return StaffDashboard;
+      case 'commuter':
+        return CommuterDashboard;
       case 'driver':
         return DriverDashboard;
       case 'admin':
         return AdminDashboard;
       default:
-        return ParentDashboard;
+        return CommuterDashboard;
     }
   };
 

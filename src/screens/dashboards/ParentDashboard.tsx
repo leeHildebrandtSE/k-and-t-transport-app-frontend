@@ -6,6 +6,8 @@ import {
   RefreshControl,
   Dimensions,
   Platform,
+  Animated,
+  TouchableOpacity,
 } from 'react-native';
 import {
   Card,
@@ -16,13 +18,15 @@ import {
   Chip,
   Text,
   Avatar,
-  IconButton,
 } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { User } from '../../types/User';
 import { Booking } from '../../types/Booking';
 import { colors, spacing, borderRadius } from '../../utils/theme';
+import { parentDashboardStyles } from '../../styles/screens/dashboards/parentDashboard';
+import DashboardHeader from '../../components/ui/DashboardHeader';
 
 interface ParentDashboardProps {
   route: {
@@ -74,32 +78,23 @@ const HomeScreen: React.FC<{ user: User }> = ({ user }) => {
 
   return (
     <View style={styles.container}>
+      {/* Modern Dashboard Header */}
+      <DashboardHeader
+        user={user}
+        title="Parent Dashboard"
+        subtitle="Manage your children's transport"
+        notificationCount={3}
+        onNotificationPress={() => {/* Navigate to notifications */}}
+        onProfilePress={() => {/* Navigate to profile */}}
+        showGradient={true}
+      />
+
       <ScrollView
-        style={styles.scrollView}
+        style={styles.scrollContainer}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {/* Welcome Section */}
-        <Card style={styles.welcomeCard}>
-          <Card.Content>
-            <View style={styles.welcomeHeader}>
-              <Avatar.Text
-                size={50}
-                label={`${user.firstName[0]}${user.lastName[0]}`}
-                style={{ backgroundColor: colors.primary }}
-              />
-              <View style={styles.welcomeText}>
-                <Title style={styles.welcomeTitle}>
-                  Welcome, {user.firstName}!
-                </Title>
-                <Paragraph style={styles.welcomeSubtitle}>
-                  Manage your children's transport bookings
-                </Paragraph>
-              </View>
-            </View>
-          </Card.Content>
-        </Card>
 
         {/* Quick Actions */}
         <Card style={styles.card}>
@@ -125,6 +120,33 @@ const HomeScreen: React.FC<{ user: User }> = ({ user }) => {
                 Track Bus
               </Button>
             </View>
+
+            {/* Lift Club Actions */}
+            <View style={styles.liftClubSection}>
+              <Text style={styles.sectionLabel}>Lift Clubs</Text>
+              <View style={styles.quickActions}>
+                <Button
+                  mode="contained"
+                  icon="car-multiple"
+                  onPress={() => {/* Navigate to lift club browse */}}
+                  style={[styles.actionButton, styles.liftClubButton]}
+                  contentStyle={styles.actionButtonContent}
+                  buttonColor={colors.success}
+                >
+                  Browse Lift Clubs
+                </Button>
+                <Button
+                  mode="outlined"
+                  icon="plus-circle"
+                  onPress={() => {/* Navigate to create request */}}
+                  style={styles.actionButton}
+                  contentStyle={styles.actionButtonContent}
+                  textColor={colors.success}
+                >
+                  Request New Club
+                </Button>
+              </View>
+            </View>
           </Card.Content>
         </Card>
 
@@ -141,7 +163,7 @@ const HomeScreen: React.FC<{ user: User }> = ({ user }) => {
                 View All
               </Button>
             </View>
-            
+
             {bookings.length === 0 ? (
               <View style={styles.emptyState}>
                 <Text style={styles.emptyText}>No active bookings</Text>
@@ -211,7 +233,7 @@ const HomeScreen: React.FC<{ user: User }> = ({ user }) => {
             <View style={styles.tripsList}>
               {/* Mock data - replace with real trips */}
               <View style={styles.tripItem}>
-                <View style={styles.tripTime}>
+                <View style={styles.tripTimeContainer}>
                   <Text style={styles.tripTimeText}>07:30</Text>
                   <Text style={styles.tripTimeLabel}>AM</Text>
                 </View>
@@ -220,15 +242,20 @@ const HomeScreen: React.FC<{ user: User }> = ({ user }) => {
                   <Text style={styles.tripRoute}>Route: Central Primary</Text>
                   <Text style={styles.tripStatus}>Driver: John D.</Text>
                 </View>
-                <IconButton
-                  icon="bell"
-                  size={20}
+                <TouchableOpacity
+                  style={[styles.reminderButton, { backgroundColor: colors.primary }]}
                   onPress={() => {/* Set reminder */}}
-                />
+                >
+                  <MaterialCommunityIcons
+                    name="bell"
+                    size={20}
+                    color="#ffffff"
+                  />
+                </TouchableOpacity>
               </View>
-              
+
               <View style={styles.tripItem}>
-                <View style={styles.tripTime}>
+                <View style={styles.tripTimeContainer}>
                   <Text style={styles.tripTimeText}>15:00</Text>
                   <Text style={styles.tripTimeLabel}>PM</Text>
                 </View>
@@ -237,11 +264,16 @@ const HomeScreen: React.FC<{ user: User }> = ({ user }) => {
                   <Text style={styles.tripRoute}>Route: Central Primary</Text>
                   <Text style={styles.tripStatus}>Driver: John D.</Text>
                 </View>
-                <IconButton
-                  icon="bell"
-                  size={20}
+                <TouchableOpacity
+                  style={[styles.reminderButton, { backgroundColor: colors.primary }]}
                   onPress={() => {/* Set reminder */}}
-                />
+                >
+                  <MaterialCommunityIcons
+                    name="bell"
+                    size={20}
+                    color="#ffffff"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </Card.Content>
@@ -291,65 +323,138 @@ const TrackingScreen: React.FC = () => {
 const ProfileScreen: React.FC<{ user: User; onLogout: () => void }> = ({ user, onLogout }) => {
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <Card style={styles.card}>
-          <Card.Content>
-            <View style={styles.profileHeader}>
-              <Avatar.Text
-                size={80}
-                label={`${user.firstName[0]}${user.lastName[0]}`}
-                style={{ backgroundColor: colors.primary }}
-              />
-              <View style={styles.profileInfo}>
-                <Title>{user.firstName} {user.lastName}</Title>
-                <Paragraph>{user.email}</Paragraph>
-                <Paragraph>{user.phone}</Paragraph>
-                <Chip mode="outlined" style={styles.roleChip}>
-                  {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
-                </Chip>
-              </View>
-            </View>
-          </Card.Content>
-        </Card>
+      <ScrollView
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Premium Profile Hero Card */}
+        <View style={styles.profileHeroCard}>
+          <View style={styles.profileHeroBackground}>
+            <View style={styles.profileHeroGradient} />
+          </View>
 
-        <Card style={styles.card}>
-          <Card.Content>
-            <Title style={styles.cardTitle}>Account Settings</Title>
-            <Button
-              mode="outlined"
-              icon="account-edit"
+          <View style={styles.profileHeroContent}>
+            <Avatar.Text
+              size={100}
+              label={`${user.firstName[0]}${user.lastName[0]}`}
+              style={styles.profileAvatar}
+            />
+
+            <Text style={styles.profileName}>
+              {user.firstName} {user.lastName}
+            </Text>
+
+            <View style={styles.profileContactInfo}>
+              <Text style={styles.profileEmail}>{user.email}</Text>
+              <Text style={styles.profilePhone}>{user.phone}</Text>
+            </View>
+
+            <Chip
+              mode="flat"
+              style={styles.profileRoleChip}
+              textStyle={{ color: colors.primary, fontWeight: '600' }}
+            >
+              {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+            </Chip>
+          </View>
+        </View>
+
+        {/* Premium Settings Card */}
+        <View style={styles.profileSettingsCard}>
+          <View style={styles.profileSettingsHeader}>
+            <Text style={styles.profileSettingsTitle}>Account Settings</Text>
+          </View>
+
+          <View style={styles.profileSettingsContent}>
+            <TouchableOpacity
+              style={styles.profileSettingButton}
               onPress={() => {/* Edit profile */}}
-              style={styles.settingButton}
             >
-              Edit Profile
-            </Button>
-            <Button
-              mode="outlined"
-              icon="bell"
-              onPress={() => {/* Notification settings */}}
-              style={styles.settingButton}
+              <View style={styles.profileSettingButtonContent}>
+                <View style={styles.profileSettingIcon}>
+                  <MaterialCommunityIcons
+                    name="account-edit"
+                    size={20}
+                    color={colors.primary}
+                  />
+                </View>
+                <View style={styles.profileSettingInfo}>
+                  <Text style={styles.profileSettingTitle}>Edit Profile</Text>
+                  <Text style={styles.profileSettingSubtitle}>Update your personal information</Text>
+                </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={24}
+                  color={colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.profileSettingButton}
+              onPress={() => {/* Notifications */}}
             >
-              Notifications
-            </Button>
-            <Button
-              mode="outlined"
-              icon="help-circle"
-              onPress={() => {/* Help & support */}}
-              style={styles.settingButton}
+              <View style={styles.profileSettingButtonContent}>
+                <View style={styles.profileSettingIcon}>
+                  <MaterialCommunityIcons
+                    name="bell"
+                    size={20}
+                    color={colors.primary}
+                  />
+                </View>
+                <View style={styles.profileSettingInfo}>
+                  <Text style={styles.profileSettingTitle}>Notifications</Text>
+                  <Text style={styles.profileSettingSubtitle}>Configure your notification preferences</Text>
+                </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={24}
+                  color={colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.profileSettingButton}
+              onPress={() => {/* Help & Support */}}
             >
-              Help & Support
-            </Button>
-            <Button
-              mode="contained"
-              icon="logout"
+              <View style={styles.profileSettingButtonContent}>
+                <View style={styles.profileSettingIcon}>
+                  <MaterialCommunityIcons
+                    name="help-circle"
+                    size={20}
+                    color={colors.primary}
+                  />
+                </View>
+                <View style={styles.profileSettingInfo}>
+                  <Text style={styles.profileSettingTitle}>Help & Support</Text>
+                  <Text style={styles.profileSettingSubtitle}>Get help or contact support</Text>
+                </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={24}
+                  color={colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.profileLogoutButton}
               onPress={onLogout}
-              style={[styles.settingButton, styles.logoutButton]}
-              buttonColor={colors.error}
             >
-              Logout
-            </Button>
-          </Card.Content>
-        </Card>
+              <View style={styles.profileLogoutButtonContent}>
+                <View style={styles.profileLogoutIcon}>
+                  <MaterialCommunityIcons
+                    name="logout"
+                    size={20}
+                    color={colors.error}
+                  />
+                </View>
+                <Text style={styles.profileLogoutText}>Logout</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -382,7 +487,7 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ route }) => {
               iconName = 'circle';
           }
 
-          return <IconButton icon={iconName} size={size} iconColor={color} />;
+          return <MaterialCommunityIcons name={iconName as any} size={size} color={color} />;
         },
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textSecondary,
@@ -404,7 +509,10 @@ const ParentDashboard: React.FC<ParentDashboardProps> = ({ route }) => {
 const { width } = Dimensions.get('window');
 const isTablet = width > 768;
 
-const styles = StyleSheet.create({
+// Using external styles for enhanced design and maintainability
+const styles = parentDashboardStyles;
+
+const legacyStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
