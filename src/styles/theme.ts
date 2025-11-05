@@ -80,6 +80,7 @@ export const colors = {
   gradientSuccess: ['#059669', '#10B981'], // Table Mountain green gradient
   gradientSunset: ['#F59E0B', '#FBBF24', '#FCD34D'], // Cape Town sunset over Table Bay
   gradientOcean: ['#0EA5E9', '#38BDF8', '#0891B2'], // Atlantic Ocean depths
+  gradientAuth: ['#0EA5E9', '#059669', '#F59E0B'], // Auth screens - ocean to mountain to sun
   gradientSurface: ['#FFFFFF', '#F9FAFB'], // Cloud-covered Table Mountain
 };
 

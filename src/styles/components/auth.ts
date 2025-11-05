@@ -35,14 +35,14 @@ export const authStyles = StyleSheet.create({
     opacity: 0.85,
   },
 
-  // Blue opaque overlay for better text visibility
+  // Cape Town ocean gradient overlay for better text visibility
   blueOverlay: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(79, 70, 229, 0.6)', // Reduced opacity to show more background image
+    backgroundColor: 'rgba(14, 165, 233, 0.7)', // Cape Town ocean blue with proper opacity
     zIndex: -1,
   },
 

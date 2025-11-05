@@ -18,6 +18,7 @@ import {
 } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 import { AuthService } from '../../services/AuthService';
 import { registerScreenStyles } from '../../styles/screens/registerScreen';
@@ -123,8 +124,16 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
         resizeMode="cover"
       />
 
-      {/* Blue Overlay - App Brand Color */}
-      <View style={authStyles.blueOverlay} />
+      {/* Cape Town Ocean to Mountain Gradient Overlay */}
+      <LinearGradient
+        colors={[
+          `${colors.primary}CC`, // Cape Town ocean blue with 80% opacity
+          `${colors.tertiary}99`, // Table Mountain green with 60% opacity
+          `${colors.secondary}66`  // Cape Town sunshine with 40% opacity
+        ]}
+        locations={[0, 0.6, 1]}
+        style={authStyles.gradientOverlay}
+      />
 
       <ScrollView contentContainerStyle={registerScreenStyles.scrollContent}>
         <View style={registerScreenStyles.content}>

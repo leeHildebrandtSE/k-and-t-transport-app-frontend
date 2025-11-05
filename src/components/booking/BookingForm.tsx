@@ -24,17 +24,17 @@ interface BookingFormProps {
   onSubmit: (bookingData: any) => void;
   onCancel: () => void;
   initialData?: any;
-  userRole: 'parent' | 'staff';
+  commuterType: 'school_transport' | 'work_transport';
 }
 
 const BookingForm: React.FC<BookingFormProps> = ({
   onSubmit,
   onCancel,
   initialData,
-  userRole,
+  commuterType,
 }) => {
   const [bookingType, setBookingType] = useState<BookingType>(
-    userRole === 'parent' ? 'school' : 'work'
+    commuterType === 'school_transport' ? 'school' : 'work'
   );
   const [selectedRoute, setSelectedRoute] = useState<string>('');
   const [pickupLocation, setPickupLocation] = useState<string>('');
@@ -61,8 +61,8 @@ const BookingForm: React.FC<BookingFormProps> = ({
       const mockRoutes: Route[] = [
         {
           id: 'route-1',
-          name: userRole === 'parent' ? 'Central Primary School' : 'Business District A',
-          description: userRole === 'parent'
+          name: commuterType === 'school_transport' ? 'Central Primary School' : 'Business District A',
+          description: commuterType === 'school_transport'
             ? 'Morning and afternoon school transport'
             : 'Corporate office transport',
           stops: [],
@@ -75,8 +75,8 @@ const BookingForm: React.FC<BookingFormProps> = ({
         },
         {
           id: 'route-2',
-          name: userRole === 'parent' ? 'Westside Primary School' : 'Business District B',
-          description: userRole === 'parent'
+          name: commuterType === 'school_transport' ? 'Westside Primary School' : 'Business District B',
+          description: commuterType === 'school_transport'
             ? 'Westside area school transport'
             : 'Financial district transport',
           stops: [],
@@ -157,7 +157,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
 
   const calculateEstimatedCost = (): number => {
     // Mock calculation - replace with actual pricing logic
-    const basePrice = userRole === 'parent' ? 800 : 950;
+    const basePrice = commuterType === 'school_transport' ? 800 : 950;
     const tripMultiplier = (morningTrip ? 1 : 0) + (afternoonTrip ? 1 : 0);
     const dayMultiplier = selectedDays.length / 5; // Normalize to work week
     return Math.round(basePrice * tripMultiplier * dayMultiplier);
@@ -168,7 +168,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
       <Card style={styles.card}>
         <Card.Content>
           <Text variant="titleLarge" style={styles.title}>
-            {userRole === 'parent' ? 'School Transport Booking' : 'Work Transport Booking'}
+            {commuterType === 'school_transport' ? 'School Transport Booking' : 'Work Transport Booking'}
           </Text>
 
           {/* Route Selection */}
@@ -196,7 +196,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Location Details</Text>
             <TextInput
-              label={userRole === 'parent' ? 'Home Address (Pickup)' : 'Home Address (Pickup)'}
+              label="Home Address (Pickup)"
               value={pickupLocation}
               onChangeText={setPickupLocation}
               mode="outlined"
@@ -204,12 +204,12 @@ const BookingForm: React.FC<BookingFormProps> = ({
               placeholder="Enter your pickup address"
             />
             <TextInput
-              label={userRole === 'parent' ? 'School Address (Drop-off)' : 'Work Address (Drop-off)'}
+              label={commuterType === 'school_transport' ? 'School Address (Drop-off)' : 'Work Address (Drop-off)'}
               value={dropoffLocation}
               onChangeText={setDropoffLocation}
               mode="outlined"
               style={styles.input}
-              placeholder={userRole === 'parent' ? 'Enter school address' : 'Enter work address'}
+              placeholder={commuterType === 'school_transport' ? 'Enter school address' : 'Enter work address'}
             />
           </View>
 
@@ -261,7 +261,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
                   onPress={() => setMorningTrip(!morningTrip)}
                 />
                 <Text style={styles.checkboxLabel}>
-                  Morning Trip ({userRole === 'parent' ? 'To School' : 'To Work'})
+                  Morning Trip ({commuterType === 'school_transport' ? 'To School' : 'To Work'})
                 </Text>
               </View>
               <View style={styles.checkboxRow}>
@@ -270,7 +270,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
                   onPress={() => setAfternoonTrip(!afternoonTrip)}
                 />
                 <Text style={styles.checkboxLabel}>
-                  Afternoon Trip ({userRole === 'parent' ? 'From School' : 'From Work'})
+                  Afternoon Trip ({commuterType === 'school_transport' ? 'From School' : 'From Work'})
                 </Text>
               </View>
             </View>

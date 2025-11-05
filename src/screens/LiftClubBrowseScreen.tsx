@@ -10,12 +10,9 @@ import {
   Text,
   Button,
   Chip,
-  IconButton,
   Searchbar,
   FAB,
-  Badge,
   List,
-  Divider,
 } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -29,13 +26,13 @@ interface LiftClubBrowseScreenProps {
   route: {
     params: {
       user: User;
-      userType: 'parent' | 'staff';
+      commuterType: 'school_transport' | 'work_transport';
     };
   };
 }
 
 const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) => {
-  const { user, userType } = route.params;
+  const { user, commuterType } = route.params;
   const navigation = useNavigation();
 
   const [refreshing, setRefreshing] = useState(false);
@@ -45,8 +42,8 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
   const [filterStatus, setFilterStatus] = useState<'all' | 'available' | 'full'>('all');
   const [showRequests, setShowRequests] = useState(false);
 
-  const clubType = userType === 'parent' ? 'school' : 'staff';
-  const displayTitle = userType === 'parent' ? 'School Lift Clubs' : 'Staff Lift Clubs';
+  const clubType = commuterType === 'school_transport' ? 'school' : 'work';
+  const displayTitle = commuterType === 'school_transport' ? 'School Lift Clubs' : 'Work Lift Clubs';
 
   // Mock data
   useEffect(() => {
@@ -77,8 +74,8 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
       },
       {
         id: '2',
-        name: 'Business District Staff Transport',
-        type: 'staff',
+        name: 'Business District Work Transport',
+        type: 'work',
         description: 'Daily transport for office workers to the Business District',
         pickupLocation: 'Suburban Train Station',
         dropoffLocation: 'Business District - Corporate Plaza',
@@ -120,7 +117,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
         id: 'req1',
         requesterId: user.id,
         requesterName: `${user.firstName} ${user.lastName}`,
-        requesterType: userType,
+        requesterType: 'commuter',
         type: clubType,
         proposedName: 'Westside Primary Morning Club',
         pickupLocation: 'Westside Shopping Center',
@@ -135,7 +132,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
         updatedAt: '2025-11-01T10:00:00Z',
       }
     ]);
-  }, [user.id, userType, clubType]);
+  }, [user.id, commuterType, clubType]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -198,7 +195,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
   };
 
   const handleCreateRequest = () => {
-    // navigation.navigate('CreateLiftClubRequest', { user, userType });
+    // navigation.navigate('CreateLiftClubRequest', { user, commuterType });
     Alert.alert('Create Request', 'Navigate to Create Lift Club Request screen');
   };
 
@@ -249,7 +246,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
             {/* Search and Filters */}
             <View style={styles.searchSection}>
               <Searchbar
-                placeholder={`Search ${clubType === 'school' ? 'school' : 'staff'} lift clubs...`}
+                placeholder={`Search ${clubType === 'school' ? 'school' : 'work'} lift clubs...`}
                 onChangeText={setSearchQuery}
                 value={searchQuery}
                 style={styles.searchBar}
@@ -291,7 +288,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
                     style={styles.emptyIcon}
                   />
                   <Text variant="titleLarge" style={styles.emptyTitle}>
-                    No {clubType === 'school' ? 'School' : 'Staff'} Lift Clubs Found
+                    No {clubType === 'school' ? 'School' : 'Work'} Lift Clubs Found
                   </Text>
                   <Text style={styles.emptyText}>
                     {searchQuery

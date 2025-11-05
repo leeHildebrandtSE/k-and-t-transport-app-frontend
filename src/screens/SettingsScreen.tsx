@@ -246,7 +246,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ route }) => {
               style={styles.listItem}
             />
 
-            {user.role === 'parent' && (
+            {user.role === 'commuter' && (
               <List.Item
                 title="Auto Booking"
                 description="Automatically book recurring trips"

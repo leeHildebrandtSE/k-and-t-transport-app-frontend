@@ -540,7 +540,7 @@ export class LiftClubService {
       {
         id: 'club2',
         name: 'Sandton Office Staff Club',
-        type: 'staff',
+        type: 'work',
         status: 'active',
         pickupLocation: 'Midrand Station',
         dropoffLocation: 'Sandton CBD Office Park',
@@ -576,7 +576,7 @@ export class LiftClubService {
         status: 'pending',
         requesterId: 'user1',
         requesterName: 'John Smith',
-        requesterType: 'parent',
+        requesterType: 'commuter',
         proposedName: 'Northridge High Transport',
         pickupLocation: 'Cresta Shopping Centre',
         dropoffLocation: 'Northridge High School',

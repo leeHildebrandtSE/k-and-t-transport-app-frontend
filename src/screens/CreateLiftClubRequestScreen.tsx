@@ -28,13 +28,13 @@ interface CreateLiftClubRequestProps {
   route: {
     params: {
       user: User;
-      userType: 'parent' | 'staff';
+      commuterType: 'school_transport' | 'work_transport';
     };
   };
 }
 
 const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ route }) => {
-  const { user, userType } = route.params;
+  const { user, commuterType } = route.params;
   const navigation = useNavigation();
 
   // Form state
@@ -53,8 +53,8 @@ const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ rou
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const clubType: LiftClubType = userType === 'parent' ? 'school' : 'staff';
-  const displayTitle = userType === 'parent' ? 'Request School Lift Club' : 'Request Staff Lift Club';
+  const clubType: LiftClubType = commuterType === 'school_transport' ? 'school' : 'work';
+  const displayTitle = commuterType === 'school_transport' ? 'Request School Lift Club' : 'Request Work Lift Club';
 
   const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const dayAbbr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -196,7 +196,7 @@ const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ rou
               mode="outlined"
               style={styles.input}
               error={!!errors.proposedName}
-              placeholder={userType === 'parent' ? 'e.g., Westside Primary Morning Club' : 'e.g., Business District Staff Transport'}
+              placeholder={commuterType === 'school_transport' ? 'e.g., Westside Primary Morning Club' : 'e.g., Business District Work Transport'}
             />
             <HelperText type="error" visible={!!errors.proposedName}>
               {errors.proposedName}
@@ -256,7 +256,7 @@ const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ rou
               mode="outlined"
               style={styles.input}
               error={!!errors.dropoffLocation}
-              placeholder={userType === 'parent' ? 'e.g., Central Primary School' : 'e.g., Business District - Corporate Plaza'}
+              placeholder={commuterType === 'school_transport' ? 'e.g., Central Primary School' : 'e.g., Business District - Corporate Plaza'}
               left={<TextInput.Icon icon="flag-checkered" />}
             />
             <HelperText type="error" visible={!!errors.dropoffLocation}>

@@ -1,4 +1,4 @@
-export type UserRole = 'commuter' | 'driver' | 'admin' | 'parent' | 'staff';
+export type UserRole = 'commuter' | 'driver' | 'admin';
 
 export type CommuterType = 'school_transport' | 'work_transport' | 'lift_club' | 'general_commuting';
 

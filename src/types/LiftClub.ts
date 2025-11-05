@@ -1,4 +1,4 @@
-export type LiftClubType = 'school' | 'staff';
+export type LiftClubType = 'school' | 'work';
 export type LiftClubStatus = 'active' | 'inactive' | 'full' | 'pending';
 export type RequestStatus = 'pending' | 'approved' | 'rejected' | 'completed';
 
@@ -31,7 +31,7 @@ export interface LiftClubMember {
   id: string;
   liftClubId: string;
   userId: string;
-  userType: 'parent' | 'staff';
+  userType: 'commuter';
   memberName: string;
   contactNumber: string;
   emergencyContact: string;
@@ -44,7 +44,7 @@ export interface LiftClubRequest {
   id: string;
   requesterId: string;
   requesterName: string;
-  requesterType: 'parent' | 'staff';
+  requesterType: 'commuter';
   type: LiftClubType;
   proposedName: string;
   pickupLocation: string;

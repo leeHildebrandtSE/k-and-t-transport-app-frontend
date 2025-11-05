@@ -74,7 +74,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
           status: 'pending',
           requesterId: 'user1',
           requesterName: 'Sarah Johnson',
-          requesterType: 'parent',
+          requesterType: 'commuter',
           proposedName: 'Greenfield Primary Lift Club',
           pickupLocation: 'Sandton City, Sandton',
           dropoffLocation: 'Greenfield Primary School, Bryanston',
@@ -90,11 +90,11 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
         },
         {
           id: '2',
-          type: 'staff',
+          type: 'work',
           status: 'pending',
           requesterId: 'user2',
           requesterName: 'Michael Chen',
-          requesterType: 'staff',
+          requesterType: 'commuter',
           proposedName: 'Sandton Office Staff Club',
           pickupLocation: 'Midrand Station',
           dropoffLocation: 'Sandton CBD Office Park',
@@ -114,7 +114,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
           status: 'approved',
           requesterId: 'user3',
           requesterName: 'Lisa Williams',
-          requesterType: 'parent',
+          requesterType: 'commuter',
           proposedName: 'Northcliff High Club',
           pickupLocation: 'Cresta Shopping Centre',
           dropoffLocation: 'Northcliff High School',
@@ -362,7 +362,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
                           style={liftClubManagementStyles.typeChip}
                           icon={request.type === 'school' ? 'school' : 'office-building'}
                         >
-                          {request.type === 'school' ? 'School' : 'Staff'}
+                          {request.type === 'school' ? 'School' : 'Work'}
                         </Chip>
                       </View>
                     </View>
