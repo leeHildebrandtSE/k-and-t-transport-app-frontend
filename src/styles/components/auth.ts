@@ -118,7 +118,6 @@ export const authStyles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: spacing.xs,
     letterSpacing: 1,
-    textShadow: '0px 2px 4px rgba(0, 0, 0, 0.3)',
   },
 
   logoTagline: {
@@ -128,7 +127,6 @@ export const authStyles = StyleSheet.create({
     opacity: 0.9,
     fontStyle: 'italic',
     letterSpacing: 0.5,
-    textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
   },
 
   title: {
@@ -558,7 +556,6 @@ export const authStyles = StyleSheet.create({
     letterSpacing: -0.5, // Tighter spacing for modern feel
     marginBottom: spacing.sm,
     textAlign: 'center',
-    textShadow: '0px 1px 2px rgba(0, 0, 0, 0.3)', // Subtle shadow for depth
   },
 
   modernSubtitle: {
@@ -568,7 +565,6 @@ export const authStyles = StyleSheet.create({
     lineHeight: 24, // Better readability
     maxWidth: 320, // Optimal reading width
     opacity: 0.9, // High opacity for readability on overlay
-    textShadow: '0px 1px 1px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
   },
 
   // Enhanced interaction states

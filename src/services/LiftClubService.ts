@@ -527,14 +527,14 @@ export class LiftClubService {
         pickupLocation: 'Sandton City Mall',
         dropoffLocation: 'Greenfield Primary School',
         departureTime: '07:00',
-        returnTime: '15:30',
+        arrivalTime: '15:30',
         daysOfWeek: [1, 2, 3, 4, 5],
-        monthlyCost: 600,
-        maxMembers: 8,
+        monthlyFee: 600,
+        maxCapacity: 8,
         currentMembers: 6,
         driverId: 'driver1',
-        adminId: 'admin1',
-        createdDate: new Date('2024-01-15'),
+        createdAt: '2024-01-15T08:00:00Z',
+        updatedAt: '2024-01-15T08:00:00Z',
         description: 'Reliable transport to Greenfield Primary School from Sandton area.',
       },
       {
@@ -545,14 +545,14 @@ export class LiftClubService {
         pickupLocation: 'Midrand Station',
         dropoffLocation: 'Sandton CBD Office Park',
         departureTime: '07:30',
-        returnTime: '17:00',
+        arrivalTime: '17:00',
         daysOfWeek: [1, 2, 3, 4, 5],
-        monthlyCost: 450,
-        maxMembers: 10,
+        monthlyFee: 450,
+        maxCapacity: 10,
         currentMembers: 8,
         driverId: 'driver2',
-        adminId: 'admin1',
-        createdDate: new Date('2024-01-20'),
+        createdAt: '2024-01-20T08:00:00Z',
+        updatedAt: '2024-01-20T08:00:00Z',
         description: 'Professional transport for office workers from Midrand to Sandton.',
       },
     ];
@@ -560,7 +560,7 @@ export class LiftClubService {
     return {
       clubs: mockClubs.filter(club => {
         if (params.filters?.type && club.type !== params.filters.type) return false;
-        if (params.filters?.maxBudget && club.monthlyCost > params.filters.maxBudget) return false;
+        if (params.filters?.maxBudget && club.monthlyFee > params.filters.maxBudget) return false;
         return true;
       }),
       totalCount: mockClubs.length,
@@ -575,6 +575,8 @@ export class LiftClubService {
         type: 'school',
         status: 'pending',
         requesterId: 'user1',
+        requesterName: 'John Smith',
+        requesterType: 'parent',
         proposedName: 'Northridge High Transport',
         pickupLocation: 'Cresta Shopping Centre',
         dropoffLocation: 'Northridge High School',
@@ -583,7 +585,8 @@ export class LiftClubService {
         estimatedMembers: 6,
         maxBudget: 700,
         daysOfWeek: [1, 2, 3, 4, 5],
-        requestDate: new Date('2024-01-25'),
+        createdAt: '2024-01-25T08:00:00Z',
+        updatedAt: '2024-01-25T08:00:00Z',
       },
     ];
 

@@ -23,6 +23,7 @@ import { User } from '../types/User';
 import { LiftClubType } from '../types/LiftClub';
 import DashboardHeader from '../components/ui/DashboardHeader';
 import { createLiftClubRequestStyles } from '../styles/screens/createLiftClubRequestScreen';
+import { colors } from '../styles/theme';
 
 interface CreateLiftClubRequestProps {
   route: {

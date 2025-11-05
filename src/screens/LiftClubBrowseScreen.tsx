@@ -12,7 +12,7 @@ import {
   Button,
   Chip,
   IconButton,
-  SearchBar,
+  Searchbar,
   FAB,
   Badge,
   List,
@@ -194,11 +194,13 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
   };
 
   const handleViewDetails = (liftClub: LiftClub) => {
-    navigation.navigate('LiftClubDetails' as never, { liftClub, user } as never);
+    // navigation.navigate('LiftClubDetails', { liftClub, user });
+    Alert.alert('View Details', `Viewing details for ${liftClub.name}`);
   };
 
   const handleCreateRequest = () => {
-    navigation.navigate('CreateLiftClubRequest' as never, { user, userType } as never);
+    // navigation.navigate('CreateLiftClubRequest', { user, userType });
+    Alert.alert('Create Request', 'Navigate to Create Lift Club Request screen');
   };
 
   const filteredClubs = liftClubs
@@ -247,7 +249,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
           <>
             {/* Search and Filters */}
             <View style={styles.searchSection}>
-              <SearchBar
+              <Searchbar
                 placeholder={`Search ${clubType === 'school' ? 'school' : 'staff'} lift clubs...`}
                 onChangeText={setSearchQuery}
                 value={searchQuery}

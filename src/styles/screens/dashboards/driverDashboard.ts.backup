@@ -99,9 +99,7 @@ export const driverDashboardStyles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: -0.5,
     // Cape Town ocean blue accent
-    textShadowColor: `${colors.primary}20`,
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 3,
+    textShadow: `0px 1px 3px ${colors.primary}20`,
   },
 
   // Cape Town Ocean-Inspired Duty Status Card
@@ -150,9 +148,7 @@ export const driverDashboardStyles = StyleSheet.create({
     fontWeight: '800',
     letterSpacing: -0.5,
     // Cape Town sunshine glow effect for ON DUTY
-    textShadowColor: 'rgba(245, 158, 11, 0.3)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 8,
+    textShadow: '0px 2px 8px rgba(245, 158, 11, 0.3)',
   },
 
   dutyToggleButton: {
@@ -415,9 +411,7 @@ export const driverDashboardStyles = StyleSheet.create({
     marginLeft: spacing.md,
     letterSpacing: -0.5,
     // Cape Town mountain text shadow
-    textShadowColor: `${colors.tertiary}15`,
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadow: `0px 1px 2px ${colors.tertiary}15`,
   },
 
   cardIconContainer: {
@@ -887,25 +881,6 @@ export const driverDashboardStyles = StyleSheet.create({
     marginLeft: spacing.xs,
   },
 
-  // Route Quick Actions (for DriverRoutesScreen)
-  routeQuickActions: {
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.xl,
-  },
-
-  quickActionItem: {
-    flex: 1,
-    backgroundColor: colors.surface,
-    borderRadius: borderRadius.xl,
-    padding: spacing.lg,
-    alignItems: 'center',
-    marginHorizontal: spacing.xs,
-    ...shadows.sm,
-    borderWidth: 1,
-    borderColor: colors.border,
-    minWidth: '30%',
-  },
-
   // Passengers Screen Styles
   passengersHeader: {
     paddingHorizontal: spacing.lg,
@@ -1038,127 +1013,6 @@ export const driverDashboardStyles = StyleSheet.create({
     color: colors.textSecondary,
     marginLeft: spacing.sm,
     flex: 1,
-  },
-
-  // Additional Passenger Stats Styles
-  passengerStatsContainer: {
-    flexDirection: 'row',
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.xl,
-    justifyContent: 'space-between',
-  },
-
-  passengerStatCard: {
-    flex: 1,
-    backgroundColor: colors.surface,
-    borderRadius: borderRadius.xl,
-    padding: spacing.lg,
-    alignItems: 'center',
-    marginHorizontal: spacing.xs,
-    ...shadows.sm,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-
-  passengerStatValue: {
-    ...typography.headlineSmall,
-    color: colors.text,
-    fontWeight: '800',
-    marginTop: spacing.sm,
-    marginBottom: spacing.xs,
-  },
-
-  passengerStatLabel: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-
-  // Filter Tabs Styles
-  filterTabsContainer: {
-    flexDirection: 'row',
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.lg,
-    backgroundColor: `${colors.textSecondary}10`,
-    borderRadius: borderRadius.lg,
-    padding: spacing.xs,
-  },
-
-  // Premium Passenger List Styles
-  premiumPassengerList: {
-    paddingTop: spacing.md,
-  },
-
-  routePassengersSection: {
-    marginBottom: spacing.xl,
-  },
-
-  routeSectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.md,
-    paddingHorizontal: spacing.sm,
-  },
-
-  routeSectionTitle: {
-    ...typography.titleMedium,
-    color: colors.text,
-    fontWeight: '600',
-    marginLeft: spacing.sm,
-    flex: 1,
-  },
-
-  routeSectionCount: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    backgroundColor: `${colors.primary}15`,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    borderRadius: borderRadius.md,
-  },
-
-  premiumPassengerItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: spacing.lg,
-    paddingHorizontal: spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: `${colors.textSecondary}08`,
-  },
-
-  premiumPassengerInfo: {
-    flex: 1,
-    marginRight: spacing.md,
-  },
-
-  premiumPassengerName: {
-    ...typography.bodyLarge,
-    color: colors.text,
-    fontWeight: '600',
-    marginBottom: spacing.xs,
-  },
-
-  premiumPassengerDetails: {
-    ...typography.bodyMedium,
-    color: colors.textSecondary,
-    marginBottom: spacing.sm,
-  },
-
-  passengerMetrics: {
-    flexDirection: 'row',
-    gap: spacing.lg,
-  },
-
-  passengerMetric: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  passengerMetricText: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    marginLeft: spacing.xs,
   },
 
   // Profile Screen Styles
@@ -1294,82 +1148,16 @@ export const driverDashboardStyles = StyleSheet.create({
     fontWeight: '500',
   },
 
-  // Hero Profile Styles for DriverProfileScreen
-  onlineIndicator: {
+  // Background blob 3 for Cape Town sunshine effect
+  backgroundBlob3: {
     position: 'absolute',
-    bottom: 8,
-    right: 8,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: colors.success,
-    borderWidth: 3,
-    borderColor: '#fff',
-  },
-
-  heroProfileInfo: {
-    alignItems: 'center',
-    width: '100%',
-  },
-
-  heroName: {
-    ...typography.headlineMedium,
-    color: '#fff',
-    fontWeight: '700',
-    marginBottom: spacing.xs,
-    textAlign: 'center',
-  },
-
-  heroRole: {
-    ...typography.titleMedium,
-    color: 'rgba(255,255,255,0.9)',
-    marginBottom: spacing.lg,
-    textAlign: 'center',
-  },
-
-  statsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.15)',
-    borderRadius: borderRadius.lg,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
-    width: '100%',
-  },
-
-  statItem: {
-    flex: 1,
-    alignItems: 'center',
-  },
-
-  statDivider: {
-    width: 1,
-    height: 40,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    marginHorizontal: spacing.md,
-  },
-
-  heroStatValue: {
-    ...typography.headlineSmall,
-    color: '#fff',
-    fontWeight: '800',
-    marginBottom: spacing.xs,
-    textAlign: 'center',
-  },
-
-  heroStatLabel: {
-    ...typography.bodySmall,
-    color: 'rgba(255,255,255,0.8)',
-    fontWeight: '500',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-    textAlign: 'center',
-  },
-
-  starRating: {
-    flexDirection: 'row',
-    marginBottom: spacing.xs,
-    justifyContent: 'center',
+    width: width * 0.4,
+    height: width * 0.4,
+    borderRadius: width * 0.2,
+    top: '50%',
+    right: '60%',
+    opacity: 0.02,
+    transform: [{ rotate: '45deg' }],
   },
 
   // Responsive Card Content Padding
@@ -1416,6 +1204,124 @@ export const driverDashboardStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.3,
     shadowRadius: 16,
+  },
+
+  passengersHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+  },
+
+  passengersTitle: {
+    ...typography.titleLarge,
+    color: colors.text,
+    fontWeight: '600',
+  },
+
+  passengerCount: {
+    backgroundColor: colors.primarySoft,
+    borderRadius: borderRadius.full,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
+
+  countText: {
+    ...typography.bodyMedium,
+    color: colors.primary,
+    fontWeight: '600',
+  },
+
+  passengerItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: spacing.sm,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+
+  passengerAvatar: {
+    width: 40,
+    height: 40,
+    borderRadius: borderRadius.full,
+    marginRight: spacing.md,
+  },
+
+  passengerInfo: {
+    flex: 1,
+  },
+
+  passengerName: {
+    ...typography.bodyLarge,
+    color: colors.text,
+    fontWeight: '500',
+  },
+
+  passengerStop: {
+    ...typography.bodyMedium,
+    color: colors.textSecondary,
+    marginTop: 2,
+  },
+
+  // Action Buttons
+  actionContainer: {
+    flexDirection: 'row',
+    gap: spacing.md,
+    marginBottom: spacing.lg,
+  },
+
+  actionButton: {
+    flex: 1,
+    borderRadius: borderRadius.lg,
+    paddingVertical: spacing.lg,
+    // Enhanced 3D effect
+    ...shadows.md,
+    transform: [{ translateY: -1 }],
+  },
+
+  primaryAction: {
+    backgroundColor: colors.primary,
+  },
+
+  secondaryAction: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.primary,
+  },
+
+  actionText: {
+    ...typography.titleMedium,
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+
+  primaryActionText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#fff',
+    marginLeft: 8,
+  },
+
+  secondaryActionText: {
+    color: colors.primary,
+  },
+
+  // Emergency Button
+  emergencyButton: {
+    backgroundColor: colors.error,
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+    // Enhanced 3D effect
+    ...shadows.lg,
+    transform: [{ translateY: -2 }],
+  },
+
+  emergencyText: {
+    ...typography.titleMedium,
+    color: colors.surface,
+    fontWeight: '600',
   },
 
   // Navigation Card
@@ -1531,6 +1437,63 @@ export const driverDashboardStyles = StyleSheet.create({
     marginTop: spacing.md,
   },
 
+  // Legacy Style Mappings (for compatibility)
+  statusSubtitle: {
+    ...typography.bodyMedium,
+    color: colors.textSecondary,
+  },
+
+  dutyToggle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  dutyLabel: {
+    ...typography.bodyMedium,
+    color: colors.text,
+    marginRight: spacing.sm,
+  },
+
+  card: {
+    marginHorizontal: spacing.lg,
+    marginVertical: spacing.sm,
+    borderRadius: borderRadius.xl,
+    backgroundColor: colors.surface,
+    // Enhanced 3D effect
+    ...shadows.lg,
+    transform: [{ translateY: -2 }],
+  },
+
+  cardTitle: {
+    ...typography.titleLarge,
+    color: colors.text,
+    fontWeight: '600',
+  },
+
+  tripInfo: {
+    ...typography.bodyLarge,
+    color: colors.text,
+    marginBottom: spacing.xs,
+  },
+
+  tripButton: {
+    marginTop: spacing.md,
+    borderRadius: borderRadius.lg,
+  },
+
+  emptyText: {
+    ...typography.headlineMedium,
+    color: colors.text,
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+
+  emptySubtext: {
+    ...typography.bodyLarge,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+
   // Responsive Design
   mobileLayout: {
     paddingHorizontal: spacing.md,
@@ -1540,6 +1503,81 @@ export const driverDashboardStyles = StyleSheet.create({
     paddingHorizontal: spacing.xl,
     maxWidth: 1000,
     alignSelf: 'center',
+  },
+
+  // Map Container
+  mapContainer: {
+    height: 300,
+    borderRadius: borderRadius.lg,
+    overflow: 'hidden',
+    marginBottom: spacing.lg,
+    // Enhanced 3D effect
+    ...shadows.lg,
+  },
+
+  // Floating Action Buttons
+  fabContainer: {
+    position: 'absolute',
+    bottom: spacing.lg,
+    right: spacing.lg,
+    gap: spacing.sm,
+  },
+
+  fab: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // Enhanced 3D effect
+    ...shadows.lg,
+  },
+
+  secondaryFab: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.primary,
+  },
+
+  // Premium Profile Styles
+  premiumBackgroundContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+  },
+
+  backgroundBlob1: {
+    position: 'absolute',
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    top: '5%',
+    right: '-15%',
+    opacity: 0.8,
+  },
+
+  backgroundBlob2: {
+    position: 'absolute',
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    bottom: '30%',
+    left: '-10%',
+    opacity: 0.6,
+  },
+
+  backgroundBlob3: {
+    position: 'absolute',
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    top: '50%',
+    right: '20%',
+    opacity: 0.4,
   },
 
   // Hero Profile Card
@@ -1571,6 +1609,109 @@ export const driverDashboardStyles = StyleSheet.create({
     borderWidth: 4,
     borderColor: 'rgba(255,255,255,0.3)',
     ...shadows.lg,
+  },
+
+  avatarLabel: {
+    ...typography.headlineLarge,
+    color: '#fff',
+    fontWeight: '700',
+  },
+
+  onlineIndicator: {
+    position: 'absolute',
+    bottom: 8,
+    right: 8,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: colors.success,
+    borderWidth: 3,
+    borderColor: '#fff',
+  },
+
+  heroProfileInfo: {
+    alignItems: 'center',
+    width: '100%',
+  },
+
+  heroName: {
+    ...typography.headlineMedium,
+    color: '#fff',
+    fontWeight: '700',
+    marginBottom: spacing.xs,
+  },
+
+  heroRole: {
+    ...typography.titleMedium,
+    color: 'rgba(255,255,255,0.9)',
+    marginBottom: spacing.lg,
+  },
+
+  statsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    borderRadius: borderRadius.lg,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    width: '100%',
+  },
+
+  statItem: {
+    flex: 1,
+    alignItems: 'center',
+  },
+
+  statDivider: {
+    width: 1,
+    height: 40,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    marginHorizontal: spacing.md,
+  },
+
+  heroStatValue: {
+    ...typography.headlineSmall,
+    color: '#fff',
+    fontWeight: '800',
+    marginBottom: spacing.xs,
+  },
+
+  heroStatLabel: {
+    ...typography.bodySmall,
+    color: 'rgba(255,255,255,0.8)',
+    fontWeight: '500',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+
+  starRating: {
+    flexDirection: 'row',
+    marginBottom: spacing.xs,
+  },
+
+  // Premium Cards
+  premiumCard: {
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    overflow: 'hidden',
+    ...shadows.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+
+  cardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+  },
+
+  premiumCardTitle: {
+    ...typography.titleLarge,
+    color: colors.text,
+    fontWeight: '600',
+    marginLeft: spacing.md,
   },
 
   // Details Grid
@@ -1630,6 +1771,15 @@ export const driverDashboardStyles = StyleSheet.create({
     borderRadius: borderRadius.lg,
     borderWidth: 1,
     borderColor: colors.border,
+  },
+
+  contactIcon: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.lg,
   },
 
   contactContent: {
@@ -1727,6 +1877,10 @@ export const driverDashboardStyles = StyleSheet.create({
     color: colors.textSecondary,
   },
 
+  bottomSpacer: {
+    height: spacing.xxl,
+  },
+
   // Premium Tab Bar Styles
   premiumTabBar: {
     backgroundColor: colors.surface,
@@ -1757,6 +1911,695 @@ export const driverDashboardStyles = StyleSheet.create({
 
   inactiveTabIcon: {
     padding: 8,
+  },
+
+  // Premium Routes Screen Styles
+  routesHeader: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.xl,
+    alignItems: 'center',
+  },
+
+  routesTitle: {
+    ...typography.headlineLarge,
+    color: colors.text,
+    fontWeight: '700',
+    marginBottom: spacing.xs,
+  },
+
+  routesSubtitle: {
+    ...typography.bodyLarge,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+
+  routeStatsContainer: {
+    flexDirection: 'row',
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.xl,
+    gap: spacing.md,
+  },
+
+  routeStatCard: {
+    flex: 1,
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xl,
+    padding: spacing.lg,
+    alignItems: 'center',
+    ...shadows.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+
+  routeStatValue: {
+    ...typography.headlineMedium,
+    color: colors.text,
+    fontWeight: '800',
+    marginTop: spacing.sm,
+    marginBottom: spacing.xs,
+  },
+
+  routeStatLabel: {
+    ...typography.bodySmall,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+
+  premiumRouteCard: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xl,
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.lg,
+    overflow: 'hidden',
+    ...shadows.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+
+  routeCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.lg,
+    backgroundColor: colors.primarySoft,
+  },
+
+  routeIconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.md,
+  },
+
+  routeHeaderContent: {
+    flex: 1,
+  },
+
+  premiumRouteTitle: {
+    ...typography.titleLarge,
+    color: colors.text,
+    fontWeight: '700',
+    marginBottom: spacing.xs,
+  },
+
+  routeSubtitle: {
+    ...typography.bodyMedium,
+    color: colors.textSecondary,
+    fontWeight: '500',
+  },
+
+  routeStatusBadge: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: borderRadius.md,
+  },
+
+  routeStatusText: {
+    ...typography.bodySmall,
+    color: '#fff',
+    fontWeight: '700',
+    letterSpacing: 0.5,
+  },
+
+  routeDetailsContainer: {
+    padding: spacing.lg,
+    gap: spacing.md,
+  },
+
+  routeDetailRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  routeDetailText: {
+    ...typography.bodyMedium,
+    color: colors.text,
+    marginLeft: spacing.sm,
+    flex: 1,
+  },
+
+  routeActionsContainer: {
+    flexDirection: 'row',
+    padding: spacing.lg,
+    gap: spacing.sm,
+  },
+
+  routeActionButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: spacing.md,
+    borderRadius: borderRadius.lg,
+    gap: spacing.sm,
+  },
+
+  primaryRouteAction: {
+    backgroundColor: colors.primary,
+  },
+
+  secondaryRouteAction: {
+    backgroundColor: colors.backgroundSecondary,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+
+  routeActionText: {
+    ...typography.bodyMedium,
+    color: '#fff',
+    fontWeight: '600',
+  },
+
+  routeQuickActions: {
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.xl,
+  },
+
+  quickActionsTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: colors.text,
+    marginBottom: 16,
+  },
+
+  quickActionsGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    paddingHorizontal: 8,
+  },
+
+  quickActionItem: {
+    flex: 1,
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xl,
+    padding: spacing.lg,
+    alignItems: 'center',
+    marginHorizontal: spacing.sm,
+    ...shadows.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+
+  quickActionText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.text,
+    marginTop: 8,
+    textAlign: 'center',
+  },
+
+  // Legacy styles for backward compatibility
+  scrollView: {
+    flex: 1,
+    padding: spacing.lg,
+  },
+
+  placeholderText: {
+    ...typography.headlineMedium,
+    color: colors.text,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: spacing.sm,
+  },
+
+  placeholderSubtext: {
+    ...typography.bodyLarge,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    marginBottom: spacing.xl,
+  },
+
+  passengerList: {
+    gap: spacing.md,
+  },
+
+  passengerDetails: {
+    ...typography.bodySmall,
+    color: colors.textSecondary,
+    marginTop: spacing.xs,
+  },
+
+  passengerContact: {
+    ...typography.bodySmall,
+    color: colors.info,
+    marginTop: spacing.xs,
+  },
+
+  // Premium Home Screen Styles
+  homeHeader: {
+    paddingHorizontal: 24,
+    paddingVertical: 20,
+    paddingTop: 40,
+    backgroundColor: 'transparent',
+    marginBottom: 8,
+  },
+
+  welcomeText: {
+    fontSize: 16,
+    color: colors.textSecondary,
+    fontWeight: '500',
+    opacity: 0.8,
+    marginBottom: 4,
+  },
+
+  driverNameHome: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: colors.text,
+    letterSpacing: -0.5,
+  },
+
+  dutyStatusCard: {
+    backgroundColor: colors.surface,
+    marginHorizontal: 20,
+    marginVertical: 20,
+    borderRadius: 16,
+    padding: 20,
+    ...shadows.md,
+    elevation: 6,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+
+  dutyStatusContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  dutyStatusInfo: {
+    flex: 1,
+  },
+
+  dutyStatusLabel: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+
+  dutyStatusText: {
+    fontSize: 22,
+    fontWeight: '700',
+    letterSpacing: 0.5,
+  },
+
+  dutyToggleButton: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...shadows.sm,
+  },
+
+  statsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 20,
+    marginBottom: 20,
+    marginTop: 8,
+  },
+
+  primaryActionButton: {
+    flexDirection: 'row',
+    backgroundColor: colors.primary,
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    ...shadows.sm,
+  },
+
+  activeTripContainer: {
+    paddingTop: 16,
+  },
+
+  tripRoute: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+
+  tripRouteText: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: colors.text,
+  },
+
+  tripStatusBadge: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+
+  tripStatusText: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#fff',
+    letterSpacing: 0.5,
+  },
+
+  tripDetails: {
+    marginBottom: 16,
+  },
+
+  tripDetailRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+
+  tripDetailText: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginLeft: 8,
+  },
+
+  noTripContainer: {
+    alignItems: 'center',
+    paddingVertical: 32,
+  },
+
+  noTripTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.text,
+    marginTop: 16,
+    marginBottom: 8,
+  },
+
+  noTripSubtitle: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+
+  scheduleContainer: {
+    paddingTop: 16,
+  },
+
+  premiumScheduleItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 18,
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: `${colors.textSecondary}15`,
+    borderRadius: 8,
+    marginBottom: 4,
+  },
+
+  scheduleTimeContainer: {
+    alignItems: 'center',
+    marginRight: 16,
+    minWidth: 50,
+  },
+
+  scheduleTime: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: colors.text,
+  },
+
+  scheduleAmPm: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    fontWeight: '500',
+  },
+
+  scheduleInfo: {
+    flex: 1,
+    marginRight: 12,
+  },
+
+  scheduleTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 4,
+  },
+
+  scheduleRoute: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginBottom: 8,
+  },
+
+  scheduleStatus: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+
+  scheduleStatusText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#fff',
+    letterSpacing: 0.5,
+  },
+
+  scheduleMetrics: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+
+  scheduleMetric: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+
+  scheduleMetricText: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginLeft: 4,
+  },
+
+  vehicleStatusGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingTop: 16,
+    paddingHorizontal: 8,
+  },
+
+  vehicleStatusItem: {
+    width: '45%',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    marginBottom: 12,
+    marginHorizontal: '2.5%',
+    minHeight: 85,
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: colors.border,
+    ...shadows.xs,
+  },
+
+  vehicleStatusLabel: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    fontWeight: '500',
+    marginTop: 8,
+    marginBottom: 4,
+  },
+
+  vehicleStatusValue: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.text,
+  },
+
+  quickActionsHome: {
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+  },
+
+  quickActionHome: {
+    alignItems: 'center',
+    backgroundColor: colors.surface,
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    width: '30%',
+    minHeight: 80,
+    justifyContent: 'center',
+    ...shadows.xs,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+
+  // Premium Passengers Screen Styles
+
+  passengersSubtitle: {
+    fontSize: 16,
+    color: colors.textSecondary,
+    textAlign: 'center',
+  },
+
+  passengerStatsContainer: {
+    flexDirection: 'row',
+    marginHorizontal: 16,
+    marginBottom: 24,
+    justifyContent: 'space-between',
+  },
+
+  passengerStatCard: {
+    flex: 1,
+    backgroundColor: colors.surface,
+    borderRadius: 16,
+    padding: 16,
+    alignItems: 'center',
+    marginHorizontal: 3,
+    ...shadows.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+
+  passengerStatValue: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: colors.text,
+    marginTop: 8,
+    marginBottom: 4,
+  },
+
+  passengerStatLabel: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+
+  filterTabsContainer: {
+    flexDirection: 'row',
+    marginHorizontal: 24,
+    marginBottom: 16,
+    backgroundColor: `${colors.textSecondary}10`,
+    borderRadius: 12,
+    padding: 4,
+  },
+
+  filterTab: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+
+  activeFilterTab: {
+    backgroundColor: colors.surface,
+    ...shadows.xs,
+  },
+
+  filterTabText: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: colors.textSecondary,
+  },
+
+  activeFilterTabText: {
+    color: colors.primary,
+    fontWeight: '600',
+  },
+
+  premiumPassengerList: {
+    paddingTop: 16,
+  },
+
+  routePassengersSection: {
+    marginBottom: 24,
+  },
+
+  routeSectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    paddingHorizontal: 4,
+  },
+
+  routeSectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+    marginLeft: 8,
+    flex: 1,
+  },
+
+  routeSectionCount: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    backgroundColor: `${colors.primary}15`,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+
+  premiumPassengerItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: `${colors.textSecondary}08`,
+  },
+
+  premiumPassengerInfo: {
+    flex: 1,
+    marginRight: 12,
+  },
+
+  premiumPassengerName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+    marginBottom: 4,
+  },
+
+  premiumPassengerDetails: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    marginBottom: 8,
+  },
+
+  passengerMetrics: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+
+  passengerMetric: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  passengerMetricText: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginLeft: 4,
+  },
+
+  passengerStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+
+  passengerStatusText: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: '#fff',
   },
 
   // Responsive Adjustments

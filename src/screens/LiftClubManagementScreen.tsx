@@ -24,7 +24,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
 import { User } from '../types/User';
-import { LiftClub, LiftClubRequest, LiftClubStatus } from '../types/LiftClub';
+import { LiftClub, LiftClubRequest, RequestStatus } from '../types/LiftClub';
 import DashboardHeader from '../components/ui/DashboardHeader';
 import { liftClubManagementStyles } from '../styles/screens/liftClubManagementScreen';
 
@@ -37,7 +37,6 @@ interface LiftClubManagementProps {
 }
 
 interface RequestWithDetails extends LiftClubRequest {
-  requesterName: string;
   estimatedCost: number;
   availableDrivers: number;
 }
@@ -76,6 +75,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
           status: 'pending',
           requesterId: 'user1',
           requesterName: 'Sarah Johnson',
+          requesterType: 'parent',
           proposedName: 'Greenfield Primary Lift Club',
           pickupLocation: 'Sandton City, Sandton',
           dropoffLocation: 'Greenfield Primary School, Bryanston',
@@ -84,7 +84,8 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
           estimatedMembers: 5,
           maxBudget: 600,
           daysOfWeek: [1, 2, 3, 4, 5],
-          requestDate: new Date('2024-01-15'),
+          createdAt: '2024-01-15T08:00:00Z',
+          updatedAt: '2024-01-15T08:00:00Z',
           estimatedCost: 550,
           availableDrivers: 3,
         },
@@ -94,6 +95,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
           status: 'pending',
           requesterId: 'user2',
           requesterName: 'Michael Chen',
+          requesterType: 'staff',
           proposedName: 'Sandton Office Staff Club',
           pickupLocation: 'Midrand Station',
           dropoffLocation: 'Sandton CBD Office Park',
@@ -102,7 +104,8 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
           estimatedMembers: 8,
           maxBudget: 450,
           daysOfWeek: [1, 2, 3, 4, 5],
-          requestDate: new Date('2024-01-16'),
+          createdAt: '2024-01-16T08:00:00Z',
+          updatedAt: '2024-01-16T08:00:00Z',
           estimatedCost: 420,
           availableDrivers: 2,
         },
@@ -112,6 +115,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
           status: 'approved',
           requesterId: 'user3',
           requesterName: 'Lisa Williams',
+          requesterType: 'parent',
           proposedName: 'Northcliff High Club',
           pickupLocation: 'Cresta Shopping Centre',
           dropoffLocation: 'Northcliff High School',
@@ -120,7 +124,8 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
           estimatedMembers: 6,
           maxBudget: 700,
           daysOfWeek: [1, 2, 3, 4, 5],
-          requestDate: new Date('2024-01-10'),
+          createdAt: '2024-01-10T08:00:00Z',
+          updatedAt: '2024-01-10T08:00:00Z',
           estimatedCost: 650,
           availableDrivers: 4,
         },
@@ -135,14 +140,14 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
           pickupLocation: 'Cresta Shopping Centre',
           dropoffLocation: 'Northcliff High School',
           departureTime: '06:45',
-          returnTime: '15:30',
+          arrivalTime: '15:30',
           daysOfWeek: [1, 2, 3, 4, 5],
-          monthlyCost: 650,
-          maxMembers: 8,
+          monthlyFee: 650,
+          maxCapacity: 8,
           currentMembers: 6,
           driverId: 'driver1',
-          adminId: user.id,
-          createdDate: new Date('2024-01-10'),
+          createdAt: '2024-01-10T08:00:00Z',
+          updatedAt: '2024-01-10T08:00:00Z',
           description: 'Professional transport service for Northcliff High School students.',
         },
       ];
@@ -199,7 +204,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
       // Update request status
       setRequests(prev => prev.map(req =>
         req.id === selectedRequest.id
-          ? { ...req, status: 'approved' as LiftClubStatus }
+          ? { ...req, status: 'approved' as RequestStatus }
           : req
       ));
 
@@ -212,14 +217,14 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
         pickupLocation: selectedRequest.pickupLocation,
         dropoffLocation: selectedRequest.dropoffLocation,
         departureTime: selectedRequest.preferredDepartureTime,
-        returnTime: selectedRequest.type === 'school' ? '15:30' : '17:00',
+        arrivalTime: selectedRequest.type === 'school' ? '15:30' : '17:00',
         daysOfWeek: selectedRequest.daysOfWeek,
-        monthlyCost: Number(approvalData.monthlyCost),
-        maxMembers: Number(approvalData.maxMembers),
+        monthlyFee: Number(approvalData.monthlyCost),
+        maxCapacity: Number(approvalData.maxMembers),
         currentMembers: 1, // Requester automatically joins
         driverId: approvalData.assignedDriverId,
-        adminId: user.id,
-        createdDate: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         description: selectedRequest.description,
       };
 
@@ -240,7 +245,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
 
       setRequests(prev => prev.map(req =>
         req.id === selectedRequest.id
-          ? { ...req, status: 'rejected' as LiftClubStatus }
+          ? { ...req, status: 'rejected' as RequestStatus }
           : req
       ));
 
@@ -251,7 +256,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
     }
   };
 
-  const getStatusColor = (status: LiftClubStatus) => {
+  const getStatusColor = (status: RequestStatus) => {
     switch (status) {
       case 'pending':
         return '#FFA500';
@@ -259,7 +264,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
         return '#4CAF50';
       case 'rejected':
         return '#F44336';
-      case 'active':
+      case 'completed':
         return '#2196F3';
       default:
         return '#757575';
@@ -461,9 +466,9 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
                     <View style={liftClubManagementStyles.clubHeader}>
                       <Title style={liftClubManagementStyles.clubTitle}>{club.name}</Title>
                       <View style={liftClubManagementStyles.clubBadges}>
-                        <Badge style={liftClubManagementStyles.membersBadge}>
-                          {club.currentMembers}/{club.maxMembers}
-                        </Badge>
+                        <Text style={liftClubManagementStyles.membersBadge}>
+                          {club.currentMembers}/{club.maxCapacity}
+                        </Text>
                         <Chip
                           style={liftClubManagementStyles.activeChip}
                           textStyle={{ color: '#4CAF50' }}
@@ -485,13 +490,13 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
                         <View style={liftClubManagementStyles.detailItem}>
                           <MaterialCommunityIcons name="clock-outline" size={16} color="#666" />
                           <Text style={liftClubManagementStyles.detailText}>
-                            {club.departureTime} - {club.returnTime}
+                            {club.departureTime} - {club.arrivalTime}
                           </Text>
                         </View>
                         <View style={liftClubManagementStyles.detailItem}>
                           <MaterialCommunityIcons name="currency-usd" size={16} color="#666" />
                           <Text style={liftClubManagementStyles.detailText}>
-                            R{club.monthlyCost}/month
+                            R{club.monthlyFee}/month
                           </Text>
                         </View>
                       </View>

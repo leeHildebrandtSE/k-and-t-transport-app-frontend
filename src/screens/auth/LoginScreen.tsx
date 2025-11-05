@@ -74,7 +74,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
   };
 
   const navigateToRegister = () => {
-    navigation.navigate('Register' as never);
+    // navigation.navigate('Register');
+    Alert.alert('Create Account', 'Navigate to registration screen');
   };
 
   return (
@@ -121,7 +122,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
                 color={colors.textInverse}
               />
             </View>
-            <Text style={authStyles.logoText}>K & T Transport</Text>
+            <Text style={authStyles.logoTitle}>K & T Transport</Text>
             <Text style={authStyles.logoTagline}>Your Trusted Journey Partner</Text>
           </View>
 

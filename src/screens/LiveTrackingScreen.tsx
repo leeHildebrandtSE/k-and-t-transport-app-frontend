@@ -21,6 +21,7 @@ import { useNavigation } from '@react-navigation/native';
 import { User } from '../types/User';
 import DashboardHeader from '../components/ui/DashboardHeader';
 import { liveTrackingScreenStyles } from '../styles/screens/liveTrackingScreen';
+import { colors } from '../styles/theme';
 
 interface TripStatus {
   id: string;
@@ -242,7 +243,7 @@ const LiveTrackingScreen: React.FC<LiveTrackingScreenProps> = ({ route }) => {
           <Card style={styles.emptyCard}>
             <Card.Content style={styles.emptyContent}>
               <MaterialCommunityIcons
-                name="bus-off"
+                name="bus-alert"
                 size={64}
                 color="#ccc"
                 style={styles.emptyIcon}

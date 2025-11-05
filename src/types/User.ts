@@ -1,4 +1,4 @@
-export type UserRole = 'commuter' | 'driver' | 'admin';
+export type UserRole = 'commuter' | 'driver' | 'admin' | 'parent' | 'staff';
 
 export type CommuterType = 'school_transport' | 'work_transport' | 'lift_club' | 'general_commuting';
 
@@ -17,13 +17,16 @@ export interface CommuterPreferences {
 export interface User {
   id: string;
   email: string;
-  phone: string;
+  phone?: string;
   firstName: string;
   lastName: string;
   role: UserRole;
-  verified: boolean;
-  createdAt: string;
-  updatedAt: string;
+  verified?: boolean;
+  isActive?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  dateJoined?: Date;
+  lastLogin?: Date;
   // Commuter-specific preferences (only populated for commuter role)
   commuterPreferences?: CommuterPreferences;
 }

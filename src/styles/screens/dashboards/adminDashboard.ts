@@ -472,6 +472,114 @@ export const adminDashboardStyles = StyleSheet.create({
     backgroundColor: colors.warning,
   },
 
+  // User Management Screen Styles
+  screenTitle: {
+    ...typography.headlineMedium,
+    color: colors.text,
+    fontWeight: '600',
+    flex: 1,
+  },
+
+  headerButton: {
+    borderRadius: borderRadius.lg,
+  },
+
+  listContainer: {
+    padding: spacing.md,
+  },
+
+  userCard: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.lg,
+    marginBottom: spacing.md,
+    ...shadows.md,
+    borderWidth: 1,
+    borderColor: `${colors.primary}10`,
+  },
+
+  userCardContent: {
+    paddingVertical: spacing.md,
+  },
+
+  userDetails: {
+    flex: 1,
+    marginLeft: spacing.md,
+  },
+
+  userMetaContainer: {
+    flexDirection: 'row',
+    gap: spacing.sm,
+  },
+
+  // Profile Screen Styles
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  infoContent: {
+    flex: 1,
+    marginLeft: spacing.md,
+  },
+
+  infoLabel: {
+    ...typography.labelLarge,
+    color: colors.textSecondary,
+    marginBottom: spacing.xs,
+  },
+
+  infoValue: {
+    ...typography.bodyLarge,
+    color: colors.text,
+    fontWeight: '500',
+  },
+
+  preferenceRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  preferenceContent: {
+    flex: 1,
+  },
+
+  preferenceLabel: {
+    ...typography.titleMedium,
+    color: colors.text,
+    marginBottom: spacing.xs,
+  },
+
+  preferenceDescription: {
+    ...typography.bodyMedium,
+    color: colors.textSecondary,
+  },
+
+  actionGrid: {
+    gap: spacing.sm,
+  },
+
+  securityItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+
+  securityContent: {
+    flex: 1,
+  },
+
+  securityLabel: {
+    ...typography.titleMedium,
+    color: colors.text,
+    marginBottom: spacing.xs,
+  },
+
+  securityStatus: {
+    ...typography.bodyMedium,
+    color: colors.textSecondary,
+  },
+
   // Responsive Design
   mobileLayout: {
     paddingHorizontal: spacing.md,

@@ -156,7 +156,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                 color="#FFFFFF"
               />
             </View>
-            <Text style={authStyles.logoText}>K & T Transport</Text>
+            <Text style={authStyles.logoTitle}>K & T Transport</Text>
             <Text style={authStyles.logoTagline}>Your Trusted Journey Partner</Text>
           </View>
 
