@@ -13,8 +13,6 @@ import {
   Button,
   Text,
   Card,
-  Title,
-  Paragraph,
   ActivityIndicator,
   Icon,
 } from 'react-native-paper';
@@ -129,7 +127,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
           {/* Enhanced Demo Credentials */}
           <Card style={authStyles.enhancedDemoCard}>
             <Card.Content>
-              <Title style={authStyles.demoTitle}>✨ Demo Credentials</Title>
+              <Text variant="titleMedium" style={authStyles.demoTitle}>✨ Demo Credentials</Text>
               <Text style={authStyles.demoText}>
                 Use password: <Text style={authStyles.demoPassword}>demo123</Text> for any account
               </Text>

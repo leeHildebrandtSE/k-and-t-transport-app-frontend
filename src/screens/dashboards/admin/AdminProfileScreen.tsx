@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
   Button,
   Text,
   Avatar,
@@ -49,9 +48,9 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
             label={`${user.firstName[0]}${user.lastName[0]}`}
             style={{ backgroundColor: colors.primary, marginBottom: 16 }}
           />
-          <Title style={styles.cardTitle}>
+          <Text variant="titleLarge" style={styles.cardTitle}>
             {user.firstName} {user.lastName}
-          </Title>
+          </Text>
           <Text style={[styles.userEmail, { textAlign: 'center', marginBottom: 16 }]}>
             {user.email}
           </Text>
@@ -69,7 +68,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
       {/* Account Information */}
       <Card style={styles.card}>
         <Card.Content>
-          <Title style={styles.cardTitle}>Account Information</Title>
+          <Text variant="titleLarge" style={styles.cardTitle}>Account Information</Text>
 
           <View style={styles.infoRow}>
             <MaterialCommunityIcons name="email" size={24} color={colors.primary} />
@@ -116,7 +115,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
       {/* System Preferences */}
       <Card style={styles.card}>
         <Card.Content>
-          <Title style={styles.cardTitle}>System Preferences</Title>
+          <Text variant="titleLarge" style={styles.cardTitle}>System Preferences</Text>
 
           <View style={styles.preferenceRow}>
             <View style={styles.preferenceContent}>
@@ -166,7 +165,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
       {/* Admin Actions */}
       <Card style={styles.card}>
         <Card.Content>
-          <Title style={styles.cardTitle}>Administrative Actions</Title>
+          <Text variant="titleLarge" style={styles.cardTitle}>Administrative Actions</Text>
 
           <View style={styles.actionGrid}>
             <Button
@@ -211,7 +210,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
       {/* Security Settings */}
       <Card style={styles.card}>
         <Card.Content>
-          <Title style={styles.cardTitle}>Security & Privacy</Title>
+          <Text variant="titleLarge" style={styles.cardTitle}>Security & Privacy</Text>
 
           <View style={styles.securityItem}>
             <MaterialCommunityIcons name="two-factor-authentication" size={24} color={colors.success} />
@@ -267,7 +266,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
       {/* Support & About */}
       <Card style={[styles.card, { marginBottom: 30 }]}>
         <Card.Content>
-          <Title style={styles.cardTitle}>Support & Information</Title>
+          <Text variant="titleLarge" style={styles.cardTitle}>Support & Information</Text>
 
           <Button
             mode="outlined"

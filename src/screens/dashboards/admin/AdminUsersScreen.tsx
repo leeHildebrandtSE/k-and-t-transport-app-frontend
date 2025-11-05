@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
   Button,
   Text,
   Avatar,
@@ -177,7 +176,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Title style={styles.screenTitle}>User Management</Title>
+        <Text variant="titleLarge" style={styles.screenTitle}>User Management</Text>
         <Button
           mode="contained"
           icon="account-plus"

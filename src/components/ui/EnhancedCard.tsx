@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Pressable, Animated } from 'react-native';
-import { Card, Title, Paragraph, Surface } from 'react-native-paper';
+import { Card, Text, Surface } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, spacing, borderRadius, shadows, animations } from '../../styles/theme';
 
@@ -60,20 +60,20 @@ const EnhancedCard: React.FC<EnhancedCardProps> = ({
             {icon && <View style={styles.icon}>{icon}</View>}
             <View style={styles.headerText}>
               {title && (
-                <Title style={[
+                <Text variant="titleLarge" style={[
                   styles.title,
                   variant === 'gradient' && styles.titleOnGradient
                 ]}>
                   {title}
-                </Title>
+                </Text>
               )}
               {subtitle && (
-                <Paragraph style={[
+                <Text variant="bodyMedium" style={[
                   styles.subtitle,
                   variant === 'gradient' && styles.subtitleOnGradient
                 ]}>
                   {subtitle}
-                </Paragraph>
+                </Text>
               )}
             </View>
           </View>

@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
   Text,
   Button,
   TextInput,
@@ -174,7 +173,7 @@ const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ rou
                 size={24}
                 color={colors.primary}
               />
-              <Title style={styles.infoTitle}>How it Works</Title>
+              <Text variant="titleLarge" style={styles.infoTitle}>How it Works</Text>
             </View>
             <Text style={styles.infoText}>
               1. Submit your lift club request with details{'\n'}
@@ -188,7 +187,7 @@ const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ rou
         {/* Basic Information */}
         <Card style={styles.formCard}>
           <Card.Content>
-            <Title style={styles.sectionTitle}>Basic Information</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>Basic Information</Text>
 
             <TextInput
               label="Lift Club Name"
@@ -234,7 +233,7 @@ const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ rou
         {/* Route Information */}
         <Card style={styles.formCard}>
           <Card.Content>
-            <Title style={styles.sectionTitle}>Route Information</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>Route Information</Text>
 
             <TextInput
               label="Pickup Location"
@@ -269,7 +268,7 @@ const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ rou
         {/* Schedule Information */}
         <Card style={styles.formCard}>
           <Card.Content>
-            <Title style={styles.sectionTitle}>Schedule</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>Schedule</Text>
 
             <TextInput
               label="Preferred Departure Time"
@@ -314,7 +313,7 @@ const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ rou
         {/* Membership & Budget */}
         <Card style={styles.formCard}>
           <Card.Content>
-            <Title style={styles.sectionTitle}>Membership & Budget</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>Membership & Budget</Text>
 
             <TextInput
               label="Estimated Members"
@@ -358,7 +357,7 @@ const CreateLiftClubRequestScreen: React.FC<CreateLiftClubRequestProps> = ({ rou
         {/* Submit Section */}
         <Card style={styles.submitCard}>
           <Card.Content>
-            <Title style={styles.submitTitle}>Review & Submit</Title>
+            <Text variant="titleLarge" style={styles.submitTitle}>Review & Submit</Text>
             <Text style={styles.submitText}>
               By submitting this request, you agree to be contacted by our team and
               potentially matched with other interested members in your area.

@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
   List,
   Switch,
   Button,
@@ -111,7 +110,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ route }) => {
         {/* Account Section */}
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.sectionTitle}>Account</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>Account</Text>
 
             <View style={styles.profileSection}>
               <Avatar.Text
@@ -153,7 +152,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ route }) => {
         {/* Notifications Section */}
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.sectionTitle}>Notifications</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>Notifications</Text>
 
             <List.Item
               title="Enable Notifications"
@@ -203,7 +202,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ route }) => {
         {/* Privacy & Security Section */}
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.sectionTitle}>Privacy & Security</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>Privacy & Security</Text>
 
             <List.Item
               title="Location Tracking"
@@ -232,7 +231,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ route }) => {
         {/* App Preferences Section */}
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.sectionTitle}>App Preferences</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>App Preferences</Text>
 
             <List.Item
               title="Dark Mode"
@@ -267,7 +266,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ route }) => {
         {/* Support Section */}
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.sectionTitle}>Support & Legal</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>Support & Legal</Text>
 
             <List.Item
               title="Help & Support"
@@ -301,7 +300,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ route }) => {
         {/* Danger Zone */}
         <Card style={[styles.card, styles.dangerCard]}>
           <Card.Content>
-            <Title style={[styles.sectionTitle, styles.dangerTitle]}>Danger Zone</Title>
+            <Text variant="titleLarge" style={[styles.sectionTitle, styles.dangerTitle]}>Danger Zone</Text>
 
             <Button
               mode="outlined"

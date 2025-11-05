@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
   Button,
   Chip,
   Text,
@@ -134,7 +133,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
         {/* Quick Actions */}
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.cardTitle}>Quick Actions</Title>
+            <Text variant="titleLarge" style={styles.cardTitle}>Quick Actions</Text>
             <View style={styles.quickActions}>
               <Button
                 mode="contained"
@@ -202,7 +201,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
         {/* Recent Activities */}
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.cardTitle}>Recent Activities</Title>
+            <Text variant="titleLarge" style={styles.cardTitle}>Recent Activities</Text>
             <View style={styles.activityList}>
               <View style={styles.activityItem}>
                 <View style={[styles.activityIcon, { backgroundColor: `${colors.primary}15` }]}>
@@ -250,7 +249,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
         {/* System Status */}
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.cardTitle}>System Status</Title>
+            <Text variant="titleLarge" style={styles.cardTitle}>System Status</Text>
             <View style={styles.statusList}>
               <View style={styles.statusItem}>
                 <Text style={styles.statusLabel}>API Server</Text>

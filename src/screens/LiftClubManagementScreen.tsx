@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
   Text,
   Button,
   Chip,
@@ -342,9 +341,9 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
                   <Card.Content>
                     <View style={liftClubManagementStyles.requestHeader}>
                       <View style={liftClubManagementStyles.requestHeaderLeft}>
-                        <Title style={liftClubManagementStyles.requestTitle}>
+                        <Text variant="titleLarge" style={liftClubManagementStyles.requestTitle}>
                           {request.proposedName}
-                        </Title>
+                        </Text>
                         <Text style={liftClubManagementStyles.requesterName}>
                           Requested by: {request.requesterName}
                         </Text>
@@ -464,7 +463,7 @@ const LiftClubManagementScreen: React.FC<LiftClubManagementProps> = ({ route }) 
                 <Card key={club.id} style={liftClubManagementStyles.liftClubCard}>
                   <Card.Content>
                     <View style={liftClubManagementStyles.clubHeader}>
-                      <Title style={liftClubManagementStyles.clubTitle}>{club.name}</Title>
+                      <Text variant="titleLarge" style={liftClubManagementStyles.clubTitle}>{club.name}</Text>
                       <View style={liftClubManagementStyles.clubBadges}>
                         <Text style={liftClubManagementStyles.membersBadge}>
                           {club.currentMembers}/{club.maxCapacity}

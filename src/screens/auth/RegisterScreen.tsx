@@ -13,8 +13,6 @@ import {
   Button,
   Text,
   Card,
-  Title,
-  Paragraph,
   RadioButton,
   ActivityIndicator,
 } from 'react-native-paper';

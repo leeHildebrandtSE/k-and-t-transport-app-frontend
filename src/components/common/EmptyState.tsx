@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import { Card, Title, Paragraph, Button } from 'react-native-paper';
+import { Card, Text, Button } from 'react-native-paper';
 import { colors, spacing, borderRadius } from '../../utils/theme';
 
 interface EmptyStateProps {
@@ -27,10 +27,10 @@ const EmptyState: React.FC<EmptyStateProps> = ({
           {imageSource && (
             <Image source={imageSource} style={styles.image} resizeMode="contain" />
           )}
-          
-          <Title style={styles.title}>{title}</Title>
-          <Paragraph style={styles.message}>{message}</Paragraph>
-          
+
+          <Text variant="titleLarge" style={styles.title}>{title}</Text>
+          <Text variant="bodyMedium" style={styles.message}>{message}</Text>
+
           {actionText && onAction && (
             <Button
               mode="contained"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Card, Title, Paragraph, Chip, Text, Avatar, Icon } from 'react-native-paper';
+import { Card, Chip, Text, Avatar, Icon } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors, spacing, borderRadius, shadows } from '../../utils/theme';
 import { EnhancedCard, StatusIndicator } from '../ui';

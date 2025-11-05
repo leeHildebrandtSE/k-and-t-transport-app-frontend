@@ -7,8 +7,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
-  Paragraph,
   Button,
   TextInput,
   RadioButton,
@@ -64,7 +62,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
         {
           id: 'route-1',
           name: userRole === 'parent' ? 'Central Primary School' : 'Business District A',
-          description: userRole === 'parent' 
+          description: userRole === 'parent'
             ? 'Morning and afternoon school transport'
             : 'Corporate office transport',
           stops: [],
@@ -78,7 +76,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
         {
           id: 'route-2',
           name: userRole === 'parent' ? 'Westside Primary School' : 'Business District B',
-          description: userRole === 'parent' 
+          description: userRole === 'parent'
             ? 'Westside area school transport'
             : 'Financial district transport',
           stops: [],
@@ -97,7 +95,7 @@ const BookingForm: React.FC<BookingFormProps> = ({
   };
 
   const toggleDay = (dayIndex: number) => {
-    setSelectedDays(prev => 
+    setSelectedDays(prev =>
       prev.includes(dayIndex)
         ? prev.filter(day => day !== dayIndex)
         : [...prev, dayIndex]
@@ -169,9 +167,9 @@ const BookingForm: React.FC<BookingFormProps> = ({
     <ScrollView style={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
-          <Title style={styles.title}>
+          <Text variant="titleLarge" style={styles.title}>
             {userRole === 'parent' ? 'School Transport Booking' : 'Work Transport Booking'}
-          </Title>
+          </Text>
 
           {/* Route Selection */}
           <View style={styles.section}>

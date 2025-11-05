@@ -7,8 +7,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
-  Paragraph,
   Button,
   Chip,
   Text,
@@ -53,7 +51,7 @@ const LiveTrackingMap: React.FC<LiveTrackingMapProps> = ({
   const [connectionStatus, setConnectionStatus] = useState<'connecting' | 'connected' | 'disconnected'>('connecting');
   const [estimatedArrival, setEstimatedArrival] = useState<string>('');
   const [currentSpeed, setCurrentSpeed] = useState<number>(0);
-  
+
   const mapRef = useRef<MapView>(null);
   const socketRef = useRef<Socket | null>(null);
 
@@ -79,10 +77,10 @@ const LiveTrackingMap: React.FC<LiveTrackingMapProps> = ({
     try {
       // Initialize WebSocket connection for real-time updates
       connectToTrackingService();
-      
+
       // Fetch initial route data
       await fetchRouteData();
-      
+
       setIsTracking(true);
     } catch (error) {
       console.error('Error initializing tracking:', error);
@@ -94,7 +92,7 @@ const LiveTrackingMap: React.FC<LiveTrackingMapProps> = ({
     try {
       // Replace with your actual WebSocket server URL
       const SOCKET_URL = 'ws://localhost:8080';
-      
+
       socketRef.current = io(SOCKET_URL, {
         transports: ['websocket'],
         timeout: 5000,
@@ -103,7 +101,7 @@ const LiveTrackingMap: React.FC<LiveTrackingMapProps> = ({
       socketRef.current.on('connect', () => {
         console.log('Connected to tracking service');
         setConnectionStatus('connected');
-        
+
         // Join tracking room for specific trip/driver
         if (tripId) {
           socketRef.current?.emit('join-trip', tripId);
@@ -121,7 +119,7 @@ const LiveTrackingMap: React.FC<LiveTrackingMapProps> = ({
       socketRef.current.on('driver-location-update', (locationData: DriverLocation) => {
         setDriverLocation(locationData);
         setCurrentSpeed(locationData.speed);
-        
+
         // Update map region to follow driver
         if (mapRef.current) {
           mapRef.current.animateToRegion({
@@ -245,7 +243,6 @@ const LiveTrackingMap: React.FC<LiveTrackingMapProps> = ({
         coordinates={coordinates}
         strokeColor={colors.primary}
         strokeWidth={3}
-        strokePattern={[1]}
       />
     );
   };
@@ -256,11 +253,11 @@ const LiveTrackingMap: React.FC<LiveTrackingMapProps> = ({
       <View style={styles.container}>
         <Card style={styles.webMapCard}>
           <Card.Content>
-            <Title style={styles.webMapTitle}>Live Tracking</Title>
-            <Paragraph style={styles.webMapText}>
+            <Text variant="titleLarge" style={styles.webMapTitle}>Live Tracking</Text>
+            <Text variant="bodyMedium" style={styles.webMapText}>
               Interactive map tracking is available on mobile devices.
-            </Paragraph>
-            
+            </Text>
+
             {driverLocation && (
               <View style={styles.locationInfo}>
                 <Text style={styles.locationLabel}>Current Location:</Text>
@@ -314,7 +311,7 @@ const LiveTrackingMap: React.FC<LiveTrackingMapProps> = ({
               {connectionStatus === 'connected' ? 'Live Tracking Active' : 'Connecting...'}
             </Text>
           </View>
-          
+
           {driverLocation && (
             <View style={styles.driverInfo}>
               <Text style={styles.speedText}>{currentSpeed} km/h</Text>

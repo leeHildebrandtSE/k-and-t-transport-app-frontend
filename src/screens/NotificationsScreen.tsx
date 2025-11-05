@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
   Text,
   Button,
   Chip,
@@ -266,7 +265,7 @@ const NotificationsScreen: React.FC<NotificationsScreenProps> = ({ route }) => {
                 color="#ccc"
                 style={styles.emptyIcon}
               />
-              <Title style={styles.emptyTitle}>No Notifications</Title>
+              <Text variant="titleLarge" style={styles.emptyTitle}>No Notifications</Text>
               <Text style={styles.emptyText}>
                 {filter === 'all'
                   ? "You're all caught up! No new notifications."

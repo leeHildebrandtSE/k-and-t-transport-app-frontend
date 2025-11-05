@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
   Text,
   Button,
   Chip,
@@ -291,9 +290,9 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
                     color="#ccc"
                     style={styles.emptyIcon}
                   />
-                  <Title style={styles.emptyTitle}>
+                  <Text variant="titleLarge" style={styles.emptyTitle}>
                     No {clubType === 'school' ? 'School' : 'Staff'} Lift Clubs Found
-                  </Title>
+                  </Text>
                   <Text style={styles.emptyText}>
                     {searchQuery
                       ? 'Try adjusting your search or filters'
@@ -316,7 +315,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
                     {/* Club Header */}
                     <View style={styles.clubHeader}>
                       <View style={styles.clubInfo}>
-                        <Title style={styles.clubTitle}>{liftClub.name}</Title>
+                        <Text variant="titleLarge" style={styles.clubTitle}>{liftClub.name}</Text>
                         <View style={styles.clubMeta}>
                           <Chip
                             icon="account-group"
@@ -388,7 +387,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
 
         {showRequests && (
           <View style={styles.requestsSection}>
-            <Title style={styles.sectionTitle}>My Lift Club Requests</Title>
+            <Text variant="titleLarge" style={styles.sectionTitle}>My Lift Club Requests</Text>
 
             {myRequests.length === 0 ? (
               <Card style={styles.emptyCard}>
@@ -399,7 +398,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
                     color="#ccc"
                     style={styles.emptyIcon}
                   />
-                  <Title style={styles.emptyTitle}>No Requests Yet</Title>
+                  <Text variant="titleLarge" style={styles.emptyTitle}>No Requests Yet</Text>
                   <Text style={styles.emptyText}>
                     You haven't submitted any lift club requests yet.
                   </Text>
@@ -410,7 +409,7 @@ const LiftClubBrowseScreen: React.FC<LiftClubBrowseScreenProps> = ({ route }) =>
                 <Card key={request.id} style={styles.requestCard}>
                   <Card.Content>
                     <View style={styles.requestHeader}>
-                      <Title style={styles.requestTitle}>{request.proposedName}</Title>
+                      <Text variant="titleLarge" style={styles.requestTitle}>{request.proposedName}</Text>
                       <Chip
                         style={[styles.statusChip, { backgroundColor: request.status === 'pending' ? '#ff9800' : '#4caf50' }]}
                         textStyle={{ color: 'white' }}

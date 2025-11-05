@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import {
   Card,
-  Title,
   Text,
   Button,
   Chip,
@@ -216,7 +215,7 @@ const LiveTrackingScreen: React.FC<LiveTrackingScreenProps> = ({ route }) => {
         {/* Quick Stats */}
         <Card style={styles.statsCard}>
           <Card.Content>
-            <Title style={styles.statsTitle}>Current Activity</Title>
+            <Text variant="titleLarge" style={styles.statsTitle}>Current Activity</Text>
             <View style={styles.statsGrid}>
               <View style={styles.statItem}>
                 <Text style={styles.statNumber}>{activeTrips.length}</Text>
@@ -248,7 +247,7 @@ const LiveTrackingScreen: React.FC<LiveTrackingScreenProps> = ({ route }) => {
                 color="#ccc"
                 style={styles.emptyIcon}
               />
-              <Title style={styles.emptyTitle}>No Active Trips</Title>
+              <Text variant="titleLarge" style={styles.emptyTitle}>No Active Trips</Text>
               <Text style={styles.emptyText}>
                 There are no trips currently active. Check back during transport hours.
               </Text>
@@ -360,7 +359,7 @@ const LiveTrackingScreen: React.FC<LiveTrackingScreenProps> = ({ route }) => {
                 size={24}
                 color={colors.success}
               />
-              <Title style={styles.safetyTitle}>Safety Features</Title>
+              <Text variant="titleLarge" style={styles.safetyTitle}>Safety Features</Text>
             </View>
             <Text style={styles.safetyText}>
               • Real-time GPS tracking for all vehicles{'\n'}
