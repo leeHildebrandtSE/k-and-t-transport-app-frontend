@@ -24,6 +24,7 @@ import { AuthService } from '../../services/AuthService';
 import { registerScreenStyles } from '../../styles/screens/registerScreen';
 import { authStyles, colors } from '../../styles';
 import { RegisterData, User, UserRole } from '../../types/User';
+import { useResponsive } from '../../hooks/useResponsive';
 
 interface RegisterScreenProps {
   route: {
@@ -36,6 +37,7 @@ interface RegisterScreenProps {
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
   const navigation = useNavigation();
+  const responsive = useResponsive(); // Added responsive hook
   const { onLogin, onBackToLanding } = route.params;
 
   const [formData, setFormData] = useState<RegisterData>({
@@ -124,7 +126,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
         resizeMode="cover"
       />
 
-      {/* Cape Town Ocean to Mountain Gradient Overlay */}
+      {/* UPDATED: Cape Town Ocean to Mountain Gradient Overlay - Better Visibility */}
       <LinearGradient
         colors={[
           `${colors.primary}CC`, // Cape Town ocean blue with 80% opacity
@@ -132,10 +134,16 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
           `${colors.secondary}66`  // Cape Town sunshine with 40% opacity
         ]}
         locations={[0, 0.6, 1]}
-        style={authStyles.gradientOverlay}
+        style={authStyles.enhancedGradientOverlay} // Using improved overlay (50% opacity)
       />
 
-      <ScrollView contentContainerStyle={registerScreenStyles.scrollContent}>
+      <ScrollView
+        contentContainerStyle={[
+          registerScreenStyles.scrollContent,
+          // Responsive padding
+          { paddingHorizontal: responsive.mobile ? 20 : responsive.tablet ? 32 : 48 }
+        ]}
+      >
         <View style={registerScreenStyles.content}>
           {/* Back to Landing Button */}
           {onBackToLanding && (
@@ -150,7 +158,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                   color="#FFFFFF"
                 />
               </Pressable>
-              <Text style={authStyles.backText}>Back to Home</Text>
+              <Text style={authStyles.enhancedBackText}>Back to Home</Text>
             </View>
           )}
 
@@ -163,12 +171,15 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
                 color="#FFFFFF"
               />
             </View>
-            <Text style={authStyles.logoTitle}>K & T Transport</Text>
-            <Text style={authStyles.logoTagline}>Your Trusted Journey Partner</Text>
+            <Text style={authStyles.enhancedLogoTitle}>K & T Transport</Text>
+            <Text style={authStyles.enhancedLogoTagline}>Your Trusted Journey Partner</Text>
           </View>
 
-          {/* Enhanced Registration Form */}
-          <Card style={[registerScreenStyles.card, authStyles.floatingElement]}>
+          {/* UPDATED: Enhanced Registration Form - Better Contrast */}
+          <Card style={[
+            authStyles.enhancedFormCard, // Using improved card (98% opacity)
+            authStyles.floatingElement
+          ]}>
             <Card.Content>
               <View style={registerScreenStyles.nameRow}>
                 <TextInput
@@ -298,7 +309,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
 
           {/* Login Link */}
           <View style={registerScreenStyles.loginSection}>
-            <Text style={registerScreenStyles.loginText}>Already have an account?</Text>
+            <Text style={authStyles.enhancedRegisterText}>Already have an account?</Text>
             <Button
               mode="text"
               onPress={navigateToLogin}

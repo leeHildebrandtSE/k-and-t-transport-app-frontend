@@ -1,8 +1,11 @@
 import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
-import { colors } from '../../utils/theme';
+import { colors } from '../../styles/theme';
+import { adminDashboardStyles, adminGradientConfigs } from '../../styles/screens/dashboards/adminDashboard';
 import { AdminDashboardProps } from '../../types/Dashboard';
 
 // Import extracted admin components
@@ -13,45 +16,85 @@ import AdminProfileScreen from './admin/AdminProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
+// Custom TabBar with LinearGradient
+const CustomTabBar = (props: any) => {
+  const { state, descriptors, navigation } = props;
+
+  return (
+    <LinearGradient
+      colors={adminGradientConfigs.navbar.colors}
+      start={adminGradientConfigs.navbar.start}
+      end={adminGradientConfigs.navbar.end}
+      style={adminDashboardStyles.premiumTabBar}
+    >
+      <View style={{ flexDirection: 'row', height: '100%' }}>
+        {state.routes.map((route: any, index: number) => {
+          const { options } = descriptors[route.key];
+          const isFocused = state.index === index;
+
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
+
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate(route.name);
+            }
+          };
+
+          let iconName: keyof typeof MaterialCommunityIcons.glyphMap;
+          if (route.name === 'Overview') {
+            iconName = isFocused ? 'view-dashboard' : 'view-dashboard-outline';
+          } else if (route.name === 'Users') {
+            iconName = isFocused ? 'account-group' : 'account-group-outline';
+          } else if (route.name === 'Bookings') {
+            iconName = isFocused ? 'calendar-check' : 'calendar-check-outline';
+          } else if (route.name === 'Profile') {
+            iconName = isFocused ? 'account-circle' : 'account-circle-outline';
+          } else {
+            iconName = 'help-circle';
+          }
+
+          return (
+            <TouchableOpacity
+              key={route.key}
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingVertical: 10,
+              }}
+              onPress={onPress}
+            >
+              <View style={isFocused ? adminDashboardStyles.activeTabIcon : adminDashboardStyles.inactiveTabIcon}>
+                <MaterialCommunityIcons
+                  name={iconName}
+                  size={isFocused ? 26 : 24}
+                  color={isFocused ? colors.tertiaryLight : colors.surface}
+                />
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </LinearGradient>
+  );
+};
+
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ route }) => {
   const { user, onLogout } = route.params;
 
   return (
     <Tab.Navigator
       initialRouteName="Overview"
-      screenOptions={({ route }) => ({
+      tabBar={props => <CustomTabBar {...props} />}
+      screenOptions={{
         headerShown: false,
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName: keyof typeof MaterialCommunityIcons.glyphMap;
-
-          if (route.name === 'Overview') {
-            iconName = focused ? 'view-dashboard' : 'view-dashboard-outline';
-          } else if (route.name === 'Users') {
-            iconName = focused ? 'account-group' : 'account-group-outline';
-          } else if (route.name === 'Bookings') {
-            iconName = focused ? 'calendar-check' : 'calendar-check-outline';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'account-circle' : 'account-circle-outline';
-          } else {
-            iconName = 'help-circle';
-          }
-
-          return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.textSecondary,
-        tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.border,
-          height: 60,
-          paddingBottom: 8,
-          paddingTop: 8,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
-        },
-      })}
+        tabBarActiveTintColor: colors.tertiaryLight,
+        tabBarInactiveTintColor: colors.surface,
+      }}
     >
       <Tab.Screen name="Overview">
         {() => <AdminOverviewScreen user={user} />}
@@ -63,7 +106,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ route }) => {
         {() => <AdminBookingsScreen user={user} />}
       </Tab.Screen>
       <Tab.Screen name="Profile">
-        {() => <AdminProfileScreen user={user} onLogout={onLogout || (() => {})} />}
+        {() => <AdminProfileScreen user={user} onLogout={onLogout} />}
       </Tab.Screen>
     </Tab.Navigator>
   );

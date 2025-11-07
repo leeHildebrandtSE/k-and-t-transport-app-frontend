@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 // Theme and core styles
 export { default as theme, colors, typography, spacing, borderRadius, shadows, animations, effects, componentSizes } from './theme';
 export {
@@ -17,17 +19,36 @@ export { default as authStyles } from './components/auth';
 export { default as dashboardStyles } from './screens/dashboard';
 export { default as landingPageStyles } from './screens/landingPage';
 export { default as registerScreenStyles } from './screens/registerScreen';
-// export { default as bookingStyles } from './screens/booking';
-// export { default as trackingStyles } from './screens/tracking';
+export { default as settingsScreenStyles } from './screens/settingsScreen';
+export { default as notificationsScreenStyles } from './screens/notificationsScreen';
+export { default as liveTrackingScreenStyles } from './screens/liveTrackingScreen';
+export { default as liftClubBrowseScreenStyles } from './screens/liftClubBrowseScreen';
+export { default as liftClubManagementScreenStyles } from './screens/liftClubManagementScreen';
+export { default as createLiftClubRequestScreenStyles } from './screens/createLiftClubRequestScreen';
+
+// Dashboard styles
+export { default as adminDashboardStyles } from './screens/dashboards/adminDashboard';
+export { default as commuterDashboardStyles } from './screens/dashboards/commuterDashboard';
+export { default as driverDashboardStyles } from './screens/dashboards/driverDashboard';
 
 // Utility functions for dynamic styling
 export const createShadow = (elevation: number) => {
+  const offset = elevation / 2;
+  const opacity = 0.1 + (elevation * 0.02);
+
   return {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: elevation / 2 },
-    shadowOpacity: 0.1 + (elevation * 0.02),
-    shadowRadius: elevation,
-    elevation: elevation,
+    boxShadow: `0px ${offset}px ${elevation}px rgba(0, 0, 0, ${opacity})`,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: offset },
+        shadowOpacity: opacity,
+        shadowRadius: elevation,
+      },
+      android: {
+        elevation: elevation,
+      },
+    }),
   };
 };
 

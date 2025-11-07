@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
   View,
-  FlatList,
+  ScrollView,
   RefreshControl,
+  ImageBackground,
 } from 'react-native';
 import {
   Card,
@@ -13,10 +14,12 @@ import {
   Menu,
   Divider,
 } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createIcon } from '../../../components/Icon';
 
 import { colors } from '../../../utils/theme';
-import { adminDashboardStyles } from '../../../styles/screens/dashboards/adminDashboard';
+import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
 import { AdminScreenProps } from '../../../types/Dashboard';
 import { Booking } from '../../../types/Booking';
 
@@ -112,13 +115,17 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
   };
 
   const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'confirmed': return 'check-circle';
-      case 'pending': return 'clock';
-      case 'cancelled': return 'cancel';
-      case 'completed': return 'check-circle-outline';
-      default: return 'help-circle';
-    }
+    const iconName = (() => {
+      switch (status) {
+        case 'confirmed': return 'check-circle';
+        case 'pending': return 'clock';
+        case 'cancelled': return 'cancel';
+        case 'completed': return 'check-circle-outline';
+        default: return 'help-circle';
+      }
+    })();
+
+    return createIcon(iconName, 16, getStatusColor(status));
   };
 
   const formatDateTime = (dateString: string) => {
@@ -174,7 +181,7 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
             <View style={adminDashboardStyles.userMetaContainer}>
               <Chip
                 mode="outlined"
-                icon="briefcase"
+                icon={createIcon('briefcase', 16, colors.primary)}
                 textStyle={{ color: colors.primary }}
                 style={{ borderColor: colors.primary }}
               >
@@ -182,7 +189,7 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
               </Chip>
               <Chip
                 mode="outlined"
-                icon="currency-usd"
+                icon={createIcon('currency-usd', 16, colors.success)}
                 textStyle={{ color: colors.success }}
                 style={{ borderColor: colors.success }}
               >
@@ -190,7 +197,11 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
               </Chip>
               <Chip
                 mode="outlined"
-                icon={item.paymentStatus === 'paid' ? 'check-circle' : item.paymentStatus === 'pending' ? 'clock' : 'alert-circle'}
+                icon={createIcon(
+                  item.paymentStatus === 'paid' ? 'check-circle' : item.paymentStatus === 'pending' ? 'clock' : 'alert-circle',
+                  16,
+                  item.paymentStatus === 'paid' ? colors.success : item.paymentStatus === 'pending' ? colors.warning : colors.error
+                )}
                 textStyle={{
                   color: item.paymentStatus === 'paid' ? colors.success :
                          item.paymentStatus === 'pending' ? colors.warning : colors.error
@@ -210,7 +221,7 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
             onDismiss={() => setMenuVisible(null)}
             anchor={
               <IconButton
-                icon="dots-vertical"
+                icon={createIcon('dots-vertical', 24, '#666')}
                 onPress={() => setMenuVisible(item.id)}
               />
             }
@@ -221,7 +232,7 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
                 // TODO: View booking details
               }}
               title="View Details"
-              leadingIcon="eye"
+              leadingIcon={createIcon('eye', 20, '#666')}
             />
             <Menu.Item
               onPress={() => {
@@ -229,7 +240,7 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
                 // TODO: Edit booking
               }}
               title="Edit Booking"
-              leadingIcon="pencil"
+              leadingIcon={createIcon('pencil', 20, '#666')}
             />
             <Divider />
             <Menu.Item
@@ -238,7 +249,7 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
                 // TODO: Cancel booking
               }}
               title="Cancel Booking"
-              leadingIcon="cancel"
+              leadingIcon={createIcon('cancel', 20, colors.error)}
               titleStyle={{ color: colors.error }}
             />
           </Menu>
@@ -251,28 +262,89 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text variant="titleLarge" style={styles.screenTitle}>Booking Management</Text>
-        <Button
-          mode="contained"
-          icon="calendar-plus"
-          onPress={() => {/* Add new booking */}}
-          style={styles.headerButton}
-        >
-          New Booking
-        </Button>
-      </View>
+      {/* Cape Town Bookings Background */}
+      <ImageBackground
+        source={{ uri: 'https://images.pexels.com/photos/1592119/pexels-photo-1592119.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        {/* Premium Background Overlay */}
+        <View style={styles.premiumBackgroundOverlay} />
+      </ImageBackground>
 
-      <FlatList
-        data={bookings}
-        keyExtractor={(item) => item.id}
-        renderItem={renderBookingItem}
-        contentContainerStyle={styles.listContainer}
+      <ScrollView
+        style={styles.scrollContainer}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        showsVerticalScrollIndicator={false}
-      />
+      >
+        {/* Hero Booking Management Header */}
+        <View style={styles.heroProfileCard}>
+          <LinearGradient
+            colors={adminGradientConfigs.hero.colors}
+            start={adminGradientConfigs.hero.start}
+            end={adminGradientConfigs.hero.end}
+            style={styles.heroGradientOverlay}
+          >
+            {/* African Pattern Overlay */}
+            <View style={[styles.africanPatternOverlay, styles.mountainAfricanPattern]}>
+              <View style={styles.africanPatternDot1} />
+              <View style={styles.africanPatternDot2} />
+              <View style={styles.africanPatternDot3} />
+              <View style={styles.africanTriangle1} />
+              <View style={styles.africanTriangle2} />
+              <View style={styles.africanZigzag} />
+            </View>
+
+            <View style={styles.heroContent}>
+              {/* Booking Management Icon */}
+              <View style={styles.profileImageFrame}>
+                <View style={[styles.adminStatusIcon, { backgroundColor: colors.info }]}>
+                  <MaterialCommunityIcons
+                    name="calendar-multiple-check"
+                    size={60}
+                    color="#fff"
+                  />
+                </View>
+                <View style={[styles.onlineIndicator, { backgroundColor: colors.success }]} />
+              </View>
+
+              {/* Booking Management Info */}
+              <View style={styles.heroProfileInfo}>
+                <Text style={styles.heroName}>Booking Management</Text>
+                <Text style={styles.heroRole}>Transport Reservations & Scheduling</Text>
+
+                {/* Booking Stats */}
+                <View style={styles.statsRow}>
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{bookings.length}</Text>
+                    <Text style={styles.heroStatLabel}>TOTAL</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{bookings.filter(b => b.status === 'confirmed').length}</Text>
+                    <Text style={styles.heroStatLabel}>CONFIRMED</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{bookings.filter(b => b.paymentStatus === 'paid').length}</Text>
+                    <Text style={styles.heroStatLabel}>PAID</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
+        </View>
+
+        {/* Booking List */}
+        <View style={styles.listContainer}>
+          {bookings.map((booking) => (
+            <View key={booking.id}>
+              {renderBookingItem({ item: booking })}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };

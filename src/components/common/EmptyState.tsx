@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { Card, Text, Button } from 'react-native-paper';
-import { colors, spacing, borderRadius } from '../../utils/theme';
+import { colors, spacing, borderRadius } from '../../styles/theme';
 
 interface EmptyStateProps {
   title: string;
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     maxWidth: 400,
-    borderRadius: borderRadius.large,
+    borderRadius: borderRadius.lg,
   },
   content: {
     alignItems: 'center',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   actionButton: {
-    borderRadius: borderRadius.medium,
+    borderRadius: borderRadius.md,
     paddingHorizontal: spacing.lg,
   },
 });

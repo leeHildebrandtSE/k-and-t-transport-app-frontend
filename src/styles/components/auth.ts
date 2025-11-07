@@ -1,14 +1,14 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { colors, spacing, borderRadius, shadows, typography } from '../theme';
 
 const { width, height } = Dimensions.get('window');
 
-// Enhanced Modern Auth Screen Styles with Premium UI/UX
+// Enhanced Modern Auth Screen Styles with Improved Visibility
 export const authStyles = StyleSheet.create({
   // Main container with background image and gradient overlay
   container: {
     flex: 1,
-    backgroundColor: 'transparent', // Make transparent to show background
+    backgroundColor: 'transparent',
   },
 
   // Background image container - full screen coverage
@@ -20,11 +20,11 @@ export const authStyles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: '100%',
-    opacity: 0.7, // Higher opacity to show more of the beautiful background image
+    opacity: 0.6, // Reduced for better visibility
     zIndex: -2,
   },
 
-  // Blue to gold gradient overlay
+  // Improved gradient overlay with better contrast
   gradientOverlay: {
     position: 'absolute',
     top: 0,
@@ -32,17 +32,17 @@ export const authStyles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: -1,
-    opacity: 0.85,
+    opacity: 0.8, // Reduced from 0.85 for better visibility
   },
 
-  // Cape Town ocean gradient overlay for better text visibility
+  // Improved blue overlay for better text visibility
   blueOverlay: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(14, 165, 233, 0.7)', // Cape Town ocean blue with proper opacity
+    backgroundColor: 'rgba(14, 165, 233, 0.5)', // Reduced from 0.7
     zIndex: -1,
   },
 
@@ -64,7 +64,7 @@ export const authStyles = StyleSheet.create({
     width: '100%',
   },
 
-  // Enhanced Header section with modern styling
+  // Enhanced Header section with improved text shadows
   header: {
     alignItems: 'center',
     marginBottom: spacing.xxxl,
@@ -80,10 +80,9 @@ export const authStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     ...shadows.lg,
-    // Premium glow effect
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.3,
     shadowRadius: 20,
     elevation: 12,
   },
@@ -103,10 +102,9 @@ export const authStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: spacing.md,
-    // Enhanced glow effect for branding
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.35,
     shadowRadius: 24,
     elevation: 15,
   },
@@ -118,15 +116,23 @@ export const authStyles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: spacing.xs,
     letterSpacing: 1,
+    // Enhanced text shadow for better legibility
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
   },
 
   logoTagline: {
     ...typography.bodyLarge,
     color: colors.textInverse,
     textAlign: 'center',
-    opacity: 0.9,
+    opacity: 0.95,
     fontStyle: 'italic',
     letterSpacing: 0.5,
+    // Enhanced text shadow
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
 
   title: {
@@ -158,20 +164,24 @@ export const authStyles = StyleSheet.create({
 
   backText: {
     ...typography.bodyMedium,
-    color: colors.textInverse, // White text for better contrast on blue overlay
+    color: colors.textInverse,
     marginLeft: spacing.xs,
     fontWeight: '500',
+    // Enhanced text shadow
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 
-  // Demo credentials card
+  // Demo credentials card with improved visibility
   demoCard: {
-    backgroundColor: colors.surfaceVariant,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)', // More opaque
     borderRadius: borderRadius.xl,
     padding: spacing.lg,
     marginBottom: spacing.xl,
     borderWidth: 1,
-    borderColor: colors.secondaryLight,
-    ...shadows.sm,
+    borderColor: 'rgba(14, 165, 233, 0.3)',
+    ...shadows.md,
   },
 
   demoTitle: {
@@ -208,19 +218,18 @@ export const authStyles = StyleSheet.create({
     paddingHorizontal: spacing.sm,
   },
 
-  // Enhanced Form card with premium styling
+  // Enhanced Form card with better contrast
   formCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: 'rgba(255, 255, 255, 0.98)', // More opaque
     borderRadius: borderRadius.xxl,
     padding: spacing.xxl,
     marginBottom: spacing.xl,
     ...shadows.xl,
     borderWidth: 1,
-    borderColor: colors.border + '40', // More subtle border
-    // Enhanced shadow for depth and premium feel
+    borderColor: 'rgba(229, 231, 235, 0.5)',
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.15,
+    shadowOpacity: 0.18,
     shadowRadius: 24,
     elevation: 16,
   },
@@ -283,7 +292,7 @@ export const authStyles = StyleSheet.create({
     backgroundColor: colors.errorLight + '20',
   },
 
-  // Enhanced Button styles with premium design
+  // Enhanced Button styles
   primaryButton: {
     marginTop: spacing.lg,
     marginBottom: spacing.md,
@@ -291,14 +300,12 @@ export const authStyles = StyleSheet.create({
     paddingVertical: spacing.md,
     backgroundColor: colors.primary,
     ...shadows.lg,
-    // Premium button glow
     shadowColor: colors.primary,
     shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.35,
     shadowRadius: 16,
     elevation: 12,
-    // Enhanced visual hierarchy
-    minHeight: 56, // Material Design 3 touch target
+    minHeight: 56,
   },
 
   primaryButtonContent: {
@@ -352,7 +359,7 @@ export const authStyles = StyleSheet.create({
     marginTop: spacing.sm,
   },
 
-  // Register section
+  // Register section with improved visibility
   registerSection: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -363,9 +370,13 @@ export const authStyles = StyleSheet.create({
 
   registerText: {
     ...typography.bodyMedium,
-    color: colors.textInverse, // White text for better contrast on blue overlay
+    color: colors.textInverse,
     marginRight: spacing.xs,
-    opacity: 0.9,
+    opacity: 0.95,
+    // Enhanced text shadow
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 
   registerButton: {
@@ -375,9 +386,13 @@ export const authStyles = StyleSheet.create({
 
   registerButtonText: {
     ...typography.labelLarge,
-    color: colors.textInverse, // White text for better contrast
+    color: colors.textInverse,
     fontWeight: '600',
-    textDecorationLine: 'underline', // Make it clear it's a link
+    textDecorationLine: 'underline',
+    // Enhanced text shadow
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 
   // Loading states
@@ -387,7 +402,7 @@ export const authStyles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1000,
@@ -400,12 +415,12 @@ export const authStyles = StyleSheet.create({
 
   loadingText: {
     ...typography.bodyMedium,
-    color: colors.textInverse, // White text for better visibility
+    color: colors.text,
     marginTop: spacing.md,
     fontWeight: '500',
   },
 
-  // Social login section (for future use)
+  // Social login section
   socialSection: {
     marginTop: spacing.xl,
     alignItems: 'center',
@@ -480,96 +495,31 @@ export const authStyles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // New Premium UI Enhancement Styles
-
-  // Floating action elements
-  floatingElement: {
-    shadowColor: colors.primary,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 20,
-    elevation: 10,
-  },
-
-  // Premium input container with enhanced focus states
-  premiumInputContainer: {
-    marginBottom: spacing.lg,
-    position: 'relative',
-    overflow: 'hidden',
-  },
-
-  // Animated focus indicator
-  inputFocusIndicator: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 2,
-    backgroundColor: colors.primary,
-    opacity: 0,
-  },
-
-  // Enhanced visual feedback
-  pressableArea: {
-    borderRadius: borderRadius.lg,
-    overflow: 'hidden',
-  },
-
-  // Premium card with subtle animations
-  animatedCard: {
-    transform: [{ scale: 1 }],
-    opacity: 1,
-  },
-
-  // Decorative gradient overlay effect (using multiple Views for React Native)
-  decorativeGradientOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 100,
-    opacity: 0.1,
-  },
-
-  // Enhanced demo card with better visual hierarchy
-  enhancedDemoCard: {
-    backgroundColor: colors.surfaceVariant + 'E6', // More transparent
-    borderRadius: borderRadius.xxl,
-    padding: spacing.xl,
-    marginBottom: spacing.xl,
-    borderWidth: 1,
-    borderColor: colors.primary + '20', // Subtle primary accent
-    ...shadows.lg,
-    // Soft glow effect
-    shadowColor: colors.secondary,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-    elevation: 8,
-  },
-
-  // Modern typography enhancements
+  // Modern typography enhancements with better shadows
   modernTitle: {
     ...typography.headlineLarge,
-    color: colors.textInverse, // White text for better contrast on blue overlay
-    fontWeight: '700', // Bolder for impact
-    letterSpacing: -0.5, // Tighter spacing for modern feel
+    color: colors.textInverse,
+    fontWeight: '700',
+    letterSpacing: -0.5,
     marginBottom: spacing.sm,
     textAlign: 'center',
+    // Enhanced text shadow for maximum legibility
+    textShadowColor: 'rgba(0, 0, 0, 0.4)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 6,
   },
 
   modernSubtitle: {
     ...typography.bodyLarge,
-    color: colors.textInverse, // White text for better contrast
+    color: colors.textInverse,
     textAlign: 'center',
-    lineHeight: 24, // Better readability
-    maxWidth: 320, // Optimal reading width
-    opacity: 0.9, // High opacity for readability on overlay
-  },
-
-  // Enhanced interaction states
-  interactiveElement: {
-    opacity: 1, // Base state for smooth animations
+    lineHeight: 24,
+    maxWidth: 320,
+    opacity: 0.98,
+    // Enhanced text shadow
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
   },
 
   // Premium divider
@@ -587,6 +537,133 @@ export const authStyles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: colors.success,
     marginRight: spacing.xs,
+  },
+
+  // ENHANCED STYLES (formerly from authStylesImproved.ts)
+  // Improved gradient overlay with better contrast
+  enhancedGradientOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
+    opacity: 0.5, // Reduced from 0.7 for better visibility
+    pointerEvents: 'none',
+  },
+
+  // Enhanced card styles with improved contrast
+  enhancedDemoCard: {
+    marginBottom: 24,
+    backgroundColor: 'rgba(255, 255, 255, 0.98)', // Increased from 0.95
+    borderRadius: 16,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 12,
+      },
+      android: {
+        elevation: 8,
+      },
+    }),
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+
+  enhancedFormCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.98)', // Increased from 0.95
+    borderRadius: 16,
+    marginBottom: 20,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.15,
+        shadowRadius: 12,
+      },
+      android: {
+        elevation: 8,
+      },
+    }),
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+
+  // Enhanced text styles with better shadows
+  enhancedLogoTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 8,
+    letterSpacing: 0.5,
+    ...Platform.select({
+      ios: {
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 4,
+      },
+      android: {
+        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 4,
+      },
+    }),
+  },
+
+  enhancedLogoTagline: {
+    fontSize: 16,
+    color: '#FFFFFF',
+    opacity: 0.95,
+    ...Platform.select({
+      ios: {
+        textShadowColor: 'rgba(0, 0, 0, 0.3)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 3,
+      },
+      android: {
+        textShadowColor: 'rgba(0, 0, 0, 0.3)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 3,
+      },
+    }),
+  },
+
+  enhancedBackText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+    ...Platform.select({
+      ios: {
+        textShadowColor: 'rgba(0, 0, 0, 0.3)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 3,
+      },
+      android: {
+        textShadowColor: 'rgba(0, 0, 0, 0.3)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 3,
+      },
+    }),
+  },
+
+  enhancedRegisterText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    marginRight: 8,
+    ...Platform.select({
+      ios: {
+        textShadowColor: 'rgba(0, 0, 0, 0.3)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 3,
+      },
+      android: {
+        textShadowColor: 'rgba(0, 0, 0, 0.3)',
+        textShadowOffset: { width: 0, height: 1 },
+        textShadowRadius: 3,
+      },
+    }),
   },
 });
 

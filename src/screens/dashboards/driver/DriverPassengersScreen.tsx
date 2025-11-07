@@ -5,16 +5,18 @@ import {
   RefreshControl,
   Animated,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import {
   Card,
   Text,
   Avatar,
 } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { colors } from '../../../utils/theme';
-import { driverDashboardStyles } from '../../../styles/screens/dashboards/driverDashboard';
+import { driverDashboardStyles, driverGradientConfigs } from '../../../styles/screens/dashboards/driverDashboard';
 import { PassengerStats } from '../../../types/Dashboard';
 
 const DriverPassengersScreen: React.FC = () => {
@@ -35,21 +37,78 @@ const DriverPassengersScreen: React.FC = () => {
 
   return (
     <View style={driverDashboardStyles.container}>
-      {/* Premium Background Graphics */}
-      <View style={driverDashboardStyles.premiumBackgroundContainer}>
-        <Animated.View style={[driverDashboardStyles.backgroundBlob1, { backgroundColor: `${colors.info}08` }]} />
-        <Animated.View style={[driverDashboardStyles.backgroundBlob2, { backgroundColor: `${colors.success}06` }]} />
-      </View>
+      {/* Cape Town Community Background */}
+      <ImageBackground
+        source={{ uri: 'https://images.pexels.com/photos/708440/pexels-photo-708440.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={driverDashboardStyles.backgroundImage}
+        resizeMode="cover"
+      >
+        {/* Premium Passengers-themed Overlay */}
+        <View style={driverDashboardStyles.passengersBackgroundOverlay} />
+        <View style={driverDashboardStyles.premiumBackgroundOverlay} />
+      </ImageBackground>
 
       <ScrollView
         style={driverDashboardStyles.scrollContainer}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
-        <View style={driverDashboardStyles.passengersHeader}>
-          <Text style={driverDashboardStyles.passengersTitle}>Passengers</Text>
-          <Text style={driverDashboardStyles.passengersSubtitle}>Manage your daily passenger roster</Text>
+        {/* Hero Passenger Management Header */}
+        <View style={driverDashboardStyles.heroProfileCard}>
+          <LinearGradient
+            colors={driverGradientConfigs.hero.colors}
+            start={driverGradientConfigs.hero.start}
+            end={driverGradientConfigs.hero.end}
+            style={driverDashboardStyles.heroGradientOverlay}
+          >
+            {/* African Pattern Overlay */}
+            <View style={[driverDashboardStyles.africanPatternOverlay, driverDashboardStyles.oceanAfricanPattern]}>
+              <View style={driverDashboardStyles.africanPatternDot1} />
+              <View style={driverDashboardStyles.africanPatternDot2} />
+              <View style={driverDashboardStyles.africanPatternDot3} />
+              <View style={driverDashboardStyles.africanTriangle1} />
+              <View style={driverDashboardStyles.africanTriangle2} />
+              <View style={driverDashboardStyles.africanZigzag} />
+            </View>
+
+            <View style={driverDashboardStyles.heroContent}>
+              {/* Passenger Management Icon */}
+              <View style={driverDashboardStyles.profileImageFrame}>
+                <View style={[driverDashboardStyles.dutyStatusIcon, { backgroundColor: colors.tertiary }]}>
+                  <MaterialCommunityIcons
+                    name="account-group"
+                    size={60}
+                    color="#fff"
+                  />
+                </View>
+                <View style={[driverDashboardStyles.onlineIndicator, { backgroundColor: colors.success }]} />
+              </View>
+
+              {/* Passenger Info */}
+              <View style={driverDashboardStyles.heroProfileInfo}>
+                <Text style={driverDashboardStyles.heroName}>Passenger Management</Text>
+                <Text style={driverDashboardStyles.heroRole}>Daily Roster & Capacity</Text>
+
+                {/* Passenger Stats */}
+                <View style={driverDashboardStyles.statsRow}>
+                  <View style={driverDashboardStyles.statItem}>
+                    <Text style={driverDashboardStyles.heroStatValue}>{passengerStats.totalPassengers}</Text>
+                    <Text style={driverDashboardStyles.heroStatLabel}>TOTAL</Text>
+                  </View>
+                  <View style={driverDashboardStyles.statDivider} />
+                  <View style={driverDashboardStyles.statItem}>
+                    <Text style={driverDashboardStyles.heroStatValue}>{passengerStats.confirmedToday}</Text>
+                    <Text style={driverDashboardStyles.heroStatLabel}>CONFIRMED</Text>
+                  </View>
+                  <View style={driverDashboardStyles.statDivider} />
+                  <View style={driverDashboardStyles.statItem}>
+                    <Text style={driverDashboardStyles.heroStatValue}>{passengerStats.pendingConfirmation}</Text>
+                    <Text style={driverDashboardStyles.heroStatLabel}>PENDING</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
         </View>
 
         {/* Passenger Stats */}
@@ -105,11 +164,11 @@ const DriverPassengersScreen: React.FC = () => {
         </View>
 
         {/* Today's Passengers List */}
-        <Card style={driverDashboardStyles.premiumCard}>
+        <Card style={driverDashboardStyles.enhancedPassengerCard}>
           <Card.Content>
-            <View style={driverDashboardStyles.cardHeader}>
+            <View style={driverDashboardStyles.sectionHeader}>
               <MaterialCommunityIcons name="format-list-checks" size={24} color={colors.primary} />
-              <Text style={driverDashboardStyles.premiumCardTitle}>Today's Passengers</Text>
+              <Text style={driverDashboardStyles.sectionTitle}>Today's Passengers</Text>
             </View>
 
             <View style={driverDashboardStyles.premiumPassengerList}>

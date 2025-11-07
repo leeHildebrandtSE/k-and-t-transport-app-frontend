@@ -3,6 +3,9 @@ import {
   View,
   ScrollView,
   RefreshControl,
+  Alert,
+  ImageBackground,
+  TouchableOpacity,
 } from 'react-native';
 import {
   Card,
@@ -13,17 +16,29 @@ import {
   Switch,
   Chip,
 } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { colors } from '../../../utils/theme';
-import { adminDashboardStyles } from '../../../styles/screens/dashboards/adminDashboard';
+import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
 import { AdminProfileScreenProps } from '../../../types/Dashboard';
+import { useAuth } from '../../../contexts/AuthContext';
+import { AuthService } from '../../../services/AuthService';
 
-const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
+const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user, onLogout: propOnLogout }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [autoBackup, setAutoBackup] = useState(true);
+
+  let logout;
+  try {
+    const authContext = useAuth();
+    logout = authContext.logout;
+  } catch (error) {
+    console.error('useAuth error:', error);
+    logout = null;
+  }
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -31,41 +46,117 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
     setTimeout(() => setRefreshing(false), 2000);
   };
 
-  const styles = adminDashboardStyles;
+  const handleLogout = async () => {
+    console.log('Logout button clicked'); // Debug log
+    console.log('Available logout methods:', { logout: !!logout, propOnLogout: !!propOnLogout });
+
+    // Use web-compatible confirmation instead of Alert.alert
+    const shouldLogout = window.confirm('Are you sure you want to sign out?');
+
+    if (!shouldLogout) {
+      console.log('Logout cancelled by user');
+      return;
+    }
+
+    try {
+      console.log('Attempting logout...'); // Debug log
+      // Use context logout first, fallback to prop, then AuthService
+      if (logout) {
+        console.log('Using context logout');
+        await logout();
+        console.log('Context logout completed');
+      } else if (propOnLogout) {
+        console.log('Using prop logout');
+        propOnLogout();
+      } else {
+        console.log('Using AuthService logout as fallback');
+        await AuthService.logout();
+        // Manually trigger app logout since AuthService won't call the context
+        window.alert('You have been logged out. Please refresh the page.');
+      }
+    } catch (error) {
+      console.error('Logout error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Please try again.';
+      window.alert(`Failed to sign out: ${errorMessage}`);
+    }
+  };  const styles = adminDashboardStyles;
 
   return (
-    <ScrollView
-      style={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-      {/* Profile Header */}
-      <Card style={[styles.card, { marginTop: 20 }]}>
-        <Card.Content style={{ alignItems: 'center', paddingVertical: 30 }}>
-          <Avatar.Text
-            size={100}
-            label={`${user.firstName[0]}${user.lastName[0]}`}
-            style={{ backgroundColor: colors.primary, marginBottom: 16 }}
-          />
-          <Text variant="titleLarge" style={styles.cardTitle}>
-            {user.firstName} {user.lastName}
-          </Text>
-          <Text style={[styles.userEmail, { textAlign: 'center', marginBottom: 16 }]}>
-            {user.email}
-          </Text>
-          <Chip
-            mode="outlined"
-            icon="shield-account"
-            textStyle={{ color: colors.error }}
-            style={{ borderColor: colors.error }}
-          >
-            SYSTEM ADMINISTRATOR
-          </Chip>
-        </Card.Content>
-      </Card>
+    <View style={styles.container}>
+      {/* Cape Town Professional Background */}
+      <ImageBackground
+        source={{ uri: 'https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        {/* Premium Background Overlay */}
+        <View style={styles.premiumBackgroundOverlay} />
+      </ImageBackground>
 
-      {/* Account Information */}
+      <ScrollView
+        style={styles.scrollContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {/* Hero Admin Profile Card */}
+        <View style={styles.heroProfileCard}>
+          <LinearGradient
+            colors={adminGradientConfigs.hero.colors}
+            start={adminGradientConfigs.hero.start}
+            end={adminGradientConfigs.hero.end}
+            style={styles.heroGradientOverlay}
+          >
+            {/* African Pattern Overlay */}
+            <View style={[styles.africanPatternOverlay, styles.mountainAfricanPattern]}>
+              <View style={styles.africanPatternDot1} />
+              <View style={styles.africanPatternDot2} />
+              <View style={styles.africanPatternDot3} />
+              <View style={styles.africanTriangle1} />
+              <View style={styles.africanTriangle2} />
+              <View style={styles.africanZigzag} />
+            </View>
+
+            <View style={styles.heroContent}>
+              {/* Profile Image with Premium Frame */}
+              <View style={styles.profileImageFrame}>
+                <Avatar.Text
+                  size={120}
+                  label={`${user.firstName[0]}${user.lastName[0]}`}
+                  style={[styles.adminStatusIcon, { backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'rgba(255,255,255,0.3)' }]}
+                  labelStyle={{ color: '#fff', fontSize: 48, fontWeight: '700' }}
+                />
+                <View style={styles.onlineIndicator} />
+              </View>
+
+              {/* Profile Info */}
+              <View style={styles.heroProfileInfo}>
+                <Text style={styles.heroName}>{user.firstName} {user.lastName}</Text>
+                <Text style={styles.heroRole}>System Administrator</Text>
+
+                {/* Admin Stats */}
+                <View style={styles.statsRow}>
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>Admin</Text>
+                    <Text style={styles.heroStatLabel}>ACCESS</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>24/7</Text>
+                    <Text style={styles.heroStatLabel}>SUPPORT</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>Full</Text>
+                    <Text style={styles.heroStatLabel}>CONTROL</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
+        </View>
+
+        {/* Account Information */}
       <Card style={styles.card}>
         <Card.Content>
           <Text variant="titleLarge" style={styles.cardTitle}>Account Information</Text>
@@ -170,7 +261,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
           <View style={styles.actionGrid}>
             <Button
               mode="outlined"
-              icon="account-edit"
+              icon={() => <MaterialCommunityIcons name="account-edit" size={20} color={colors.primary} />}
               onPress={() => {/* Edit profile */}}
               style={[styles.actionButton, { marginBottom: 12 }]}
             >
@@ -179,7 +270,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
 
             <Button
               mode="outlined"
-              icon="key-change"
+              icon={() => <MaterialCommunityIcons name="key-change" size={20} color={colors.primary} />}
               onPress={() => {/* Change password */}}
               style={[styles.actionButton, { marginBottom: 12 }]}
             >
@@ -188,7 +279,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
 
             <Button
               mode="outlined"
-              icon="download"
+              icon={() => <MaterialCommunityIcons name="download" size={20} color={colors.primary} />}
               onPress={() => {/* Export data */}}
               style={[styles.actionButton, { marginBottom: 12 }]}
             >
@@ -197,7 +288,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
 
             <Button
               mode="outlined"
-              icon="backup-restore"
+              icon={() => <MaterialCommunityIcons name="backup-restore" size={20} color={colors.primary} />}
               onPress={() => {/* System backup */}}
               style={[styles.actionButton, { marginBottom: 12 }]}
             >
@@ -263,41 +354,107 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user }) => {
         </Card.Content>
       </Card>
 
-      {/* Support & About */}
-      <Card style={[styles.card, { marginBottom: 30 }]}>
+      {/* Premium Quick Actions */}
+      <Card style={styles.enhancedPassengerCard}>
         <Card.Content>
-          <Text variant="titleLarge" style={styles.cardTitle}>Support & Information</Text>
+          <View style={styles.sectionHeader}>
+            <MaterialCommunityIcons name="cog-outline" size={24} color={colors.info} />
+            <Text style={styles.sectionTitle}>Quick Actions</Text>
+          </View>
 
-          <Button
-            mode="outlined"
-            icon="help-circle"
-            onPress={() => {/* Contact support */}}
-            style={[styles.actionButton, { marginBottom: 12 }]}
-          >
-            Contact Support
-          </Button>
+          <View style={styles.premiumPassengerList}>
+            <TouchableOpacity style={styles.premiumPassengerItem}>
+              <View style={[styles.passengerAvatar, { backgroundColor: colors.tertiary, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                <MaterialCommunityIcons name="account-edit" size={24} color="#fff" />
+              </View>
+              <View style={styles.premiumPassengerInfo}>
+                <Text style={styles.premiumPassengerName}>Edit Profile</Text>
+                <Text style={styles.premiumPassengerDetails}>Update administrator account & preferences</Text>
+                <View style={styles.passengerMetrics}>
+                  <View style={styles.passengerMetric}>
+                    <MaterialCommunityIcons name="pencil" size={14} color={colors.textSecondary} />
+                    <Text style={styles.passengerMetricText}>Admin settings</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={[styles.passengerStatus, { backgroundColor: colors.tertiary }]}>
+                <MaterialCommunityIcons name="arrow-right" size={16} color="#fff" />
+                <Text style={styles.passengerStatusText}>EDIT</Text>
+              </View>
+            </TouchableOpacity>
 
-          <Button
-            mode="outlined"
-            icon="information"
-            onPress={() => {/* About system */}}
-            style={[styles.actionButton, { marginBottom: 12 }]}
-          >
-            System Information
-          </Button>
+            <TouchableOpacity style={styles.premiumPassengerItem}>
+              <View style={[styles.passengerAvatar, { backgroundColor: colors.primary, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                <MaterialCommunityIcons name="database-cog" size={24} color="#fff" />
+              </View>
+              <View style={styles.premiumPassengerInfo}>
+                <Text style={styles.premiumPassengerName}>System Management</Text>
+                <Text style={styles.premiumPassengerDetails}>Configure system settings & preferences</Text>
+                <View style={styles.passengerMetrics}>
+                  <View style={styles.passengerMetric}>
+                    <MaterialCommunityIcons name="cog" size={14} color={colors.textSecondary} />
+                    <Text style={styles.passengerMetricText}>All systems</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={[styles.passengerStatus, { backgroundColor: colors.primary }]}>
+                <MaterialCommunityIcons name="arrow-right" size={16} color="#fff" />
+                <Text style={styles.passengerStatusText}>MANAGE</Text>
+              </View>
+            </TouchableOpacity>
 
-          <Button
-            mode="outlined"
-            icon="logout"
-            onPress={() => {/* Logout */}}
-            style={styles.actionButton}
-            textColor={colors.error}
-          >
-            Sign Out
-          </Button>
+            <TouchableOpacity style={styles.premiumPassengerItem}>
+              <View style={[styles.passengerAvatar, { backgroundColor: colors.info, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                <MaterialCommunityIcons name="help-circle" size={24} color="#fff" />
+              </View>
+              <View style={styles.premiumPassengerInfo}>
+                <Text style={styles.premiumPassengerName}>Support Center</Text>
+                <Text style={styles.premiumPassengerDetails}>Access help resources & contact support</Text>
+                <View style={styles.passengerMetrics}>
+                  <View style={styles.passengerMetric}>
+                    <MaterialCommunityIcons name="headset" size={14} color={colors.textSecondary} />
+                    <Text style={styles.passengerMetricText}>24/7 available</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={[styles.passengerStatus, { backgroundColor: colors.info }]}>
+                <MaterialCommunityIcons name="arrow-right" size={16} color="#fff" />
+                <Text style={styles.passengerStatusText}>HELP</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.premiumPassengerItem} onPress={handleLogout}>
+              <View style={[styles.passengerAvatar, { backgroundColor: colors.error, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                <MaterialCommunityIcons name="logout" size={24} color="#fff" />
+              </View>
+              <View style={styles.premiumPassengerInfo}>
+                <Text style={styles.premiumPassengerName}>Sign Out</Text>
+                <Text style={styles.premiumPassengerDetails}>End administrative session securely</Text>
+                <View style={styles.passengerMetrics}>
+                  <View style={styles.passengerMetric}>
+                    <MaterialCommunityIcons name="shield-check" size={14} color={colors.textSecondary} />
+                    <Text style={styles.passengerMetricText}>Secure logout</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={[styles.passengerStatus, { backgroundColor: colors.error }]}>
+                <MaterialCommunityIcons name="logout" size={16} color="#fff" />
+                <Text style={styles.passengerStatusText}>LOGOUT</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </Card.Content>
       </Card>
-    </ScrollView>
+
+        {/* App Version Footer */}
+        <View style={styles.appFooter}>
+          <Text style={styles.footerText}>K&T Transport Admin App</Text>
+          <Text style={styles.versionText}>Version 2.1.0</Text>
+        </View>
+
+        <View style={styles.bottomSpacer} />
+      </ScrollView>
+    </View>
   );
 };
 

@@ -51,6 +51,329 @@ export const commuterDashboardStyles = StyleSheet.create({
 
   scrollContainer: {
     flex: 1,
+    zIndex: 1,
+  },
+
+  // Hero Profile Card (matching driver dashboard style)
+  heroProfileCard: {
+    marginHorizontal: 0, // Full width spanning
+    marginTop: 0, // Start from the very top
+    marginBottom: spacing.xxl, // Spacing between hero header and content
+    borderBottomLeftRadius: borderRadius.xxl, // Modern bottom corner radius
+    borderBottomRightRadius: borderRadius.xxl, // Modern bottom corner radius
+    overflow: 'hidden',
+    ...shadows.xl,
+  },
+
+  // Hero background image container
+  heroBackgroundImage: {
+    width: '100%',
+    flex: 1,
+    borderBottomLeftRadius: borderRadius.xxl,
+    borderBottomRightRadius: borderRadius.xxl,
+    overflow: 'hidden',
+  },
+
+  heroGradientOverlay: {
+    backgroundColor: colors.secondary, // Fallback for non-gradient usage
+    padding: spacing.xl,
+    borderBottomLeftRadius: borderRadius.xxl, // Match parent border radius
+    borderBottomRightRadius: borderRadius.xxl, // Match parent border radius
+    position: 'relative',
+    overflow: 'hidden',
+  },
+
+    // African Pattern Overlay
+  africanPatternOverlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: '45%',
+    height: '100%',
+    opacity: 0.25,
+    transform: [{ skewX: '-8deg' }, { translateX: 30 }],
+    zIndex: 1,
+  },
+
+  // Sunset African Pattern (Commuter Theme) - Visible but elegant
+  sunsetAfricanPattern: {
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    borderLeftWidth: 1,
+    borderLeftColor: 'rgba(255, 255, 255, 0.25)',
+    borderStyle: 'solid',
+  },
+
+  // Elegant geometric elements - more visible
+  africanPatternDot1: {
+    position: 'absolute',
+    width: 6,
+    height: 6,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    borderRadius: 3,
+    top: '25%',
+    left: '20%',
+  },
+
+  africanPatternDot2: {
+    position: 'absolute',
+    width: 4,
+    height: 4,
+    backgroundColor: 'rgba(255, 255, 255, 0.35)',
+    borderRadius: 2,
+    top: '45%',
+    right: '25%',
+  },
+
+  africanPatternDot3: {
+    position: 'absolute',
+    width: 5,
+    height: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 2.5,
+    bottom: '30%',
+    left: '30%',
+  },
+
+  // More visible lines for texture
+  africanTriangle1: {
+    position: 'absolute',
+    width: 20,
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    top: '35%',
+    left: '15%',
+  },
+
+  africanTriangle2: {
+    position: 'absolute',
+    width: 16,
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    bottom: '40%',
+    right: '20%',
+  },
+
+  africanZigzag: {
+    position: 'absolute',
+    width: 1,
+    height: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+    top: '20%',
+    right: '30%',
+  },
+
+  africanLine1: {
+    position: 'absolute',
+    width: 1,
+    height: 25,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    top: '60%',
+    left: '25%',
+  },
+
+  africanLine2: {
+    position: 'absolute',
+    width: 15,
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+    bottom: '25%',
+    right: '15%',
+  },
+
+  // Golden African Pattern (Commuter Theme) - Subtle geometric texture
+  goldenAfricanPattern: {
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    borderLeftWidth: 1,
+    borderLeftColor: 'rgba(255, 255, 255, 0.15)',
+    borderStyle: 'solid',
+  },
+
+  // Simplified, elegant geometric elements
+  africanPatternDot1: {
+    position: 'absolute',
+    width: 3,
+    height: 3,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 1.5,
+    top: '25%',
+    left: '20%',
+  },
+
+  africanPatternDot2: {
+    position: 'absolute',
+    width: 2,
+    height: 2,
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
+    borderRadius: 1,
+    top: '45%',
+    right: '25%',
+  },
+
+  africanPatternDot3: {
+    position: 'absolute',
+    width: 3,
+    height: 3,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: 1.5,
+    bottom: '30%',
+    left: '30%',
+  },
+
+  // Very subtle lines for texture
+  africanTriangle1: {
+    position: 'absolute',
+    width: 15,
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+    top: '35%',
+    left: '15%',
+  },
+
+  africanTriangle2: {
+    position: 'absolute',
+    width: 12,
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    bottom: '40%',
+    right: '20%',
+  },
+
+  africanZigzag: {
+    position: 'absolute',
+    width: 1,
+    height: 25,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    top: '20%',
+    right: '30%',
+  },
+
+  africanLine1: {
+    position: 'absolute',
+    width: 1,
+    height: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    top: '60%',
+    left: '25%',
+  },
+
+  africanLine2: {
+    position: 'absolute',
+    width: 10,
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    bottom: '25%',
+    right: '15%',
+  },  heroContent: {
+    alignItems: 'center',
+  },
+
+  profileImageFrame: {
+    position: 'relative',
+    marginBottom: spacing.lg,
+  },
+
+  commuterStatusIcon: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 4,
+    borderColor: 'rgba(255,255,255,0.3)',
+    ...shadows.lg,
+  },
+
+  onlineIndicator: {
+    position: 'absolute',
+    bottom: 8,
+    right: 8,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: colors.success,
+    borderWidth: 3,
+    borderColor: '#fff',
+    ...shadows.md,
+  },
+
+  heroProfileInfo: {
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+  },
+
+  heroName: {
+    ...typography.headlineMedium,
+    color: colors.textInverse,
+    fontWeight: '700',
+    marginBottom: spacing.xs,
+    textAlign: 'center',
+  },
+
+  heroRole: {
+    ...typography.titleMedium,
+    color: 'rgba(255,255,255,0.9)',
+    fontWeight: '500',
+    marginBottom: spacing.lg,
+    textAlign: 'center',
+  },
+
+  statsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: borderRadius.xl,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+  },
+
+  statItem: {
+    alignItems: 'center',
+  },
+
+  statDivider: {
+    width: 1,
+    height: 40,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    marginHorizontal: spacing.lg,
+  },
+
+  heroStatValue: {
+    ...typography.headlineSmall,
+    color: colors.textInverse,
+    fontWeight: '700',
+    fontSize: 24,
+    lineHeight: 28,
+  },
+
+  heroStatLabel: {
+    ...typography.labelSmall,
+    color: 'rgba(255,255,255,0.8)',
+    fontWeight: '600',
+    fontSize: 11,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    marginTop: 2,
+  },
+
+  // Premium Background Image Styles
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -2,
+  },
+
+  premiumBackgroundOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: colors.secondary + '60', // Golden overlay to match hero header and navbar theme
+    zIndex: -1,
   },
 
   // Header Section
@@ -90,6 +413,7 @@ export const commuterDashboardStyles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: borderRadius.xl,
     marginHorizontal: spacing.lg,
+    marginTop: spacing.xl, // Add gap between hero header and content
     marginBottom: spacing.lg,
     ...shadows.lg,
     borderWidth: 1,
@@ -357,6 +681,7 @@ export const commuterDashboardStyles = StyleSheet.create({
   emptyState: {
     alignItems: 'center',
     padding: spacing.xxl,
+    marginTop: spacing.xl, // Add gap between hero header and content
   },
 
   emptyIcon: {
@@ -468,10 +793,34 @@ export const commuterDashboardStyles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: borderRadius.xl,
     marginHorizontal: spacing.lg,
+    marginTop: spacing.xl, // Add gap between hero header and content
     marginBottom: spacing.lg,
     ...shadows.lg,
     borderWidth: 1,
     borderColor: colors.border,
+  },
+
+  card: {
+    marginHorizontal: spacing.lg,
+    marginVertical: spacing.sm,
+    borderRadius: borderRadius.xl,
+    backgroundColor: colors.surface,
+    // Enhanced 3D effect
+    ...shadows.lg,
+    transform: [{ translateY: -2 }],
+  },
+
+  enhancedPassengerCard: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xxl,
+    marginHorizontal: spacing.lg,
+    marginTop: spacing.xl, // Add gap between hero header and content
+    marginBottom: spacing.xl,
+    ...shadows.lg,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+    overflow: 'hidden',
   },
 
   profileSettingsHeader: {
@@ -560,12 +909,170 @@ export const commuterDashboardStyles = StyleSheet.create({
     fontWeight: '600',
   },
 
+  // Premium Passenger List Styles (Quick Actions)
+  premiumPassengerList: {
+    marginHorizontal: -spacing.lg,
+  },
+
+  premiumPassengerItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.lg,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border + '30',
+  },
+
+  premiumPassengerInfo: {
+    flex: 1,
+    marginLeft: spacing.md,
+  },
+
+  premiumPassengerName: {
+    ...typography.bodyLarge,
+    fontWeight: '700',
+    color: colors.text,
+    marginBottom: spacing.xs,
+  },
+
+  premiumPassengerDetails: {
+    ...typography.bodyMedium,
+    color: colors.textSecondary,
+    marginBottom: spacing.sm,
+  },
+
+  passengerAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  passengerMetrics: {
+    flexDirection: 'row',
+    gap: spacing.md,
+  },
+
+  passengerMetric: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+  },
+
+  passengerMetricText: {
+    ...typography.bodySmall,
+    color: colors.textSecondary,
+    fontSize: 11,
+  },
+
+  passengerStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    borderRadius: borderRadius.md,
+    gap: spacing.xs,
+  },
+
+  passengerStatusText: {
+    ...typography.bodySmall,
+    color: colors.surface,
+    fontWeight: '700',
+    fontSize: 10,
+  },
+
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+    gap: spacing.sm,
+  },
+
+  sectionTitle: {
+    ...typography.headlineSmall,
+    fontWeight: '700',
+    color: colors.text,
+  },
+
+  // Premium Tab Bar Styles
+  premiumTabBar: {
+    backgroundColor: colors.secondary, // Fallback for non-gradient usage
+    borderTopWidth: 0,
+    height: 70,
+    paddingBottom: 10,
+    paddingTop: 10,
+    ...shadows.xl,
+    borderTopLeftRadius: borderRadius.xl,
+    borderTopRightRadius: borderRadius.xl,
+  },  tabBarLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    marginTop: 4,
+    color: colors.surface, // White text by default
+  },
+
+  tabBarItem: {
+    paddingVertical: 5,
+  },
+
+  activeTabIcon: {
+    backgroundColor: colors.secondaryLight + '20', // Light orange background for better contrast
+    borderRadius: 12,
+    padding: 8,
+    ...shadows.md,
+  },
+
+  inactiveTabIcon: {
+    backgroundColor: 'transparent',
+    borderRadius: 12,
+    padding: 8,
+  },
+
   // Responsive Design
   tabletLayout: {
     paddingHorizontal: spacing.xl,
     maxWidth: 1000,
     alignSelf: 'center',
   },
+
+  // App Footer
+  appFooter: {
+    alignItems: 'center',
+    paddingVertical: spacing.xl,
+    marginBottom: spacing.lg,
+  },
+
+  footerText: {
+    ...typography.titleMedium,
+    color: colors.text,
+    fontWeight: '600',
+    marginBottom: spacing.xs,
+  },
+
+  versionText: {
+    ...typography.bodySmall,
+    color: colors.textSecondary,
+  },
+
+  // Bottom spacer
+  bottomSpacer: {
+    height: 100,
+  },
 });
+
+// Gradient configurations for LinearGradient components
+export const commuterGradientConfigs = {
+  hero: {
+    colors: ['rgba(217, 119, 6, 0.6)', 'rgba(245, 158, 11, 0.5)'], // Semi-transparent to show background image
+    start: { x: 0, y: 0 },
+    end: { x: 1, y: 1 }, // Diagonal gradient top-left to bottom-right
+  },
+  navbar: {
+    colors: ['#d97706', colors.secondary], // Keep navbar solid
+    start: { x: 0, y: 0 },
+    end: { x: 1, y: 0 }, // Horizontal gradient left to right
+  }
+};
 
 export default commuterDashboardStyles;

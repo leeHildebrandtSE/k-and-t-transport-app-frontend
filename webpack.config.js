@@ -40,6 +40,18 @@ module.exports = async function (env, argv) {
     /Can't resolve 'os'/,
   ];
 
+  // Add alias for React Native Vector Icons web compatibility
+  if (config.resolve.alias) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'react-native-vector-icons/MaterialCommunityIcons': '@expo/vector-icons/MaterialCommunityIcons',
+    };
+  } else {
+    config.resolve.alias = {
+      'react-native-vector-icons/MaterialCommunityIcons': '@expo/vector-icons/MaterialCommunityIcons',
+    };
+  }
+
   // Suppress specific warnings
   config.ignoreWarnings = [
     // Suppress React Native Vector Icons warnings

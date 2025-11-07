@@ -109,6 +109,7 @@ export const driverDashboardStyles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: isDesktop ? 32 : 24,
     marginHorizontal: getResponsiveCardMargin(),
+    marginTop: spacing.xl, // Add gap between hero header and content
     marginBottom: spacing.lg,
     padding: getResponsivePadding(),
     ...shadows.lg,
@@ -340,22 +341,22 @@ export const driverDashboardStyles = StyleSheet.create({
   // Individual stat card themes for Cape Town elements
   statCardOcean: {
     borderColor: colors.primary + '20',
-    backgroundColor: colors.primary + '03',
+    backgroundColor: colors.surface, // Solid white background instead of transparent
   },
 
   statCardMountain: {
     borderColor: colors.tertiary + '20',
-    backgroundColor: colors.tertiary + '03',
+    backgroundColor: colors.surface, // Solid white background instead of transparent
   },
 
   statCardSunshine: {
     borderColor: colors.secondary + '20',
-    backgroundColor: colors.secondary + '03',
+    backgroundColor: colors.surface, // Solid white background instead of transparent
   },
 
   statCardBeach: {
     borderColor: colors.info + '20',
-    backgroundColor: colors.info + '03',
+    backgroundColor: colors.surface, // Solid white background instead of transparent
   },
 
   statValue: {
@@ -742,6 +743,7 @@ export const driverDashboardStyles = StyleSheet.create({
   routeStatsContainer: {
     flexDirection: 'row',
     paddingHorizontal: spacing.lg,
+    marginTop: spacing.xl, // Add gap between hero header and content
     marginBottom: spacing.xl,
   },
 
@@ -986,6 +988,10 @@ export const driverDashboardStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: spacing.md,
+    borderWidth: 2,
+    borderColor: colors.surface,
+    ...shadows.sm,
+    elevation: 2,
   },
 
   passengerInitials: {
@@ -1044,6 +1050,7 @@ export const driverDashboardStyles = StyleSheet.create({
   passengerStatsContainer: {
     flexDirection: 'row',
     marginHorizontal: spacing.lg,
+    marginTop: spacing.xl, // Add gap between hero header and content
     marginBottom: spacing.xl,
     justifyContent: 'space-between',
   },
@@ -1088,6 +1095,7 @@ export const driverDashboardStyles = StyleSheet.create({
   // Premium Passenger List Styles
   premiumPassengerList: {
     paddingTop: spacing.md,
+    paddingHorizontal: spacing.sm,
   },
 
   routePassengersSection: {
@@ -1097,8 +1105,13 @@ export const driverDashboardStyles = StyleSheet.create({
   routeSectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.md,
-    paddingHorizontal: spacing.sm,
+    marginBottom: spacing.lg,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    backgroundColor: `${colors.primary}08`,
+    borderRadius: borderRadius.lg,
+    borderLeftWidth: 3,
+    borderLeftColor: colors.primary,
   },
 
   routeSectionTitle: {
@@ -1121,10 +1134,17 @@ export const driverDashboardStyles = StyleSheet.create({
   premiumPassengerItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: spacing.lg,
-    paddingHorizontal: spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: `${colors.textSecondary}08`,
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xl,
+    padding: spacing.lg,
+    marginBottom: spacing.md,
+    ...shadows.md,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+    // Cape Town ocean gradient border
+    borderLeftWidth: 4,
+    borderLeftColor: colors.primary,
   },
 
   premiumPassengerInfo: {
@@ -1409,6 +1429,7 @@ export const driverDashboardStyles = StyleSheet.create({
     position: 'absolute',
     bottom: isDesktop ? 32 : 24,
     right: isDesktop ? 32 : 24,
+    zIndex: 1000, // High z-index to stay above all other content
     ...shadows.xl,
     elevation: 16,
     // Cape Town sunset emergency colors
@@ -1544,21 +1565,52 @@ export const driverDashboardStyles = StyleSheet.create({
 
   // Hero Profile Card
   heroProfileCard: {
-    marginHorizontal: spacing.lg,
-    marginTop: spacing.xl,
-    marginBottom: spacing.lg,
-    borderRadius: borderRadius.xl,
+    marginHorizontal: 0, // Full width spanning
+    marginTop: 0, // Start from the very top
+    marginBottom: spacing.xxl, // Increased spacing for better visual separation
+    borderBottomLeftRadius: borderRadius.xxl, // Modern bottom corner radius
+    borderBottomRightRadius: borderRadius.xxl, // Modern bottom corner radius
     overflow: 'hidden',
     ...shadows.xl,
   },
 
+  // Hero background image container
+  heroBackgroundImage: {
+    width: '100%',
+    flex: 1,
+    borderBottomLeftRadius: borderRadius.xxl,
+    borderBottomRightRadius: borderRadius.xxl,
+    overflow: 'hidden',
+  },
+
   heroGradientOverlay: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.primary, // Fallback for non-gradient usage
     padding: spacing.xl,
+    borderBottomLeftRadius: borderRadius.xxl, // Match parent border radius
+    borderBottomRightRadius: borderRadius.xxl, // Match parent border radius
+    flex: 1,
+    minHeight: 300,
+    position: 'relative',
+    overflow: 'hidden',
   },
 
   heroContent: {
     alignItems: 'center',
+  },
+
+  // African pattern image container with CSS background
+  africanPatternImage: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: '100%',
+    height: '100%',
+    opacity: 0.6,
+    transform: [{ skewX: '-8deg' }, { translateX: 20 }],
+    // CSS background image for web (will be ignored on native)
+    backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiBmaWxsPSJub25lIj4KPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9InRyYW5zcGFyZW50Ii8+CjxnIG9wYWNpdHk9IjAuNCI+CjxwYXRoIGQ9Ik01MCA1MCBMOCA4MCBMNTBI0MTEwIEwyMCA4MFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjYiLz4KPHBhdGggZD0iTTEyMCAzMCBMMTYwIDcwIEwxMjAgMTEwIEw4MCA3MFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjQiLz4KPHBhdGggZD0iTTIwMCA2MCBMMjMwIDkwIEwyMDAgMTIwIEwxNzAgOTBaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC41Ii8+CjxwYXRoIGQ9Ik0zMDAgNDAgTDM0MCA4MCBMM8ADEgxMjAgTDI2MCA4MFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjMiLz4KPHBhdGggZD0iTTcwIDE1MCBMOTA1IDEgNzAgTTcwIDE5MCBMNTAgMTcwWiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNCIvPgo8cGF0aCBkPSJNMTUwIDE0MCBMMTGWIDE3MCBMMTU5IDIwMCBMMTIwIDE3MFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjMiLz4KPHBhdGggZD0iTTI1MCAxNjAgTDI3MCAxODAgTDI1MCAyMDAgTDIzMCAxODBaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC40Ii8+CjwvZz4KPGcgb3BhY2l0eT0iMC4zIj4KPHJlY3QgeD0iMTAiIHk9Ijk1IiB3aWR0aD0iNjAiIGhlaWdodD0iMiIgZmlsbD0id2hpdGUiLz4KPHJlY3QgeD0iMTUwIiB5PSI5NSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjIiIGZpbGw9IndoaXRlIi8+CjxyZWN0IHg9IjMxMCIgeT0iOTUiIHdpZHRoPSI4MCIgaGVpZ2h0PSIyIiBmaWxsPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPg==")',
+    backgroundRepeat: 'repeat',
+    backgroundSize: '200px 150px',
   },
 
   profileImageFrame: {
@@ -1568,6 +1620,17 @@ export const driverDashboardStyles = StyleSheet.create({
 
   premiumAvatar: {
     backgroundColor: 'rgba(255,255,255,0.2)',
+    borderWidth: 4,
+    borderColor: 'rgba(255,255,255,0.3)',
+    ...shadows.lg,
+  },
+
+  dutyStatusIcon: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 4,
     borderColor: 'rgba(255,255,255,0.3)',
     ...shadows.lg,
@@ -1729,12 +1792,12 @@ export const driverDashboardStyles = StyleSheet.create({
 
   // Premium Tab Bar Styles
   premiumTabBar: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.primary, // Fallback for non-gradient usage
     borderTopWidth: 0,
     height: 70,
     paddingBottom: 10,
     paddingTop: 10,
-    ...shadows.lg,
+    ...shadows.xl,
     borderTopLeftRadius: borderRadius.xl,
     borderTopRightRadius: borderRadius.xl,
   },
@@ -1743,6 +1806,7 @@ export const driverDashboardStyles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     marginTop: 4,
+    color: colors.surface, // White text by default
   },
 
   tabBarItem: {
@@ -1750,20 +1814,23 @@ export const driverDashboardStyles = StyleSheet.create({
   },
 
   activeTabIcon: {
-    backgroundColor: colors.primary + '15',
+    backgroundColor: colors.secondary + '30', // Orange background for active state
     borderRadius: 12,
     padding: 8,
+    ...shadows.md,
   },
 
   inactiveTabIcon: {
+    backgroundColor: 'transparent',
+    borderRadius: 12,
     padding: 8,
   },
 
   // Responsive Adjustments
   ...(width > 768 && {
     heroProfileCard: {
-      maxWidth: 600,
-      alignSelf: 'center',
+      width: '100%', // Full width on larger screens
+      alignSelf: 'stretch', // Stretch to full width
     },
     premiumCard: {
       maxWidth: 600,
@@ -1774,6 +1841,187 @@ export const driverDashboardStyles = StyleSheet.create({
       alignSelf: 'center',
     },
   }),
+
+  // Section Container Styles
+  sectionContainer: {
+    marginHorizontal: spacing.lg,
+    marginBottom: spacing.xl,
+  },
+
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.lg,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+    backgroundColor: `${colors.primary}08`,
+    borderRadius: borderRadius.lg,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.primary,
+    ...shadows.sm,
+  },
+
+  sectionTitle: {
+    ...typography.titleLarge,
+    color: colors.text,
+    fontWeight: '600',
+    marginLeft: spacing.md,
+    letterSpacing: -0.3,
+  },
+
+  enhancedPassengerCard: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.xxl,
+    marginHorizontal: spacing.lg,
+    marginTop: spacing.xl, // Add gap between hero header and content
+    marginBottom: spacing.xl,
+    ...shadows.lg,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: colors.borderLight,
+    overflow: 'hidden',
+  },
+
+  // Enhanced Trip Container Styles
+  enhancedTripContainer: {
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.lg,
+    padding: 0,
+  },
+
+  enhancedTripHeader: {
+    marginBottom: spacing.md,
+  },
+
+  enhancedTripDetails: {
+    marginBottom: spacing.lg,
+    gap: spacing.md,
+  },
+
+  tripDetailCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.surfaceVariant,
+    borderRadius: borderRadius.lg,
+    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.lg,
+    borderWidth: 1,
+    borderColor: `${colors.primary}15`,
+    ...shadows.sm,
+    elevation: 2,
+  },
+
+  tripDetailContent: {
+    flex: 1,
+    marginLeft: spacing.md,
+  },
+
+  tripDetailLabel: {
+    ...typography.bodySmall,
+    color: colors.textSecondary,
+    fontWeight: '500',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    marginBottom: spacing.xs,
+  },
+
+  tripDetailValue: {
+    ...typography.bodyLarge,
+    color: colors.text,
+    fontWeight: '600',
+  },
+
+  // Enhanced No Trip Container
+  enhancedNoTripContainer: {
+    alignItems: 'center',
+    paddingVertical: spacing.xl,
+    paddingHorizontal: spacing.lg,
+  },
+
+  noTripIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: `${colors.secondary}15`,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.lg,
+    ...shadows.md,
+  },
+
+  // Enhanced Route Card Styles
+  enhancedRouteCard: {
+    backgroundColor: colors.surfaceVariant,
+    borderRadius: borderRadius.lg,
+    marginBottom: spacing.lg,
+    padding: spacing.lg,
+    borderWidth: 1,
+    borderColor: `${colors.primary}20`,
+    ...shadows.md,
+    elevation: 4,
+  },
+
+  // Premium Background Image Styles
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
+  },
+
+  premiumBackgroundOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: colors.primary + '60', // Ocean blue overlay to match hero header and navbar theme
+  },
+
+  // Route-specific background overlays
+  routesBackgroundOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(14, 165, 233, 0.05)', // Ocean blue tint
+  },
+
+  passengersBackgroundOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(245, 158, 11, 0.05)', // Warm sunset tint
+  },
+
+  profileBackgroundOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(5, 150, 105, 0.05)', // Mountain green tint
+  },
 });
+
+// Gradient configurations for LinearGradient components
+export const driverGradientConfigs = {
+  hero: {
+    colors: ['rgba(2, 132, 199, 0.6)', 'rgba(14, 165, 233, 0.5)'], // Semi-transparent to show background image
+    start: { x: 0, y: 0 },
+    end: { x: 1, y: 1 }, // Diagonal gradient top-left to bottom-right
+  },
+  navbar: {
+    colors: ['#0284c7', colors.primary], // Keep navbar solid
+    start: { x: 0, y: 0 },
+    end: { x: 1, y: 0 }, // Horizontal gradient left to right
+  }
+};
 
 export default driverDashboardStyles;

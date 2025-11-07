@@ -16,7 +16,7 @@ import {
 import MapView, { Marker, Polyline, Region } from 'react-native-maps';
 import { io, Socket } from 'socket.io-client';
 
-import { colors, spacing, borderRadius } from '../../utils/theme';
+import { colors, spacing, borderRadius } from '../../styles/theme';
 import { Location } from '../../types/Transport';
 
 interface LiveTrackingMapProps {
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
   statusCard: {
     margin: spacing.md,
     marginBottom: spacing.sm,
-    borderRadius: borderRadius.medium,
+    borderRadius: borderRadius.md,
   },
   statusContent: {
     flexDirection: 'row',
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: spacing.md,
     marginTop: 0,
-    borderRadius: borderRadius.large,
+    borderRadius: borderRadius.lg,
     overflow: 'hidden',
   },
   map: {
@@ -508,7 +508,7 @@ const styles = StyleSheet.create({
   // Web-specific styles
   webMapCard: {
     margin: spacing.md,
-    borderRadius: borderRadius.large,
+    borderRadius: borderRadius.lg,
   },
   webMapTitle: {
     textAlign: 'center',
@@ -523,7 +523,7 @@ const styles = StyleSheet.create({
   locationInfo: {
     backgroundColor: colors.surface,
     padding: spacing.md,
-    borderRadius: borderRadius.medium,
+    borderRadius: borderRadius.md,
     marginBottom: spacing.md,
   },
   locationLabel: {

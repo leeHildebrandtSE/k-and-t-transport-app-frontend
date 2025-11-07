@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
   View,
-  FlatList,
+  ScrollView,
   RefreshControl,
+  ImageBackground,
 } from 'react-native';
 import {
   Card,
@@ -14,10 +15,12 @@ import {
   Menu,
   Divider,
 } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { createIcon } from '../../../components/Icon';
 
 import { colors } from '../../../utils/theme';
-import { adminDashboardStyles } from '../../../styles/screens/dashboards/adminDashboard';
+import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
 import { AdminScreenProps } from '../../../types/Dashboard';
 import { User } from '../../../types/User';
 
@@ -50,8 +53,18 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
       email: 'bob.williams@example.com',
       firstName: 'Bob',
       lastName: 'Williams',
-      role: 'parent',
+      role: 'commuter',
       isActive: false,
+      dateJoined: new Date(),
+      lastLogin: new Date(),
+    },
+    {
+      id: '4',
+      email: 'admin@ktransport.com',
+      firstName: 'Sarah',
+      lastName: 'Admin',
+      role: 'admin',
+      isActive: true,
       dateJoined: new Date(),
       lastLogin: new Date(),
     },
@@ -67,9 +80,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
     switch (role) {
       case 'admin': return colors.error;
       case 'driver': return colors.primary;
-      case 'parent': return colors.secondary;
       case 'commuter': return colors.success;
-      case 'staff': return colors.warning;
       default: return colors.text;
     }
   };
@@ -78,9 +89,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
     switch (role) {
       case 'admin': return 'shield-account';
       case 'driver': return 'car';
-      case 'parent': return 'account-supervisor';
       case 'commuter': return 'account';
-      case 'staff': return 'badge-account';
       default: return 'account';
     }
   };
@@ -102,7 +111,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
             <View style={adminDashboardStyles.userMetaContainer}>
               <Chip
                 mode="outlined"
-                icon={getRoleIcon(item.role)}
+                icon={createIcon(getRoleIcon(item.role), 16, getRoleColor(item.role))}
                 textStyle={{ color: getRoleColor(item.role) }}
                 style={{ borderColor: getRoleColor(item.role) }}
               >
@@ -110,6 +119,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
               </Chip>
               <Chip
                 mode="outlined"
+                icon={createIcon(item.isActive ? "check-circle" : "close-circle", 16, item.isActive ? colors.success : colors.error)}
                 textStyle={{
                   color: item.isActive ? colors.success : colors.error
                 }}
@@ -127,7 +137,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
           onDismiss={() => setMenuVisible(null)}
           anchor={
             <IconButton
-              icon="dots-vertical"
+              icon={createIcon("dots-vertical", 24, "#666")}
               onPress={() => setMenuVisible(item.id)}
             />
           }
@@ -138,7 +148,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
               // TODO: View user details
             }}
             title="View Details"
-            leadingIcon="eye"
+            leadingIcon={createIcon("eye", 20, "#666")}
           />
           <Menu.Item
             onPress={() => {
@@ -146,7 +156,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
               // TODO: Edit user
             }}
             title="Edit User"
-            leadingIcon="pencil"
+            leadingIcon={createIcon("pencil", 20, "#666")}
           />
           <Divider />
           <Menu.Item
@@ -155,7 +165,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
               // TODO: Toggle user status
             }}
             title={item.isActive ? "Deactivate" : "Activate"}
-            leadingIcon={item.isActive ? "account-cancel" : "account-check"}
+            leadingIcon={createIcon(item.isActive ? "account-cancel" : "account-check", 20, "#666")}
           />
           <Menu.Item
             onPress={() => {
@@ -163,7 +173,7 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
               // TODO: Delete user
             }}
             title="Delete User"
-            leadingIcon="delete"
+            leadingIcon={createIcon("delete", 20, colors.error)}
             titleStyle={{ color: colors.error }}
           />
         </Menu>
@@ -175,28 +185,89 @@ const AdminUsersScreen: React.FC<AdminScreenProps> = ({ user }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text variant="titleLarge" style={styles.screenTitle}>User Management</Text>
-        <Button
-          mode="contained"
-          icon="account-plus"
-          onPress={() => {/* Add new user */}}
-          style={styles.headerButton}
-        >
-          Add User
-        </Button>
-      </View>
+      {/* Cape Town Admin Background */}
+      <ImageBackground
+        source={{ uri: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        {/* Premium Background Overlay */}
+        <View style={styles.premiumBackgroundOverlay} />
+      </ImageBackground>
 
-      <FlatList
-        data={users}
-        keyExtractor={(item) => item.id}
-        renderItem={renderUserItem}
-        contentContainerStyle={styles.listContainer}
+      <ScrollView
+        style={styles.scrollContainer}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        showsVerticalScrollIndicator={false}
-      />
+      >
+        {/* Hero User Management Header */}
+        <View style={styles.heroProfileCard}>
+          <LinearGradient
+            colors={adminGradientConfigs.hero.colors}
+            start={adminGradientConfigs.hero.start}
+            end={adminGradientConfigs.hero.end}
+            style={styles.heroGradientOverlay}
+          >
+            {/* African Pattern Overlay */}
+            <View style={[styles.africanPatternOverlay, styles.mountainAfricanPattern]}>
+              <View style={styles.africanPatternDot1} />
+              <View style={styles.africanPatternDot2} />
+              <View style={styles.africanPatternDot3} />
+              <View style={styles.africanTriangle1} />
+              <View style={styles.africanTriangle2} />
+              <View style={styles.africanZigzag} />
+            </View>
+
+            <View style={styles.heroContent}>
+              {/* User Management Icon */}
+              <View style={styles.profileImageFrame}>
+                <View style={[styles.adminStatusIcon, { backgroundColor: colors.tertiary }]}>
+                  <MaterialCommunityIcons
+                    name="account-group"
+                    size={60}
+                    color="#fff"
+                  />
+                </View>
+                <View style={[styles.onlineIndicator, { backgroundColor: colors.success }]} />
+              </View>
+
+              {/* User Management Info */}
+              <View style={styles.heroProfileInfo}>
+                <Text style={styles.heroName}>User Management</Text>
+                <Text style={styles.heroRole}>Manage System Users & Permissions</Text>
+
+                {/* User Stats */}
+                <View style={styles.statsRow}>
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{users.length}</Text>
+                    <Text style={styles.heroStatLabel}>TOTAL</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{users.filter(u => u.isActive).length}</Text>
+                    <Text style={styles.heroStatLabel}>ACTIVE</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{users.filter(u => u.role === 'driver').length}</Text>
+                    <Text style={styles.heroStatLabel}>DRIVERS</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
+        </View>
+
+        {/* User List */}
+        <View style={styles.listContainer}>
+          {users.map((user) => (
+            <View key={user.id}>
+              {renderUserItem({ item: user })}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };

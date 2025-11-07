@@ -6,17 +6,19 @@ import {
   Alert,
   Animated,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import {
   Card,
   FAB,
   Text,
 } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Trip } from '../../../types/Booking';
 import { colors } from '../../../utils/theme';
-import { driverDashboardStyles } from '../../../styles/screens/dashboards/driverDashboard';
+import { driverDashboardStyles, driverGradientConfigs } from '../../../styles/screens/dashboards/driverDashboard';
 import { DriverScreenProps, DashboardStats } from '../../../types/Dashboard';
 
 const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
@@ -67,15 +69,15 @@ const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
 
   return (
     <View style={driverDashboardStyles.container}>
-      {/* Cape Town Inspired Background Graphics */}
-      <View style={driverDashboardStyles.premiumBackgroundContainer}>
-        {/* Atlantic Ocean waves */}
-        <Animated.View style={[driverDashboardStyles.backgroundBlob1, { backgroundColor: `${colors.primary}08` }]} />
-        {/* Table Mountain silhouette */}
-        <Animated.View style={[driverDashboardStyles.backgroundBlob2, { backgroundColor: `${colors.info}06` }]} />
-        {/* Cape Town sunshine */}
-        <Animated.View style={[driverDashboardStyles.backgroundBlob3, { backgroundColor: `${colors.secondary}04` }]} />
-      </View>
+      {/* Cape Town Ocean Scenic Background */}
+      <ImageBackground
+        source={{ uri: 'https://images.pexels.com/photos/259447/pexels-photo-259447.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={driverDashboardStyles.backgroundImage}
+        resizeMode="cover"
+      >
+        {/* Premium Gradient Overlay */}
+        <View style={driverDashboardStyles.premiumBackgroundOverlay} />
+      </ImageBackground>
 
       <ScrollView
         style={driverDashboardStyles.scrollContainer}
@@ -87,12 +89,60 @@ const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
         />}
         showsVerticalScrollIndicator={false}
       >
-        {/* Cape Town Welcome Header */}
-        <View style={driverDashboardStyles.homeHeader}>
-          <Text style={driverDashboardStyles.welcomeText}>
-            Good {new Date().getHours() < 12 ? 'Morning' : new Date().getHours() < 17 ? 'Afternoon' : 'Evening'} from the Mother City
-          </Text>
-          <Text style={driverDashboardStyles.driverNameHome}>{user.firstName} {user.lastName}</Text>
+        {/* Hero Driver Status Header */}
+        <View style={driverDashboardStyles.heroProfileCard}>
+          <ImageBackground
+            source={require('../../../../assets/images/driver-dash-hero-header-background.png')}
+            style={driverDashboardStyles.heroBackgroundImage}
+            resizeMode="cover"
+          >
+            <LinearGradient
+              colors={driverGradientConfigs.hero.colors}
+              start={driverGradientConfigs.hero.start}
+              end={driverGradientConfigs.hero.end}
+              style={driverDashboardStyles.heroGradientOverlay}
+            >
+            <View style={driverDashboardStyles.heroContent}>
+              {/* Driver Status Icon */}
+              <View style={driverDashboardStyles.profileImageFrame}>
+                <View style={[driverDashboardStyles.dutyStatusIcon, { backgroundColor: isOnDuty ? colors.success : colors.warning }]}>
+                  <MaterialCommunityIcons
+                    name={isOnDuty ? "steering" : "pause-circle"}
+                    size={60}
+                    color="#fff"
+                  />
+                </View>
+                <View style={[driverDashboardStyles.onlineIndicator, { backgroundColor: isOnDuty ? colors.success : colors.warning }]} />
+              </View>
+
+              {/* Driver Info */}
+              <View style={driverDashboardStyles.heroProfileInfo}>
+                <Text style={driverDashboardStyles.heroName}>{user.firstName} {user.lastName}</Text>
+                <Text style={driverDashboardStyles.heroRole}>
+                  {isOnDuty ? 'On Duty - Active Driver' : 'Off Duty - Standby'}
+                </Text>
+
+                {/* Today's Stats */}
+                <View style={driverDashboardStyles.statsRow}>
+                  <View style={driverDashboardStyles.statItem}>
+                    <Text style={driverDashboardStyles.heroStatValue}>{todaysStats.tripsCompleted}</Text>
+                    <Text style={driverDashboardStyles.heroStatLabel}>TRIPS</Text>
+                  </View>
+                  <View style={driverDashboardStyles.statDivider} />
+                  <View style={driverDashboardStyles.statItem}>
+                    <Text style={driverDashboardStyles.heroStatValue}>{todaysStats.passengersServed}</Text>
+                    <Text style={driverDashboardStyles.heroStatLabel}>PASSENGERS</Text>
+                  </View>
+                  <View style={driverDashboardStyles.statDivider} />
+                  <View style={driverDashboardStyles.statItem}>
+                    <Text style={driverDashboardStyles.heroStatValue}>{todaysStats.hoursOnDuty}h</Text>
+                    <Text style={driverDashboardStyles.heroStatLabel}>ON-DUTY</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
+          </ImageBackground>
         </View>
 
         {/* Duty Status Card */}
@@ -146,166 +196,278 @@ const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
         </View>
 
         {/* Cape Town Current Trip Section */}
-        <Card style={driverDashboardStyles.premiumCard}>
-          <Card.Content style={{ padding: 0 }}>
-            <View style={driverDashboardStyles.cardHeader}>
-              <View style={[driverDashboardStyles.cardIconContainer, { backgroundColor: colors.primary }]}>
-                <MaterialCommunityIcons name="ship-wheel" size={28} color={colors.surface} />
-              </View>
-              <Text style={driverDashboardStyles.premiumCardTitle}>Atlantic Route</Text>
+        <Card style={driverDashboardStyles.enhancedPassengerCard}>
+          <Card.Content>
+            <View style={driverDashboardStyles.sectionHeader}>
+              <MaterialCommunityIcons name="ship-wheel" size={24} color={colors.primary} />
+              <Text style={driverDashboardStyles.sectionTitle}>Atlantic Route Management</Text>
             </View>
-
-            <View style={driverDashboardStyles.cardContent}>
               {currentTrip ? (
-                <View style={driverDashboardStyles.activeTripContainer}>
-                  <View style={driverDashboardStyles.tripRoute}>
-                    <Text style={driverDashboardStyles.tripRouteText}>Coastal Express {currentTrip?.routeId || 'CT-001'}</Text>
-                    <View style={[driverDashboardStyles.tripStatusBadge, { backgroundColor: colors.info }]}>
-                      <Text style={driverDashboardStyles.tripStatusText}>ATLANTIC</Text>
+                <View style={driverDashboardStyles.premiumPassengerList}>
+                  <View style={driverDashboardStyles.routePassengersSection}>
+                    <View style={driverDashboardStyles.routeSectionHeader}>
+                      <MaterialCommunityIcons name="ship-wheel" size={20} color={colors.primary} />
+                      <Text style={driverDashboardStyles.routeSectionTitle}>Active Trip - Coastal Express</Text>
+                      <Text style={driverDashboardStyles.routeSectionCount}>CT-001</Text>
                     </View>
+
+                    <View style={driverDashboardStyles.premiumPassengerItem}>
+                      <View style={[driverDashboardStyles.passengerAvatar, { backgroundColor: colors.primary, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                        <MaterialCommunityIcons name="sail-boat" size={24} color="#fff" />
+                      </View>
+                      <View style={driverDashboardStyles.premiumPassengerInfo}>
+                        <Text style={driverDashboardStyles.premiumPassengerName}>Sea Point → CBD</Text>
+                        <Text style={driverDashboardStyles.premiumPassengerDetails}>Atlantic Route • 15 passengers aboard</Text>
+                        <View style={driverDashboardStyles.passengerMetrics}>
+                          <View style={driverDashboardStyles.passengerMetric}>
+                            <MaterialCommunityIcons name="clock" size={14} color={colors.textSecondary} />
+                            <Text style={driverDashboardStyles.passengerMetricText}>25 minutes</Text>
+                          </View>
+                          <View style={driverDashboardStyles.passengerMetric}>
+                            <MaterialCommunityIcons name="map-marker-path" size={14} color={colors.textSecondary} />
+                            <Text style={driverDashboardStyles.passengerMetricText}>5 stops remaining</Text>
+                          </View>
+                        </View>
+                      </View>
+                      <View style={[driverDashboardStyles.passengerStatus, { backgroundColor: colors.success }]}>
+                        <MaterialCommunityIcons name="check" size={16} color="#fff" />
+                        <Text style={driverDashboardStyles.passengerStatusText}>ACTIVE</Text>
+                      </View>
+                    </View>
+
+                    <TouchableOpacity style={driverDashboardStyles.capeActionButton} onPress={startTrip}>
+                      <MaterialCommunityIcons name="sail-boat" size={20} color={colors.surface} />
+                      <Text style={driverDashboardStyles.capeActionButtonText}>Set Sail</Text>
+                    </TouchableOpacity>
                   </View>
-                  <View style={driverDashboardStyles.tripDetails}>
-                    <View style={driverDashboardStyles.tripDetailRow}>
-                      <MaterialCommunityIcons name="calendar-today" size={18} color={colors.primary} />
-                      <Text style={driverDashboardStyles.tripDetailText}>Today's Cape Town Route</Text>
-                    </View>
-                    <View style={driverDashboardStyles.tripDetailRow}>
-                      <MaterialCommunityIcons name="account-multiple" size={18} color={colors.info} />
-                      <Text style={driverDashboardStyles.tripDetailText}>15 passengers • Sea Point to CBD</Text>
-                    </View>
-                  </View>
-                  <TouchableOpacity style={driverDashboardStyles.capeActionButton} onPress={startTrip}>
-                    <MaterialCommunityIcons name="sail-boat" size={20} color={colors.surface} />
-                    <Text style={driverDashboardStyles.capeActionButtonText}>Set Sail</Text>
-                  </TouchableOpacity>
                 </View>
               ) : (
-                <View style={driverDashboardStyles.noTripContainer}>
-                  <MaterialCommunityIcons name="weather-sunny" size={64} color={colors.secondary} />
-                  <Text style={driverDashboardStyles.noTripTitle}>Cape Town Ready</Text>
-                  <Text style={driverDashboardStyles.noTripSubtitle}>Your next Atlantic route will appear here</Text>
+                <View style={driverDashboardStyles.premiumPassengerList}>
+                  <View style={driverDashboardStyles.routePassengersSection}>
+                    <View style={driverDashboardStyles.routeSectionHeader}>
+                      <MaterialCommunityIcons name="weather-sunny" size={20} color={colors.secondary} />
+                      <Text style={driverDashboardStyles.routeSectionTitle}>No Active Trip</Text>
+                      <Text style={driverDashboardStyles.routeSectionCount}>Ready</Text>
+                    </View>
+
+                    <View style={driverDashboardStyles.premiumPassengerItem}>
+                      <View style={[driverDashboardStyles.passengerAvatar, { backgroundColor: colors.secondary + '30', width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                        <MaterialCommunityIcons name="weather-sunny" size={24} color={colors.secondary} />
+                      </View>
+                      <View style={driverDashboardStyles.premiumPassengerInfo}>
+                        <Text style={driverDashboardStyles.premiumPassengerName}>Cape Town Ready</Text>
+                        <Text style={driverDashboardStyles.premiumPassengerDetails}>Your next Atlantic route will appear here</Text>
+                        <View style={driverDashboardStyles.passengerMetrics}>
+                          <View style={driverDashboardStyles.passengerMetric}>
+                            <MaterialCommunityIcons name="clock" size={14} color={colors.textSecondary} />
+                            <Text style={driverDashboardStyles.passengerMetricText}>Awaiting assignment</Text>
+                          </View>
+                        </View>
+                      </View>
+                      <View style={[driverDashboardStyles.passengerStatus, { backgroundColor: colors.textSecondary }]}>
+                        <MaterialCommunityIcons name="pause" size={16} color="#fff" />
+                        <Text style={driverDashboardStyles.passengerStatusText}>STANDBY</Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
               )}
-            </View>
           </Card.Content>
         </Card>
 
         {/* Cape Town Schedule */}
-        <Card style={driverDashboardStyles.premiumCard}>
-          <Card.Content style={{ padding: 0 }}>
-            <View style={driverDashboardStyles.cardHeader}>
-              <View style={[driverDashboardStyles.cardIconContainer, { backgroundColor: colors.secondary }]}>
-                <MaterialCommunityIcons name="clock-outline" size={28} color={colors.surface} />
-              </View>
-              <Text style={driverDashboardStyles.premiumCardTitle}>Cape Town Routes</Text>
+        <Card style={driverDashboardStyles.enhancedPassengerCard}>
+          <Card.Content>
+            <View style={driverDashboardStyles.sectionHeader}>
+              <MaterialCommunityIcons name="clock-outline" size={24} color={colors.secondary} />
+              <Text style={driverDashboardStyles.sectionTitle}>Cape Town Routes Schedule</Text>
             </View>
+              {/* Premium Route List with Enhanced Design */}
+              <View style={driverDashboardStyles.premiumPassengerList}>
+                {/* Morning Route */}
+                <View style={driverDashboardStyles.routePassengersSection}>
+                  <View style={driverDashboardStyles.routeSectionHeader}>
+                    <MaterialCommunityIcons name="weather-sunny" size={20} color={colors.secondary} />
+                    <Text style={driverDashboardStyles.routeSectionTitle}>Morning Route - 7:00 AM</Text>
+                    <Text style={driverDashboardStyles.routeSectionCount}>Sunrise Beach</Text>
+                  </View>
 
-            <View style={[driverDashboardStyles.scheduleContainer, driverDashboardStyles.cardContent]}>
-              <View style={driverDashboardStyles.premiumScheduleItem}>
-                <View style={driverDashboardStyles.scheduleTimeContainer}>
-                  <Text style={driverDashboardStyles.scheduleTime}>07:00</Text>
-                  <Text style={driverDashboardStyles.scheduleAmPm}>AM</Text>
-                </View>
-                <View style={driverDashboardStyles.scheduleInfo}>
-                  <Text style={driverDashboardStyles.scheduleTitle}>Sunrise Beach Route</Text>
-                  <Text style={driverDashboardStyles.scheduleRoute}>Camps Bay → City Bowl</Text>
-                  <View style={driverDashboardStyles.scheduleMetrics}>
-                    <View style={driverDashboardStyles.scheduleMetric}>
-                      <MaterialCommunityIcons name="waves" size={14} color={colors.primary} />
-                      <Text style={driverDashboardStyles.scheduleMetricText}>8 ocean lovers</Text>
+                  <View style={driverDashboardStyles.premiumPassengerItem}>
+                    <View style={[driverDashboardStyles.passengerAvatar, { backgroundColor: colors.secondary, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                      <MaterialCommunityIcons name="waves" size={24} color="#fff" />
                     </View>
-                    <View style={driverDashboardStyles.scheduleMetric}>
-                      <MaterialCommunityIcons name="lighthouse" size={14} color={colors.secondary} />
-                      <Text style={driverDashboardStyles.scheduleMetricText}>6 coastal stops</Text>
+                    <View style={driverDashboardStyles.premiumPassengerInfo}>
+                      <Text style={driverDashboardStyles.premiumPassengerName}>Camps Bay → City Bowl</Text>
+                      <Text style={driverDashboardStyles.premiumPassengerDetails}>Atlantic Seaboard • 6 coastal stops</Text>
+                      <View style={driverDashboardStyles.passengerMetrics}>
+                        <View style={driverDashboardStyles.passengerMetric}>
+                          <MaterialCommunityIcons name="account-group" size={14} color={colors.textSecondary} />
+                          <Text style={driverDashboardStyles.passengerMetricText}>8 ocean lovers</Text>
+                        </View>
+                        <View style={driverDashboardStyles.passengerMetric}>
+                          <MaterialCommunityIcons name="clock" size={14} color={colors.textSecondary} />
+                          <Text style={driverDashboardStyles.passengerMetricText}>35 minutes</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={[driverDashboardStyles.passengerStatus, { backgroundColor: colors.secondary }]}>
+                      <MaterialCommunityIcons name="check" size={16} color="#fff" />
+                      <Text style={driverDashboardStyles.passengerStatusText}>SUNRISE</Text>
                     </View>
                   </View>
                 </View>
-                <View style={[driverDashboardStyles.scheduleStatus, { backgroundColor: colors.secondary }]}>
-                  <Text style={driverDashboardStyles.scheduleStatusText}>SUNRISE</Text>
-                </View>
-              </View>
 
-              <View style={driverDashboardStyles.premiumScheduleItem}>
-                <View style={driverDashboardStyles.scheduleTimeContainer}>
-                  <Text style={driverDashboardStyles.scheduleTime}>15:00</Text>
-                  <Text style={driverDashboardStyles.scheduleAmPm}>PM</Text>
-                </View>
-                <View style={driverDashboardStyles.scheduleInfo}>
-                  <Text style={driverDashboardStyles.scheduleTitle}>Table Mountain Explorer</Text>
-                  <Text style={driverDashboardStyles.scheduleRoute}>Constantia → Newlands</Text>
-                  <View style={driverDashboardStyles.scheduleMetrics}>
-                    <View style={driverDashboardStyles.scheduleMetric}>
-                      <MaterialCommunityIcons name="pine-tree" size={14} color={colors.info} />
-                      <Text style={driverDashboardStyles.scheduleMetricText}>8 nature lovers</Text>
+                {/* Afternoon Route */}
+                <View style={driverDashboardStyles.routePassengersSection}>
+                  <View style={driverDashboardStyles.routeSectionHeader}>
+                    <MaterialCommunityIcons name="image-filter-hdr" size={20} color={colors.info} />
+                    <Text style={driverDashboardStyles.routeSectionTitle}>Afternoon Route - 3:00 PM</Text>
+                    <Text style={driverDashboardStyles.routeSectionCount}>Mountain Explorer</Text>
+                  </View>
+
+                  <View style={driverDashboardStyles.premiumPassengerItem}>
+                    <View style={[driverDashboardStyles.passengerAvatar, { backgroundColor: colors.info, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                      <MaterialCommunityIcons name="pine-tree" size={24} color="#fff" />
                     </View>
-                    <View style={driverDashboardStyles.scheduleMetric}>
-                      <MaterialCommunityIcons name="image-filter-hdr" size={14} color={colors.info} />
-                      <Text style={driverDashboardStyles.scheduleMetricText}>6 scenic stops</Text>
+                    <View style={driverDashboardStyles.premiumPassengerInfo}>
+                      <Text style={driverDashboardStyles.premiumPassengerName}>Constantia → Newlands</Text>
+                      <Text style={driverDashboardStyles.premiumPassengerDetails}>Southern Suburbs • 6 scenic stops</Text>
+                      <View style={driverDashboardStyles.passengerMetrics}>
+                        <View style={driverDashboardStyles.passengerMetric}>
+                          <MaterialCommunityIcons name="account-group" size={14} color={colors.textSecondary} />
+                          <Text style={driverDashboardStyles.passengerMetricText}>8 nature lovers</Text>
+                        </View>
+                        <View style={driverDashboardStyles.passengerMetric}>
+                          <MaterialCommunityIcons name="clock" size={14} color={colors.textSecondary} />
+                          <Text style={driverDashboardStyles.passengerMetricText}>40 minutes</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={[driverDashboardStyles.passengerStatus, { backgroundColor: colors.info }]}>
+                      <MaterialCommunityIcons name="check" size={16} color="#fff" />
+                      <Text style={driverDashboardStyles.passengerStatusText}>MOUNTAIN</Text>
                     </View>
                   </View>
                 </View>
-                <View style={[driverDashboardStyles.scheduleStatus, { backgroundColor: colors.info }]}>
-                  <Text style={driverDashboardStyles.scheduleStatusText}>MOUNTAIN</Text>
-                </View>
-              </View>
 
-              <View style={driverDashboardStyles.premiumScheduleItem}>
-                <View style={driverDashboardStyles.scheduleTimeContainer}>
-                  <Text style={driverDashboardStyles.scheduleTime}>17:30</Text>
-                  <Text style={driverDashboardStyles.scheduleAmPm}>PM</Text>
-                </View>
-                <View style={driverDashboardStyles.scheduleInfo}>
-                  <Text style={driverDashboardStyles.scheduleTitle}>Golden Hour Cruise</Text>
-                  <Text style={driverDashboardStyles.scheduleRoute}>V&A Waterfront → Sunset Beach</Text>
-                  <View style={driverDashboardStyles.scheduleMetrics}>
-                    <View style={driverDashboardStyles.scheduleMetric}>
-                      <MaterialCommunityIcons name="weather-sunset" size={14} color={colors.secondary} />
-                      <Text style={driverDashboardStyles.scheduleMetricText}>12 sunset seekers</Text>
+                {/* Evening Route */}
+                <View style={driverDashboardStyles.routePassengersSection}>
+                  <View style={driverDashboardStyles.routeSectionHeader}>
+                    <MaterialCommunityIcons name="weather-sunset" size={20} color={colors.primary} />
+                    <Text style={driverDashboardStyles.routeSectionTitle}>Evening Route - 5:30 PM</Text>
+                    <Text style={driverDashboardStyles.routeSectionCount}>Golden Hour</Text>
+                  </View>
+
+                  <View style={driverDashboardStyles.premiumPassengerItem}>
+                    <View style={[driverDashboardStyles.passengerAvatar, { backgroundColor: colors.primary, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                      <MaterialCommunityIcons name="camera" size={24} color="#fff" />
                     </View>
-                    <View style={driverDashboardStyles.scheduleMetric}>
-                      <MaterialCommunityIcons name="camera" size={14} color={colors.secondary} />
-                      <Text style={driverDashboardStyles.scheduleMetricText}>8 photo stops</Text>
+                    <View style={driverDashboardStyles.premiumPassengerInfo}>
+                      <Text style={driverDashboardStyles.premiumPassengerName}>V&A Waterfront → Sunset Beach</Text>
+                      <Text style={driverDashboardStyles.premiumPassengerDetails}>Waterfront Circuit • 8 photo stops</Text>
+                      <View style={driverDashboardStyles.passengerMetrics}>
+                        <View style={driverDashboardStyles.passengerMetric}>
+                          <MaterialCommunityIcons name="account-group" size={14} color={colors.textSecondary} />
+                          <Text style={driverDashboardStyles.passengerMetricText}>12 sunset seekers</Text>
+                        </View>
+                        <View style={driverDashboardStyles.passengerMetric}>
+                          <MaterialCommunityIcons name="clock" size={14} color={colors.textSecondary} />
+                          <Text style={driverDashboardStyles.passengerMetricText}>45 minutes</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={[driverDashboardStyles.passengerStatus, { backgroundColor: colors.primary }]}>
+                      <MaterialCommunityIcons name="check" size={16} color="#fff" />
+                      <Text style={driverDashboardStyles.passengerStatusText}>SUNSET</Text>
                     </View>
                   </View>
                 </View>
-                <View style={[driverDashboardStyles.scheduleStatus, { backgroundColor: colors.primary }]}>
-                  <Text style={driverDashboardStyles.scheduleStatusText}>SUNSET</Text>
-                </View>
               </View>
-            </View>
           </Card.Content>
         </Card>
 
         {/* Cape Town Vehicle Status */}
-        <Card style={driverDashboardStyles.premiumCard}>
-          <Card.Content style={{ padding: 0 }}>
-            <View style={driverDashboardStyles.cardHeader}>
-              <View style={[driverDashboardStyles.cardIconContainer, { backgroundColor: colors.info }]}>
-                <MaterialCommunityIcons name="bus-articulated-front" size={28} color={colors.surface} />
-              </View>
-              <Text style={driverDashboardStyles.premiumCardTitle}>Mountain Cruiser</Text>
+        <Card style={driverDashboardStyles.enhancedPassengerCard}>
+          <Card.Content>
+            <View style={driverDashboardStyles.sectionHeader}>
+              <MaterialCommunityIcons name="bus-articulated-front" size={24} color={colors.info} />
+              <Text style={driverDashboardStyles.sectionTitle}>Mountain Cruiser - CT-001</Text>
             </View>
 
-            <View style={[driverDashboardStyles.vehicleStatusGrid, driverDashboardStyles.cardContent]}>
-              <View style={driverDashboardStyles.vehicleStatusItem}>
-                <MaterialCommunityIcons name="anchor" size={24} color={colors.primary} />
-                <Text style={driverDashboardStyles.vehicleStatusLabel}>Cape Cruiser</Text>
-                <Text style={driverDashboardStyles.vehicleStatusValue}>CT-001</Text>
+            <View style={driverDashboardStyles.premiumPassengerList}>
+              {/* Fuel Status */}
+              <View style={driverDashboardStyles.premiumPassengerItem}>
+                <View style={[driverDashboardStyles.passengerAvatar, { backgroundColor: colors.info, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                  <MaterialCommunityIcons name="fuel" size={24} color="#fff" />
+                </View>
+                <View style={driverDashboardStyles.premiumPassengerInfo}>
+                  <Text style={driverDashboardStyles.premiumPassengerName}>Ocean Ready Fuel</Text>
+                  <Text style={driverDashboardStyles.premiumPassengerDetails}>Tank Level • Ready for Atlantic routes</Text>
+                  <View style={driverDashboardStyles.passengerMetrics}>
+                    <View style={driverDashboardStyles.passengerMetric}>
+                      <MaterialCommunityIcons name="gauge" size={14} color={colors.textSecondary} />
+                      <Text style={driverDashboardStyles.passengerMetricText}>85% capacity</Text>
+                    </View>
+                    <View style={driverDashboardStyles.passengerMetric}>
+                      <MaterialCommunityIcons name="map-marker-distance" size={14} color={colors.textSecondary} />
+                      <Text style={driverDashboardStyles.passengerMetricText}>~400km range</Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={[driverDashboardStyles.passengerStatus, { backgroundColor: colors.success }]}>
+                  <MaterialCommunityIcons name="check" size={16} color="#fff" />
+                  <Text style={driverDashboardStyles.passengerStatusText}>GOOD</Text>
+                </View>
               </View>
-              <View style={driverDashboardStyles.vehicleStatusItem}>
-                <MaterialCommunityIcons name="fuel" size={24} color={colors.info} />
-                <Text style={driverDashboardStyles.vehicleStatusLabel}>Ocean Ready</Text>
-                <Text style={driverDashboardStyles.vehicleStatusValue}>85%</Text>
+
+              {/* Service Status */}
+              <View style={driverDashboardStyles.premiumPassengerItem}>
+                <View style={[driverDashboardStyles.passengerAvatar, { backgroundColor: colors.warning, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                  <MaterialCommunityIcons name="cog" size={24} color="#fff" />
+                </View>
+                <View style={driverDashboardStyles.premiumPassengerInfo}>
+                  <Text style={driverDashboardStyles.premiumPassengerName}>Service Schedule</Text>
+                  <Text style={driverDashboardStyles.premiumPassengerDetails}>Maintenance Due • Cape Town Service Center</Text>
+                  <View style={driverDashboardStyles.passengerMetrics}>
+                    <View style={driverDashboardStyles.passengerMetric}>
+                      <MaterialCommunityIcons name="calendar" size={14} color={colors.textSecondary} />
+                      <Text style={driverDashboardStyles.passengerMetricText}>In 2 weeks</Text>
+                    </View>
+                    <View style={driverDashboardStyles.passengerMetric}>
+                      <MaterialCommunityIcons name="wrench" size={14} color={colors.textSecondary} />
+                      <Text style={driverDashboardStyles.passengerMetricText}>Full service</Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={[driverDashboardStyles.passengerStatus, { backgroundColor: colors.warning }]}>
+                  <MaterialCommunityIcons name="clock" size={16} color="#fff" />
+                  <Text style={driverDashboardStyles.passengerStatusText}>PENDING</Text>
+                </View>
               </View>
-              <View style={driverDashboardStyles.vehicleStatusItem}>
-                <MaterialCommunityIcons name="cog" size={24} color={colors.secondary} />
-                <Text style={driverDashboardStyles.vehicleStatusLabel}>Service Due</Text>
-                <Text style={driverDashboardStyles.vehicleStatusValue}>2 weeks</Text>
-              </View>
-              <View style={driverDashboardStyles.vehicleStatusItem}>
-                <MaterialCommunityIcons name="road-variant" size={24} color={colors.info} />
-                <Text style={driverDashboardStyles.vehicleStatusLabel}>Cape Miles</Text>
-                <Text style={driverDashboardStyles.vehicleStatusValue}>45,234 km</Text>
+
+              {/* Mileage Status */}
+              <View style={driverDashboardStyles.premiumPassengerItem}>
+                <View style={[driverDashboardStyles.passengerAvatar, { backgroundColor: colors.primary, width: 48, height: 48, borderRadius: 24, alignItems: 'center', justifyContent: 'center' }]}>
+                  <MaterialCommunityIcons name="road-variant" size={24} color="#fff" />
+                </View>
+                <View style={driverDashboardStyles.premiumPassengerInfo}>
+                  <Text style={driverDashboardStyles.premiumPassengerName}>Cape Miles Traveled</Text>
+                  <Text style={driverDashboardStyles.premiumPassengerDetails}>Total Distance • Atlantic & Mountain Routes</Text>
+                  <View style={driverDashboardStyles.passengerMetrics}>
+                    <View style={driverDashboardStyles.passengerMetric}>
+                      <MaterialCommunityIcons name="speedometer" size={14} color={colors.textSecondary} />
+                      <Text style={driverDashboardStyles.passengerMetricText}>45,234 km</Text>
+                    </View>
+                    <View style={driverDashboardStyles.passengerMetric}>
+                      <MaterialCommunityIcons name="trophy" size={14} color={colors.textSecondary} />
+                      <Text style={driverDashboardStyles.passengerMetricText}>Excellent record</Text>
+                    </View>
+                  </View>
+                </View>
+                <View style={[driverDashboardStyles.passengerStatus, { backgroundColor: colors.primary }]}>
+                  <MaterialCommunityIcons name="check" size={16} color="#fff" />
+                  <Text style={driverDashboardStyles.passengerStatusText}>ACTIVE</Text>
+                </View>
               </View>
             </View>
           </Card.Content>
@@ -336,7 +498,7 @@ const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
       {/* Cape Town Emergency FAB */}
       <FAB
         style={[driverDashboardStyles.emergencyFAB, { backgroundColor: colors.error }]}
-        icon="lifebuoy"
+        icon={() => <MaterialCommunityIcons name="lifebuoy" size={24} color="white" />}
         onPress={() => {
           Alert.alert('Cape Town Emergency', 'Emergency services will be contacted immediately.', [
             { text: 'Cancel', style: 'cancel' },

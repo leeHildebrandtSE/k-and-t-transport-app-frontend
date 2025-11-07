@@ -23,6 +23,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { AuthService } from '../../services/AuthService';
 import { authStyles, colors } from '../../styles';
 import { LoginCredentials, User } from '../../types/User';
+import { useResponsive } from '../../hooks/useResponsive';
 
 interface LoginScreenProps {
   route: {
@@ -35,6 +36,7 @@ interface LoginScreenProps {
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
   const navigation = useNavigation();
+  const responsive = useResponsive(); // Added responsive hook
   const { onLogin, onBackToLanding } = route.params;
 
   const [formData, setFormData] = useState<LoginCredentials>({
@@ -89,7 +91,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
         resizeMode="cover"
       />
 
-      {/* Cape Town Ocean to Mountain Gradient Overlay */}
+      {/* UPDATED: Cape Town Ocean to Mountain Gradient Overlay - Better Visibility */}
       <LinearGradient
         colors={[
           `${colors.primary}CC`, // Cape Town ocean blue with 80% opacity
@@ -97,12 +99,16 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
           `${colors.secondary}66`  // Cape Town sunshine with 40% opacity
         ]}
         locations={[0, 0.6, 1]}
-        style={authStyles.gradientOverlay}
+        style={authStyles.enhancedGradientOverlay} // Using improved overlay (50% opacity instead of 70%)
       />
 
       <ScrollView
         style={authStyles.container}
-        contentContainerStyle={authStyles.scrollContent}
+        contentContainerStyle={[
+          authStyles.scrollContent,
+          // Responsive padding
+          { paddingHorizontal: responsive.mobile ? 20 : responsive.tablet ? 32 : 48 }
+        ]}
         showsVerticalScrollIndicator={false}
       >
         <View style={authStyles.content}>
@@ -116,7 +122,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
                   color={colors.textInverse}
                 />
               </Pressable>
-              <Text style={authStyles.backText}>Back to Home</Text>
+              <Text style={authStyles.enhancedBackText}>Back to Home</Text>
             </View>
           )}
 
@@ -129,11 +135,11 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
                 color={colors.textInverse}
               />
             </View>
-            <Text style={authStyles.logoTitle}>K & T Transport</Text>
-            <Text style={authStyles.logoTagline}>Your Trusted Journey Partner</Text>
+            <Text style={authStyles.enhancedLogoTitle}>K & T Transport</Text>
+            <Text style={authStyles.enhancedLogoTagline}>Your Trusted Journey Partner</Text>
           </View>
 
-          {/* Enhanced Demo Credentials */}
+          {/* UPDATED: Enhanced Demo Credentials - Better Contrast */}
           <Card style={authStyles.enhancedDemoCard}>
             <Card.Content>
               <Text variant="titleMedium" style={authStyles.demoTitle}>✨ Demo Credentials</Text>
@@ -148,8 +154,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
             </Card.Content>
           </Card>
 
-          {/* Login Form */}
-          <Card style={authStyles.formCard}>
+          {/* UPDATED: Login Form - Better Contrast */}
+          <Card style={authStyles.enhancedFormCard}>
             <Card.Content>
               <View style={authStyles.inputContainer}>
                 <View style={authStyles.inputWithIcon}>
@@ -233,7 +239,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ route }) => {
 
           {/* Register Link */}
           <View style={authStyles.registerSection}>
-            <Text style={authStyles.registerText}>Don't have an account?</Text>
+            <Text style={authStyles.enhancedRegisterText}>Don't have an account?</Text>
             <Button
               mode="text"
               onPress={navigateToRegister}

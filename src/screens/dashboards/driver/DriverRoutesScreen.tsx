@@ -5,15 +5,17 @@ import {
   RefreshControl,
   Animated,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import {
   Text,
 } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Route } from '../../../types/Transport';
 import { colors } from '../../../utils/theme';
-import { driverDashboardStyles } from '../../../styles/screens/dashboards/driverDashboard';
+import { driverDashboardStyles, driverGradientConfigs } from '../../../styles/screens/dashboards/driverDashboard';
 
 const DriverRoutesScreen: React.FC = () => {
   const [routes, setRoutes] = useState<Route[]>([]);
@@ -26,21 +28,78 @@ const DriverRoutesScreen: React.FC = () => {
 
   return (
     <View style={driverDashboardStyles.container}>
-      {/* Premium Background Graphics */}
-      <View style={driverDashboardStyles.premiumBackgroundContainer}>
-        <Animated.View style={[driverDashboardStyles.backgroundBlob1, { backgroundColor: `${colors.info}08` }]} />
-        <Animated.View style={[driverDashboardStyles.backgroundBlob2, { backgroundColor: `${colors.primary}06` }]} />
-      </View>
+      {/* Cape Town Mountain Road Background */}
+      <ImageBackground
+        source={{ uri: 'https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={driverDashboardStyles.backgroundImage}
+        resizeMode="cover"
+      >
+        {/* Premium Route-themed Overlay */}
+        <View style={driverDashboardStyles.routesBackgroundOverlay} />
+        <View style={driverDashboardStyles.premiumBackgroundOverlay} />
+      </ImageBackground>
 
       <ScrollView
         style={driverDashboardStyles.scrollContainer}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header Section */}
-        <View style={driverDashboardStyles.routesHeader}>
-          <Text style={driverDashboardStyles.routesTitle}>My Routes</Text>
-          <Text style={driverDashboardStyles.routesSubtitle}>Manage your assigned transport routes</Text>
+        {/* Hero Route Management Header */}
+        <View style={driverDashboardStyles.heroProfileCard}>
+          <LinearGradient
+            colors={driverGradientConfigs.hero.colors}
+            start={driverGradientConfigs.hero.start}
+            end={driverGradientConfigs.hero.end}
+            style={driverDashboardStyles.heroGradientOverlay}
+          >
+            {/* African Pattern Overlay */}
+            <View style={[driverDashboardStyles.africanPatternOverlay, driverDashboardStyles.oceanAfricanPattern]}>
+              <View style={driverDashboardStyles.africanPatternDot1} />
+              <View style={driverDashboardStyles.africanPatternDot2} />
+              <View style={driverDashboardStyles.africanPatternDot3} />
+              <View style={driverDashboardStyles.africanTriangle1} />
+              <View style={driverDashboardStyles.africanTriangle2} />
+              <View style={driverDashboardStyles.africanZigzag} />
+            </View>
+
+            <View style={driverDashboardStyles.heroContent}>
+              {/* Route Management Icon */}
+              <View style={driverDashboardStyles.profileImageFrame}>
+                <View style={[driverDashboardStyles.dutyStatusIcon, { backgroundColor: colors.secondary }]}>
+                  <MaterialCommunityIcons
+                    name="map-marker-path"
+                    size={60}
+                    color="#fff"
+                  />
+                </View>
+                <View style={[driverDashboardStyles.onlineIndicator, { backgroundColor: colors.success }]} />
+              </View>
+
+              {/* Route Info */}
+              <View style={driverDashboardStyles.heroProfileInfo}>
+                <Text style={driverDashboardStyles.heroName}>Route Management</Text>
+                <Text style={driverDashboardStyles.heroRole}>Cape Town Transport Network</Text>
+
+                {/* Route Stats */}
+                <View style={driverDashboardStyles.statsRow}>
+                  <View style={driverDashboardStyles.statItem}>
+                    <Text style={driverDashboardStyles.heroStatValue}>2</Text>
+                    <Text style={driverDashboardStyles.heroStatLabel}>ACTIVE</Text>
+                  </View>
+                  <View style={driverDashboardStyles.statDivider} />
+                  <View style={driverDashboardStyles.statItem}>
+                    <Text style={driverDashboardStyles.heroStatValue}>35</Text>
+                    <Text style={driverDashboardStyles.heroStatLabel}>PASSENGERS</Text>
+                  </View>
+                  <View style={driverDashboardStyles.statDivider} />
+                  <View style={driverDashboardStyles.statItem}>
+                    <Text style={driverDashboardStyles.heroStatValue}>98%</Text>
+                    <Text style={driverDashboardStyles.heroStatLabel}>ON-TIME</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
         </View>
 
         {/* Stats Overview */}

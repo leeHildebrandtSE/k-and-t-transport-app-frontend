@@ -5,17 +5,19 @@ import {
   RefreshControl,
   TouchableOpacity,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import {
   FAB,
   Text,
 } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { CommuterType } from '../../../types/User';
 import { Booking } from '../../../types/Booking';
 import { colors } from '../../../utils/theme';
-import { commuterDashboardStyles } from '../../../styles/screens/dashboards/commuterDashboard';
+import { commuterDashboardStyles, commuterGradientConfigs } from '../../../styles/screens/dashboards/commuterDashboard';
 import { CommuterScreenProps, QuickAction } from '../../../types/Dashboard';
 
 const CommuterHomeScreen: React.FC<CommuterScreenProps> = ({ user }) => {
@@ -78,6 +80,16 @@ const CommuterHomeScreen: React.FC<CommuterScreenProps> = ({ user }) => {
 
   return (
     <View style={styles.container}>
+      {/* Cape Town Commuter Background */}
+      <ImageBackground
+        source={{ uri: 'https://images.pexels.com/photos/1592119/pexels-photo-1592119.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        {/* Premium Background Overlay */}
+        <View style={styles.premiumBackgroundOverlay} />
+      </ImageBackground>
+
       <ScrollView
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
@@ -85,14 +97,72 @@ const CommuterHomeScreen: React.FC<CommuterScreenProps> = ({ user }) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {/* Welcome Card */}
-        <View style={styles.welcomeCard}>
-          <Text style={styles.welcomeText}>
-            Welcome, {user.firstName}!
-          </Text>
-          <Text style={styles.roleText}>
-            Commuter Dashboard
-          </Text>
+        {/* Hero Commuter Status Header */}
+        <View style={styles.heroProfileCard}>
+          <ImageBackground
+            source={require('../../../../assets/images/cummuter-dash-hero-header-background.png')}
+            style={styles.heroBackgroundImage}
+            resizeMode="cover"
+          >
+            <LinearGradient
+              colors={commuterGradientConfigs.hero.colors}
+              start={commuterGradientConfigs.hero.start}
+              end={commuterGradientConfigs.hero.end}
+              style={styles.heroGradientOverlay}
+            >
+            {/* African Pattern Overlay */}
+            <View style={[styles.africanPatternOverlay, styles.goldenAfricanPattern]}>
+              <View style={styles.africanPatternDot1} />
+              <View style={styles.africanPatternDot2} />
+              <View style={styles.africanPatternDot3} />
+              <View style={styles.africanTriangle1} />
+              <View style={styles.africanTriangle2} />
+              <View style={styles.africanZigzag} />
+              <View style={styles.africanLine1} />
+              <View style={styles.africanLine2} />
+            </View>
+
+            <View style={styles.heroContent}>
+              {/* Commuter Status Icon */}
+              <View style={styles.profileImageFrame}>
+                <View style={[styles.commuterStatusIcon, { backgroundColor: selectedCommuterType ? colors.success : colors.warning }]}>
+                  <MaterialCommunityIcons
+                    name={selectedCommuterType ? "account-check" : "account-clock"}
+                    size={60}
+                    color="#fff"
+                  />
+                </View>
+                <View style={[styles.onlineIndicator, { backgroundColor: colors.success }]} />
+              </View>
+
+              {/* Commuter Info */}
+              <View style={styles.heroProfileInfo}>
+                <Text style={styles.heroName}>{user.firstName} {user.lastName}</Text>
+                <Text style={styles.heroRole}>
+                  {selectedCommuterType ? 'Active Commuter' : 'Setup Required'}
+                </Text>
+
+                {/* Commuter Stats */}
+                <View style={styles.statsRow}>
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{bookings.length}</Text>
+                    <Text style={styles.heroStatLabel}>BOOKINGS</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{selectedCommuterType ? '1' : '0'}</Text>
+                    <Text style={styles.heroStatLabel}>ACTIVE</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>4.8</Text>
+                    <Text style={styles.heroStatLabel}>RATING</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
+          </ImageBackground>
         </View>
 
         {/* Commuter Type Selection */}
@@ -237,7 +307,7 @@ const CommuterHomeScreen: React.FC<CommuterScreenProps> = ({ user }) => {
       </ScrollView>
 
       <FAB
-        icon="plus"
+        icon={() => <MaterialCommunityIcons name="plus" size={24} color="white" />}
         style={{
           position: 'absolute',
           margin: 16,

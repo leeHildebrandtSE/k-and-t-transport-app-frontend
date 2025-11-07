@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card, Chip, Text, Avatar, Icon } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-import { colors, spacing, borderRadius, shadows } from '../../utils/theme';
+import { colors, spacing, borderRadius, shadows } from '../../styles/theme';
 import { EnhancedCard, StatusIndicator } from '../ui';
 
 interface TripCardProps {
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.surface,
     padding: spacing.md,
-    borderRadius: borderRadius.medium,
+    borderRadius: borderRadius.md,
     elevation: 1,
   },
   driverAvatar: {
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
     backgroundColor: colors.background,
-    borderRadius: borderRadius.small,
+    borderRadius: borderRadius.sm,
   },
   vehicleText: {
     fontSize: 14,
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
     backgroundColor: colors.background,
-    borderRadius: borderRadius.small,
+    borderRadius: borderRadius.sm,
   },
   passengerText: {
     fontSize: 14,

@@ -3,6 +3,7 @@ import {
   View,
   ScrollView,
   RefreshControl,
+  ImageBackground,
 } from 'react-native';
 import {
   Card,
@@ -10,10 +11,11 @@ import {
   Chip,
   Text,
 } from 'react-native-paper';
+import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { colors } from '../../../utils/theme';
-import { adminDashboardStyles } from '../../../styles/screens/dashboards/adminDashboard';
+import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
 import DashboardHeader from '../../../components/ui/DashboardHeader';
 import { AdminScreenProps, AdminStats } from '../../../types/Dashboard';
 
@@ -46,23 +48,87 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
 
   return (
     <View style={styles.container}>
-      {/* Modern Dashboard Header */}
-      <DashboardHeader
-        user={user}
-        title="Admin Dashboard"
-        subtitle="System Management & Analytics"
-        notificationCount={5}
-        onNotificationPress={() => {/* Navigate to notifications */}}
-        onProfilePress={() => {/* Navigate to profile */}}
-        showGradient={true}
-      />
+      {/* Cape Town Admin Background */}
+      <ImageBackground
+        source={{ uri: 'https://images.pexels.com/photos/789750/pexels-photo-789750.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        {/* Premium Background Overlay */}
+        <View style={styles.premiumBackgroundOverlay} />
+      </ImageBackground>
 
       <ScrollView
-        style={styles.scrollView}
+        style={styles.scrollContainer}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
+        {/* Hero Admin Overview Header */}
+        <View style={styles.heroProfileCard}>
+          <ImageBackground
+            source={require('../../../../../assets/images/admin-dash-hero-header-background.png')}
+            style={styles.heroBackgroundImage}
+            resizeMode="cover"
+          >
+            <LinearGradient
+              colors={adminGradientConfigs.hero.colors}
+              start={adminGradientConfigs.hero.start}
+              end={adminGradientConfigs.hero.end}
+              style={styles.heroGradientOverlay}
+            >
+            {/* African Pattern Overlay */}
+            <View style={[styles.africanPatternOverlay, styles.mountainAfricanPattern]}>
+              <View style={styles.africanPatternDot1} />
+              <View style={styles.africanPatternDot2} />
+              <View style={styles.africanPatternDot3} />
+              <View style={styles.africanTriangle1} />
+              <View style={styles.africanTriangle2} />
+              <View style={styles.africanZigzag} />
+              <View style={styles.africanLine1} />
+              <View style={styles.africanLine2} />
+            </View>
+
+            <View style={styles.heroContent}>
+              {/* Admin Management Icon */}
+              <View style={styles.profileImageFrame}>
+                <View style={[styles.adminStatusIcon, { backgroundColor: colors.secondary }]}>
+                  <MaterialCommunityIcons
+                    name="shield-crown"
+                    size={60}
+                    color="#fff"
+                  />
+                </View>
+                <View style={[styles.onlineIndicator, { backgroundColor: colors.success }]} />
+              </View>
+
+              {/* Admin Info */}
+              <View style={styles.heroProfileInfo}>
+                <Text style={styles.heroName}>Admin Dashboard</Text>
+                <Text style={styles.heroRole}>System Management & Analytics</Text>
+
+                {/* Admin Stats */}
+                <View style={styles.statsRow}>
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{stats.totalUsers}</Text>
+                    <Text style={styles.heroStatLabel}>USERS</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{stats.totalDrivers}</Text>
+                    <Text style={styles.heroStatLabel}>DRIVERS</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>{stats.activeBookings}</Text>
+                    <Text style={styles.heroStatLabel}>ACTIVE</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
+          </ImageBackground>
+        </View>
         {/* Statistics Cards */}
         <View style={styles.statsContainer}>
           <Card style={styles.statCard}>
@@ -137,7 +203,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
             <View style={styles.quickActions}>
               <Button
                 mode="contained"
-                icon="account-plus"
+                icon={() => <MaterialCommunityIcons name="account-plus" size={20} color="white" />}
                 onPress={() => {/* Add new user */}}
                 style={styles.actionButton}
               >
@@ -145,7 +211,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
               </Button>
               <Button
                 mode="outlined"
-                icon="car-plus"
+                icon={() => <MaterialCommunityIcons name="car" size={20} color={colors.primary} />}
                 onPress={() => {/* Add new driver */}}
                 style={styles.actionButton}
               >
@@ -155,7 +221,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
             <View style={styles.quickActions}>
               <Button
                 mode="outlined"
-                icon="map-marker-plus"
+                icon={() => <MaterialCommunityIcons name="map-marker-plus" size={20} color={colors.primary} />}
                 onPress={() => {/* Create new route */}}
                 style={styles.actionButton}
               >
@@ -163,7 +229,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
               </Button>
               <Button
                 mode="outlined"
-                icon="file-document"
+                icon={() => <MaterialCommunityIcons name="file-document" size={20} color={colors.primary} />}
                 onPress={() => {/* Generate report */}}
                 style={styles.actionButton}
               >
@@ -177,7 +243,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
               <View style={styles.quickActions}>
                 <Button
                   mode="contained"
-                  icon="car-multiple"
+                  icon={() => <MaterialCommunityIcons name="car-multiple" size={20} color="white" />}
                   onPress={() => {/* Navigate to lift club management */}}
                   style={[styles.actionButton, styles.liftClubButton]}
                   buttonColor={colors.warning}
@@ -186,7 +252,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
                 </Button>
                 <Button
                   mode="outlined"
-                  icon="chart-line"
+                  icon={() => <MaterialCommunityIcons name="chart-line" size={20} color={colors.warning} />}
                   onPress={() => {/* View lift club analytics */}}
                   style={styles.actionButton}
                   textColor={colors.warning}

@@ -1,4 +1,7 @@
 import { DefaultTheme } from 'react-native-paper';
+import { Platform } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React from 'react';
 
 // Cape Town Inspired K & T Transport colors - Ocean, Nature & Sunshine
 export const colors = {
@@ -213,50 +216,47 @@ export const borderRadius = {
   full: 9999,
 };
 
-// Modern shadow system
+// Helper function to create cross-platform shadows
+const createShadow = (
+  offsetHeight: number,
+  radius: number,
+  opacity: number,
+  elevation: number
+) => {
+  return {
+    // Modern boxShadow for web
+    boxShadow: `0px ${offsetHeight}px ${radius}px rgba(0, 0, 0, ${opacity})`,
+    // Platform-specific for native
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: offsetHeight },
+        shadowOpacity: opacity,
+        shadowRadius: radius,
+      },
+      android: {
+        elevation: elevation,
+      },
+      default: {},
+    }),
+  };
+};
+
+// Modern shadow system with cross-platform support
 export const shadows = {
   none: {
+    boxShadow: 'none',
     shadowColor: 'transparent',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0,
     shadowRadius: 0,
     elevation: 0,
   },
-  xs: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-  sm: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  md: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  lg: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.2,
-    shadowRadius: 16,
-    elevation: 8,
-  },
-  xl: {
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 12 },
-    shadowOpacity: 0.25,
-    shadowRadius: 24,
-    elevation: 12,
-  },
+  xs: createShadow(1, 2, 0.05, 1),
+  sm: createShadow(2, 4, 0.1, 2),
+  md: createShadow(4, 8, 0.15, 4),
+  lg: createShadow(8, 16, 0.2, 8),
+  xl: createShadow(12, 24, 0.25, 12),
 };
 
 // 2025 Modern Animation System
@@ -313,17 +313,17 @@ export const effects = {
 
   // Neumorphism (subtle 3D effect)
   neumorphism: {
-    light: {
-      shadowColor: colors.shadowLight,
-      shadowOffset: { width: 4, height: 4 },
-      shadowOpacity: 0.3,
-      shadowRadius: 8,
-    },
+    light: createShadow(4, 8, 0.3, 4),
     inset: {
-      shadowColor: colors.shadowLight,
-      shadowOffset: { width: -2, height: -2 },
-      shadowOpacity: 0.2,
-      shadowRadius: 4,
+      boxShadow: 'inset -2px -2px 4px rgba(0, 0, 0, 0.2)',
+      ...Platform.select({
+        ios: {
+          shadowColor: colors.shadowLight,
+          shadowOffset: { width: -2, height: -2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+        },
+      }),
     },
   },
 
@@ -361,9 +361,11 @@ export const componentSizes = {
   },
 };
 
-// Enhanced React Native Paper theme
+// Enhanced React Native Paper theme with icon configuration
 export const theme = {
   ...DefaultTheme,
+  // Configure icon set for React Native Paper
+  isV3: true,
   colors: {
     ...DefaultTheme.colors,
     primary: colors.primary,

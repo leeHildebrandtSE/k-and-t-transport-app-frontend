@@ -81,7 +81,7 @@ export interface AdminScreenProps {
 
 export interface AdminProfileScreenProps {
   user: User;
-  onLogout: () => void;
+  onLogout?: () => void;
 }
 
 export interface AdminStats {

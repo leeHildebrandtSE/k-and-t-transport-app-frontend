@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
   },
   card: {
     margin: spacing.md,
-    borderRadius: borderRadius.large,
+    borderRadius: borderRadius.lg,
   },
   title: {
     fontSize: 24,
@@ -418,7 +418,7 @@ const styles = StyleSheet.create({
   },
   costCard: {
     backgroundColor: colors.surface,
-    borderRadius: borderRadius.medium,
+    borderRadius: borderRadius.md,
   },
   costAmount: {
     fontSize: 32,
@@ -441,7 +441,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     marginHorizontal: spacing.xs,
-    borderRadius: borderRadius.medium,
+    borderRadius: borderRadius.md,
   },
   divider: {
     marginVertical: spacing.lg,
