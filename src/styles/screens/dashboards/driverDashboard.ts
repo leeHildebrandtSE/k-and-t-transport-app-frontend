@@ -1856,7 +1856,7 @@ export const driverGradientConfigs = {
     end: { x: 1, y: 1 }, // Diagonal gradient top-left to bottom-right
   },
   navbar: {
-    colors: [colors.primary, colors.secondary], // Keep navbar solid
+    colors: ['rgba(30, 58, 138, 1)', 'rgba(59, 130, 246, 1)'], // Dark blue to standard blue gradient
     start: { x: 0, y: 0 },
     end: { x: 1, y: 0 }, // Horizontal gradient left to right
   }

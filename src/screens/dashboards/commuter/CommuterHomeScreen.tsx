@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Alert,
   ImageBackground,
+  Dimensions,
+  Image,
 } from 'react-native';
 import {
   FAB,
@@ -14,12 +16,19 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { CommuterHeroBackground } from '../../../../assets';
+import { CommuterHeroBackground, CommuterProfilePhoto } from '../../../../assets';
 import { CommuterType } from '../../../types/User';
 import { Booking } from '../../../types/Booking';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { commuterDashboardStyles, commuterGradientConfigs } from '../../../styles/screens/dashboards/commuterDashboard';
 import { CommuterScreenProps, QuickAction } from '../../../types/Dashboard';
+
+const { width } = Dimensions.get('window');
+
+// Responsive breakpoints
+const isTablet = width >= 768;
+const isDesktop = width >= 1024;
+const isMobile = width < 768;
 
 const CommuterHomeScreen: React.FC<CommuterScreenProps> = ({ user }) => {
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -115,15 +124,14 @@ const CommuterHomeScreen: React.FC<CommuterScreenProps> = ({ user }) => {
             {/* Decorative overlay removed for production compatibility */}
 
             <View style={styles.heroContent}>
-              {/* Commuter Status Icon */}
+              {/* Commuter Profile Photo */}
               <View style={styles.profileImageFrame}>
-                <View style={[styles.commuterStatusIcon, { backgroundColor: selectedCommuterType ? colors.success : colors.warning }]}>
-                  <MaterialCommunityIcons
-                    name={selectedCommuterType ? "account-check" : "account-clock"}
-                    size={60}
-                    color="#fff"
-                  />
-                </View>
+                <Image
+                  source={{ uri: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=400' }}
+                  style={styles.commuterStatusIcon}
+                  defaultSource={CommuterProfilePhoto}
+                  resizeMode="cover"
+                />
                 <View style={[styles.onlineIndicator, { backgroundColor: colors.success }]} />
               </View>
 

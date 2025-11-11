@@ -3,6 +3,7 @@ import {
   View,
   ScrollView,
   ImageBackground,
+  Dimensions,
 } from 'react-native';
 import {
   Text,
@@ -13,6 +14,14 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { CommuterHeroBackground } from '../../../../assets';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { commuterDashboardStyles, commuterGradientConfigs } from '../../../styles/screens/dashboards/commuterDashboard';
+import { CommuterScreenProps } from '../../../types/Dashboard';
+
+const { width } = Dimensions.get('window');
+
+// Responsive breakpoints
+const isTablet = width >= 768;
+const isDesktop = width >= 1024;
+const isMobile = width < 768;
 
 const CommuterBookingsScreen: React.FC = () => {
   const styles = commuterDashboardStyles;

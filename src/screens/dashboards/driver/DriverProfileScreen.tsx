@@ -6,6 +6,7 @@ import {
   Animated,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from 'react-native';
 import {
   Card,
@@ -14,7 +15,7 @@ import {
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { DriverHeroBackground } from '../../../../assets';
+import { DriverHeroBackground, DriverProfilePhoto } from '../../../../assets';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
@@ -111,11 +112,17 @@ const DriverProfileScreen: React.FC<DriverProfileScreenProps> = ({ user, onLogou
             <View style={driverDashboardStyles.heroContent}>
               {/* Profile Image with Premium Frame */}
               <View style={driverDashboardStyles.profileImageFrame}>
-                <Avatar.Text
-                  size={120}
-                  label={`${user.firstName[0]}${user.lastName[0]}`}
-                  style={driverDashboardStyles.premiumAvatar}
-                  labelStyle={driverDashboardStyles.avatarLabel}
+                <Image
+                  source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400' }}
+                  defaultSource={DriverProfilePhoto}
+                  style={{
+                    width: 120,
+                    height: 120,
+                    borderRadius: 60,
+                    borderWidth: 4,
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                  }}
+                  resizeMode="cover"
                 />
                 <View style={driverDashboardStyles.onlineIndicator} />
               </View>

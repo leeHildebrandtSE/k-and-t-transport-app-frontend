@@ -4,6 +4,8 @@ import {
   ScrollView,
   TouchableOpacity,
   ImageBackground,
+  Dimensions,
+  Image,
 } from 'react-native';
 import {
   Chip,
@@ -14,13 +16,20 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { CommuterHeroBackground } from '../../../../assets';
+import { CommuterHeroBackground, CommuterProfilePhoto } from '../../../../assets';
 
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { commuterDashboardStyles, commuterGradientConfigs } from '../../../styles/screens/dashboards/commuterDashboard';
 import { CommuterProfileScreenProps } from '../../../types/Dashboard';
 import { useAuth } from '../../../contexts/AuthContext';
 import { AuthService } from '../../../services/AuthService';
+
+const { width } = Dimensions.get('window');
+
+// Responsive breakpoints
+const isTablet = width >= 768;
+const isDesktop = width >= 1024;
+const isMobile = width < 768;
 
 const CommuterProfileScreen: React.FC<CommuterProfileScreenProps> = ({ user, onLogout: propOnLogout }) => {
   const styles = commuterDashboardStyles;
@@ -106,11 +115,11 @@ const CommuterProfileScreen: React.FC<CommuterProfileScreenProps> = ({ user, onL
             <View style={styles.heroContent}>
               {/* Profile Image with Premium Frame */}
               <View style={styles.profileImageFrame}>
-                <Avatar.Text
-                  size={120}
-                  label={`${user.firstName[0]}${user.lastName[0]}`}
-                  style={[styles.commuterStatusIcon, { backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'rgba(255,255,255,0.3)' }]}
-                  labelStyle={{ color: '#fff', fontSize: 48, fontWeight: '700' }}
+                <Image
+                  source={{ uri: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=400' }}
+                  style={[styles.commuterStatusIcon, { borderColor: 'rgba(255,255,255,0.3)', borderWidth: 4 }]}
+                  defaultSource={CommuterProfilePhoto}
+                  resizeMode="cover"
                 />
                 <View style={styles.onlineIndicator} />
               </View>

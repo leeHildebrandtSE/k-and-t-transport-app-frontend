@@ -5,15 +5,24 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
-  StyleSheet,
+  Dimensions,
   Alert,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import { EnhancedCard } from '../../../components/ui';
 import { User } from '../../../types/User';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
+import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
 import { AdminHeroBackground } from '../../../../assets';
+
+const { width } = Dimensions.get('window');
+
+// Responsive breakpoints
+const isTablet = width >= 768;
+const isDesktop = width >= 1024;
+const isMobile = width < 768;
 
 interface AdminFinanceScreenProps {
   user: User;
@@ -80,325 +89,178 @@ export const AdminFinanceScreen: React.FC<AdminFinanceScreenProps> = ({ user }) 
     },
   ];
 
+  // Quick stats data for admin dashboard
   const quickStats = [
     {
-      label: 'Today\'s Revenue',
-      value: 'R12,450.80',
+      id: 1,
+      title: "Today's Revenue",
+      value: 'R12,451',
       icon: 'cash-multiple',
-      color: colors.success,
-      trend: '+12.5%',
-      trendUp: true,
+      iconColor: colors.success,
     },
     {
-      label: 'Pending Payouts',
-      value: 'R8,234.50',
+      id: 2,
+      title: 'Pending Payouts',
+      value: 'R8,235',
       icon: 'clock-outline',
-      color: colors.warning,
-      trend: '45 drivers',
-      trendUp: null,
+      iconColor: colors.warning,
     },
     {
-      label: 'Monthly Commission',
-      value: 'R89,675.20',
+      id: 3,
+      title: 'Monthly Commission',
+      value: 'R89,675',
       icon: 'percent',
-      color: colors.primary,
-      trend: '+8.2%',
-      trendUp: true,
+      iconColor: colors.primary,
     },
     {
-      label: 'Active Disputes',
+      id: 4,
+      title: 'Active Disputes',
       value: '7',
       icon: 'alert-circle',
-      color: colors.error,
-      trend: '-2 from yesterday',
-      trendUp: true,
+      iconColor: colors.error,
     },
   ];
 
-  const renderFinanceOption = (option: any) => (
-    <TouchableOpacity
-      key={option.id}
-      style={styles.financeCard}
-      onPress={option.onPress}
-    >
-      <View style={styles.cardHeader}>
-        <View style={[styles.iconContainer, { backgroundColor: `${option.color}20` }]}>
-          <MaterialCommunityIcons
-            name={option.icon as any}
-            size={24}
-            color={option.color}
-          />
-        </View>
-        <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>{option.title}</Text>
-          <Text style={styles.cardDescription}>{option.description}</Text>
-        </View>
-        <MaterialCommunityIcons
-          name="chevron-right"
-          size={20}
-          color={colors.textSecondary}
-        />
-      </View>
-    </TouchableOpacity>
-  );
-
-  const renderQuickStat = (stat: any, index: number) => (
-    <View key={index} style={styles.statCard}>
-      <View style={styles.statHeader}>
-        <View style={[styles.statIcon, { backgroundColor: `${stat.color}15` }]}>
-          <MaterialCommunityIcons
-            name={stat.icon as any}
-            size={20}
-            color={stat.color}
-          />
-        </View>
-        {stat.trendUp !== null && (
-          <View style={[styles.trendIndicator, { backgroundColor: stat.trendUp ? colors.successSoft : colors.errorSoft }]}>
-            <MaterialCommunityIcons
-              name={stat.trendUp ? "trending-up" : "trending-down"}
-              size={12}
-              color={stat.trendUp ? colors.success : colors.error}
-            />
-          </View>
-        )}
-      </View>
-      <Text style={styles.statValue}>{stat.value}</Text>
-      <Text style={styles.statLabel}>{stat.label}</Text>
-      <Text style={[styles.statTrend, { color: stat.trendUp ? colors.success : colors.textSecondary }]}>
-        {stat.trend}
-      </Text>
-    </View>
-  );
+  const styles = adminDashboardStyles;
 
   return (
     <View style={styles.container}>
-      {/* Hero Section */}
+      {/* Cape Town Financial Background */}
       <ImageBackground
-        source={AdminHeroBackground}
-        style={styles.heroSection}
+        source={{ uri: 'https://images.pexels.com/photos/87651/pexels-photo-87651.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={styles.backgroundImage}
         resizeMode="cover"
       >
-        <LinearGradient
-          colors={['rgba(5, 150, 105, 0.8)', 'rgba(14, 165, 233, 0.6)']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.heroGradient}
-        >
-          <View style={styles.heroContent}>
-            <Text style={styles.heroTitle}>Finance Center</Text>
-            <Text style={styles.heroSubtitle}>
-              Platform financial management and oversight
-            </Text>
-          </View>
-        </LinearGradient>
+        {/* Premium Background Overlay */}
+        <View style={styles.premiumBackgroundOverlay} />
       </ImageBackground>
 
-      <ScrollView style={styles.scrollContainer}>
-        {/* Quick Stats */}
-        <View style={styles.statsSection}>
+      <ScrollView
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Hero Finance Center Header */}
+        <View style={styles.heroProfileCard}>
+          <ImageBackground
+            source={AdminHeroBackground}
+            style={styles.heroBackgroundImage}
+            resizeMode="cover"
+          >
+            <LinearGradient
+              colors={adminGradientConfigs.hero.colors}
+              start={adminGradientConfigs.hero.start}
+              end={adminGradientConfigs.hero.end}
+              style={styles.heroGradientOverlay}
+            >
+            {/* African Pattern Overlay */}
+            {/* Decorative overlay removed for production compatibility */}
+
+            <View style={styles.heroContent}>
+              {/* Finance Management Icon */}
+              <View style={styles.profileImageFrame}>
+                <View style={[styles.adminStatusIcon, { backgroundColor: colors.tertiary }]}>
+                  <MaterialCommunityIcons
+                    name="cash-multiple"
+                    size={60}
+                    color="#fff"
+                  />
+                </View>
+                <View style={[styles.onlineIndicator, { backgroundColor: colors.success }]} />
+              </View>
+
+              {/* Finance Center Info */}
+              <View style={styles.heroProfileInfo}>
+                <Text style={styles.heroName}>Finance Center</Text>
+                <Text style={styles.heroRole}>Platform Financial Management & Analytics</Text>
+
+                {/* Finance Stats */}
+                <View style={styles.statsRow}>
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>R12.4K</Text>
+                    <Text style={styles.heroStatLabel}>TODAY</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>R89.7K</Text>
+                    <Text style={styles.heroStatLabel}>MONTH</Text>
+                  </View>
+                  <View style={styles.statDivider} />
+                  <View style={styles.statItem}>
+                    <Text style={styles.heroStatValue}>45</Text>
+                    <Text style={styles.heroStatLabel}>PAYOUTS</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </LinearGradient>
+          </ImageBackground>
+        </View>
+        {/* Quick Stats Grid */}
+        <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Financial Overview</Text>
-          <View style={styles.statsGrid}>
-            {quickStats.map(renderQuickStat)}
-          </View>
         </View>
 
-        {/* Finance Options */}
-        <View style={styles.optionsSection}>
-          <Text style={styles.sectionTitle}>Financial Management</Text>
-          {financeOptions.map(renderFinanceOption)}
+        <View style={styles.statsGrid}>
+          {quickStats.map((stat) => (
+            <View key={stat.id} style={styles.statCard}>
+              <View style={[styles.statIcon, { backgroundColor: `${stat.iconColor}20` }]}>
+                <MaterialCommunityIcons name={stat.icon as any} size={20} color={stat.iconColor} />
+              </View>
+              <Text style={styles.statValue}>{stat.value}</Text>
+              <Text style={styles.statLabel}>{stat.title}</Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Financial Management Options */}
+        <View style={styles.actionGrid}>
+          {financeOptions.map((option) => (
+            <TouchableOpacity
+              key={option.id}
+              style={styles.contentCard}
+              onPress={option.onPress}
+            >
+              <View style={styles.cardHeader}>
+                <MaterialCommunityIcons
+                  name={option.icon as any}
+                  size={24}
+                  color={option.color}
+                  style={{ marginRight: spacing.md }}
+                />
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.cardTitle}>{option.title}</Text>
+                  <Text style={styles.preferenceDescription}>{option.description}</Text>
+                </View>
+                <MaterialCommunityIcons
+                  name="chevron-right"
+                  size={20}
+                  color={colors.textSecondary}
+                />
+              </View>
+            </TouchableOpacity>
+          ))}
         </View>
 
         {/* Admin Notice */}
-        <View style={styles.adminSection}>
-          <View style={styles.adminHeader}>
+        <EnhancedCard style={styles.contentCard}>
+          <View style={styles.cardHeader}>
             <MaterialCommunityIcons
               name="shield-crown"
               size={20}
               color={colors.tertiary}
             />
-            <Text style={styles.adminTitle}>Administrator Access</Text>
+            <Text style={styles.cardTitle}>Administrator Access</Text>
           </View>
-          <Text style={styles.adminText}>
+          <Text style={styles.preferenceDescription}>
             You have full access to platform financial data and management tools. All actions are logged for audit purposes.
           </Text>
-        </View>
+        </EnhancedCard>
+
+        {/* Bottom spacing */}
+        <View style={styles.bottomSpacer} />
       </ScrollView>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
 
-  heroSection: {
-    height: 200,
-    width: '100%' as const,
-  },
-
-  heroGradient: {
-    flex: 1,
-    justifyContent: 'center' as const,
-    paddingHorizontal: spacing.xl,
-  },
-
-  heroContent: {
-    alignItems: 'center' as const,
-  },
-
-  heroTitle: {
-    ...typography.headlineLarge,
-    color: '#FFFFFF',
-    fontWeight: '700' as const,
-    marginBottom: spacing.sm,
-    textAlign: 'center' as const,
-  },
-
-  heroSubtitle: {
-    ...typography.bodyLarge,
-    color: '#FFFFFF',
-    textAlign: 'center' as const,
-    opacity: 0.9,
-  },
-
-  scrollContainer: {
-    flex: 1,
-    paddingHorizontal: spacing.lg,
-  },
-
-  statsSection: {
-    marginTop: spacing.xl,
-    marginBottom: spacing.lg,
-  },
-
-  sectionTitle: {
-    ...typography.titleLarge,
-    color: colors.text,
-    marginBottom: spacing.md,
-  },
-
-  statsGrid: {
-    flexDirection: 'row' as const,
-    flexWrap: 'wrap' as const,
-    marginHorizontal: -spacing.sm,
-  },
-
-  statCard: {
-    width: '50%' as const,
-    paddingHorizontal: spacing.sm,
-    marginBottom: spacing.md,
-  },
-
-  statHeader: {
-    flexDirection: 'row' as const,
-    justifyContent: 'space-between' as const,
-    alignItems: 'center' as const,
-    marginBottom: spacing.sm,
-  },
-
-  statIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-  },
-
-  trendIndicator: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-  },
-
-  statValue: {
-    ...typography.titleMedium,
-    color: colors.text,
-    fontWeight: '700' as const,
-    marginBottom: spacing.xs,
-  },
-
-  statLabel: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    marginBottom: spacing.xs,
-  },
-
-  statTrend: {
-    ...typography.labelSmall,
-    fontWeight: '600' as const,
-  },
-
-  optionsSection: {
-    marginBottom: spacing.xl,
-  },
-
-  financeCard: {
-    backgroundColor: colors.surface,
-    borderRadius: borderRadius.lg,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
-    ...shadows.sm,
-  },
-
-  cardHeader: {
-    flexDirection: 'row' as const,
-    alignItems: 'center' as const,
-  },
-
-  iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: borderRadius.md,
-    justifyContent: 'center' as const,
-    alignItems: 'center' as const,
-    marginRight: spacing.md,
-  },
-
-  cardContent: {
-    flex: 1,
-  },
-
-  cardTitle: {
-    ...typography.bodyLarge,
-    color: colors.text,
-    fontWeight: '600' as const,
-    marginBottom: spacing.xs,
-  },
-
-  cardDescription: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-  },
-
-  adminSection: {
-    backgroundColor: colors.surface,
-    borderRadius: borderRadius.lg,
-    padding: spacing.lg,
-    marginBottom: spacing.xl,
-    borderLeftWidth: 4,
-    borderLeftColor: colors.tertiary,
-    ...shadows.sm,
-  },
-
-  adminHeader: {
-    flexDirection: 'row' as const,
-    alignItems: 'center' as const,
-    marginBottom: spacing.sm,
-  },
-
-  adminTitle: {
-    ...typography.titleMedium,
-    color: colors.text,
-    marginLeft: spacing.sm,
-  },
-
-  adminText: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    lineHeight: 20,
-  },
-});

@@ -4,6 +4,7 @@ import {
   ScrollView,
   RefreshControl,
   ImageBackground,
+  Image,
 } from 'react-native';
 import {
   Card,
@@ -14,7 +15,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { AdminHeroBackground } from '../../../../assets';
+import { AdminHeroBackground, AdminProfilePhoto } from '../../../../assets';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
 import DashboardHeader from '../../../components/ui/DashboardHeader';
@@ -82,15 +83,14 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
             {/* Decorative overlay removed for production compatibility */}
 
             <View style={styles.heroContent}>
-              {/* Admin Management Icon */}
+              {/* Admin Profile Photo */}
               <View style={styles.profileImageFrame}>
-                <View style={[styles.adminStatusIcon, { backgroundColor: colors.secondary }]}>
-                  <MaterialCommunityIcons
-                    name="shield-crown"
-                    size={60}
-                    color="#fff"
-                  />
-                </View>
+                <Image
+                  source={{ uri: 'https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=400' }}
+                  style={styles.adminStatusIcon}
+                  defaultSource={AdminProfilePhoto}
+                  resizeMode="cover"
+                />
                 <View style={[styles.onlineIndicator, { backgroundColor: colors.success }]} />
               </View>
 

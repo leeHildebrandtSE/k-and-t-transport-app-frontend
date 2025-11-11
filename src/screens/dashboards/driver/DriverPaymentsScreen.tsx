@@ -1,13 +1,25 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity, ImageBackground, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, TouchableOpacity, ImageBackground, Text, StyleSheet, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
 import { EnhancedCard, StatsCard } from '../../../components/ui';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
-import { driverDashboardStyles } from '../../../styles/screens/dashboards/driverDashboard';
+import { driverDashboardStyles, driverGradientConfigs } from '../../../styles/screens/dashboards/driverDashboard';
+import { User } from '../../../types/User';
 
-export const DriverPaymentsScreen: React.FC = () => {
+const { width } = Dimensions.get('window');
+
+// Responsive breakpoints
+const isTablet = width >= 768;
+const isDesktop = width >= 1024;
+const isMobile = width < 768;
+
+interface DriverPaymentsScreenProps {
+  user?: User;
+}
+
+const DriverPaymentsScreen: React.FC<DriverPaymentsScreenProps> = ({ user }) => {
   // Mock data for demonstration
   const stats = [
     { id: 1, title: 'Total Earnings', value: 'R3,240', icon: 'wallet', iconColor: colors.success },
@@ -53,59 +65,65 @@ export const DriverPaymentsScreen: React.FC = () => {
 
   return (
     <View style={driverDashboardStyles.container}>
-      {/* Hero Section */}
-      <ImageBackground
-        source={require('../../../../assets/patterns/geometric-pattern.png')}
-        style={driverDashboardStyles.heroBackgroundImage}
-        imageStyle={driverDashboardStyles.heroBackgroundImage}
-      >
-        <LinearGradient
-          colors={['rgba(99, 102, 241, 0.9)', 'rgba(139, 92, 246, 0.9)']}
-          style={driverDashboardStyles.heroGradientOverlay}
-        >
-          <View style={driverDashboardStyles.heroContent}>
-            <Text style={driverDashboardStyles.sectionTitle}>Payments & Earnings</Text>
-            <Text style={styles.heroSubtitle}>
-              Manage your earnings and payment methods
-            </Text>
-
-            <View style={styles.heroActions}>
-              <TouchableOpacity style={[styles.heroActionButton, { backgroundColor: colors.success }]}>
-                <Ionicons name="download" size={16} color="#FFFFFF" />
-                <Text style={styles.heroActionText}>Withdraw</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={[styles.heroActionButton, { backgroundColor: 'rgba(255,255,255,0.2)' }]}>
-                <Ionicons name="analytics" size={16} color="#FFFFFF" />
-                <Text style={styles.heroActionText}>Reports</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </LinearGradient>
-      </ImageBackground>
-
       {/* Content */}
       <ScrollView style={driverDashboardStyles.scrollContainer} showsVerticalScrollIndicator={false}>
+        {/* Hero Section */}
+        <View style={driverDashboardStyles.heroProfileCard}>
+          <ImageBackground
+            source={require('../../../../assets/images/driver-dash-hero-header-background.png')}
+            style={driverDashboardStyles.heroBackgroundImage}
+            imageStyle={driverDashboardStyles.heroBackgroundImage}
+          >
+            <LinearGradient
+              colors={driverGradientConfigs.hero.colors}
+              start={driverGradientConfigs.hero.start}
+              end={driverGradientConfigs.hero.end}
+              style={driverDashboardStyles.heroGradientOverlay}
+            >
+              <View style={driverDashboardStyles.heroContent}>
+                <Text style={driverDashboardStyles.sectionTitle}>Payments & Earnings</Text>
+                <Text style={styles.heroSubtitle}>
+                  Manage your earnings and payment methods
+                </Text>
+
+                <View style={styles.heroActions}>
+                  <TouchableOpacity style={[styles.heroActionButton, { backgroundColor: colors.success }]}>
+                    <Ionicons name="download" size={16} color="#FFFFFF" />
+                    <Text style={styles.heroActionText}>Withdraw</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={[styles.heroActionButton, { backgroundColor: 'rgba(255,255,255,0.2)' }]}>
+                    <Ionicons name="analytics" size={16} color="#FFFFFF" />
+                    <Text style={styles.heroActionText}>Reports</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </LinearGradient>
+          </ImageBackground>
+        </View>
         {/* Stats Section */}
         <View style={driverDashboardStyles.sectionHeader}>
           <Text style={driverDashboardStyles.sectionTitle}>Earnings Overview</Text>
-          <View style={styles.statsGrid}>
-            {stats.map((stat) => (
-              <View key={stat.id} style={styles.statCard}>
-                <View style={[styles.statIcon, { backgroundColor: `${stat.iconColor}20` }]}>
-                  <Ionicons name={stat.icon as any} size={20} color={stat.iconColor} />
-                </View>
-                <Text style={styles.statValue}>{stat.value}</Text>
-                <Text style={styles.statLabel}>{stat.title}</Text>
+        </View>
+
+        <View style={styles.statsGrid}>
+          {stats.map((stat) => (
+            <View key={stat.id} style={styles.statCard}>
+              <View style={[styles.statIcon, { backgroundColor: `${stat.iconColor}20` }]}>
+                <Ionicons name={stat.icon as any} size={20} color={stat.iconColor} />
               </View>
-            ))}
-          </View>
+              <Text style={styles.statValue}>{stat.value}</Text>
+              <Text style={styles.statLabel}>{stat.title}</Text>
+            </View>
+          ))}
         </View>
 
         {/* Payment Options */}
         <View style={driverDashboardStyles.sectionHeader}>
           <Text style={driverDashboardStyles.sectionTitle}>Payment Options</Text>
+        </View>
 
+        <View style={styles.paymentOptionsContainer}>
           {paymentOptions.map((option) => (
             <TouchableOpacity key={option.id} style={styles.paymentCard}>
               <View style={[styles.iconContainer, { backgroundColor: option.backgroundColor }]}>
@@ -143,40 +161,48 @@ export const DriverPaymentsScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   heroActions: {
-    flexDirection: 'row',
+    flexDirection: isMobile ? 'column' : 'row',
     justifyContent: 'center',
+    alignItems: 'center',
     gap: spacing.md,
     marginTop: spacing.lg,
+    paddingHorizontal: spacing.lg,
   },
 
   heroActionButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: isMobile ? spacing.lg : spacing.xl,
     paddingVertical: spacing.md,
     borderRadius: borderRadius.lg,
     gap: spacing.xs,
+    minWidth: isMobile ? '80%' : 'auto',
+    justifyContent: 'center',
   },
 
   heroActionText: {
     color: '#FFFFFF',
     fontWeight: '600',
-    fontSize: 14,
+    fontSize: isMobile ? 14 : 16,
   },
 
   heroSubtitle: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: isMobile ? 14 : 16,
     textAlign: 'center',
     opacity: 0.9,
     marginBottom: spacing.sm,
+    paddingHorizontal: spacing.lg,
+    lineHeight: isMobile ? 20 : 24,
   },
 
   statsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    gap: spacing.md,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    gap: isMobile ? spacing.md : spacing.lg,
   },
 
   statCard: {
@@ -184,9 +210,14 @@ const styles = StyleSheet.create({
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     alignItems: 'center',
-    flex: 1,
-    minWidth: '45%',
+    width: isDesktop ? '22%' : isTablet ? '30%' : '47%',
+    marginBottom: spacing.md,
     ...shadows.md,
+  },
+
+  paymentOptionsContainer: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
   },
 
   statIcon: {
@@ -199,32 +230,34 @@ const styles = StyleSheet.create({
   },
 
   statValue: {
-    fontSize: 18,
+    fontSize: isMobile ? 16 : 18,
     fontWeight: '700',
     color: colors.text,
     marginBottom: spacing.xs,
   },
 
   statLabel: {
-    fontSize: 12,
+    fontSize: isMobile ? 11 : 12,
     color: colors.textSecondary,
     textAlign: 'center',
+    lineHeight: isMobile ? 14 : 16,
   },
 
   paymentCard: {
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
-    padding: spacing.lg,
+    padding: isMobile ? spacing.md : spacing.lg,
     marginVertical: spacing.sm,
     flexDirection: 'row',
     alignItems: 'center',
+    minHeight: isMobile ? 70 : 80,
     ...shadows.md,
   },
 
   iconContainer: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: isMobile ? 45 : 50,
+    height: isMobile ? 45 : 50,
+    borderRadius: isMobile ? 22.5 : 25,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: spacing.md,
@@ -235,15 +268,16 @@ const styles = StyleSheet.create({
   },
 
   paymentTitle: {
-    fontSize: 16,
+    fontSize: isMobile ? 14 : 16,
     fontWeight: '600',
     color: colors.text,
     marginBottom: spacing.xs,
   },
 
   paymentDescription: {
-    fontSize: 14,
+    fontSize: isMobile ? 12 : 14,
     color: colors.textSecondary,
+    lineHeight: isMobile ? 16 : 20,
   },
 
   paymentArrow: {
@@ -257,23 +291,26 @@ const styles = StyleSheet.create({
   },
 
   infoText: {
-    fontSize: 14,
+    fontSize: isMobile ? 12 : 14,
     color: colors.textSecondary,
-    lineHeight: 20,
+    lineHeight: isMobile ? 18 : 20,
   },
 
   infoCard: {
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
-    padding: spacing.lg,
+    padding: isMobile ? spacing.md : spacing.lg,
     marginVertical: spacing.lg,
+    marginHorizontal: spacing.lg,
     ...shadows.md,
   },
 
   infoTitle: {
-    fontSize: 16,
+    fontSize: isMobile ? 14 : 16,
     fontWeight: '600',
     color: colors.text,
     marginLeft: spacing.sm,
   },
 });
+
+export default DriverPaymentsScreen;

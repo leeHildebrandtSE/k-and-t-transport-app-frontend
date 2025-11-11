@@ -7,6 +7,7 @@ import {
   Animated,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from 'react-native';
 import {
   Card,
@@ -16,7 +17,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { DriverHeroBackground } from '../../../../assets';
+import { DriverHeroBackground, DriverProfilePhoto } from '../../../../assets';
 import { Trip } from '../../../types/Booking';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { driverDashboardStyles, driverGradientConfigs, driverTextStyles } from '../../../styles/screens/dashboards/driverDashboard';
@@ -104,15 +105,20 @@ const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
               style={driverDashboardStyles.heroGradientOverlay}
             >
             <View style={driverDashboardStyles.heroContent}>
-              {/* Driver Status Icon */}
+              {/* Driver Profile Photo */}
               <View style={driverDashboardStyles.profileImageFrame}>
-                <View style={[driverDashboardStyles.dutyStatusIcon, { backgroundColor: isOnDuty ? colors.success : colors.warning }]}>
-                  <MaterialCommunityIcons
-                    name={isOnDuty ? "steering" : "pause-circle"}
-                    size={60}
-                    color="#fff"
-                  />
-                </View>
+                <Image
+                  source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400' }}
+                  defaultSource={DriverProfilePhoto}
+                  style={{
+                    width: 120,
+                    height: 120,
+                    borderRadius: 60,
+                    borderWidth: 4,
+                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                  }}
+                  resizeMode="cover"
+                />
                 <View style={[driverDashboardStyles.onlineIndicator, { backgroundColor: isOnDuty ? colors.success : colors.warning }]} />
               </View>
 

@@ -6,20 +6,28 @@ import {
   TouchableOpacity,
   ImageBackground,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { User } from '../../../types/User';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
+import { commuterDashboardStyles, commuterGradientConfigs } from '../../../styles/screens/dashboards/commuterDashboard';
 import { CommuterHeroBackground } from '../../../../assets';
+import { CommuterScreenProps } from '../../../types/Dashboard';
 import { logNavigation } from '../../../utils/logger';
 
-interface CommuterPaymentsScreenProps {
-  user: User;
-}
+const { width } = Dimensions.get('window');
 
-export const CommuterPaymentsScreen: React.FC<CommuterPaymentsScreenProps> = ({ user }) => {
+// Responsive breakpoints
+const isTablet = width >= 768;
+const isDesktop = width >= 1024;
+const isMobile = width < 768;
+
+export const CommuterPaymentsScreen: React.FC<CommuterScreenProps> = ({ user }) => {
+  const commonStyles = commuterDashboardStyles;
+
   const paymentOptions = [
     {
       id: 'payment',
@@ -100,24 +108,23 @@ export const CommuterPaymentsScreen: React.FC<CommuterPaymentsScreenProps> = ({ 
       style={styles.paymentCard}
       onPress={option.onPress}
     >
-      <View style={styles.cardHeader}>
-        <View style={[styles.iconContainer, { backgroundColor: `${option.color}20` }]}>
-          <MaterialCommunityIcons
-            name={option.icon as any}
-            size={24}
-            color={option.color}
-          />
-        </View>
-        <View style={styles.cardContent}>
-          <Text style={styles.cardTitle}>{option.title}</Text>
-          <Text style={styles.cardDescription}>{option.description}</Text>
-        </View>
+      <View style={[styles.iconContainer, { backgroundColor: `${option.color}20` }]}>
         <MaterialCommunityIcons
-          name="chevron-right"
-          size={20}
-          color={colors.textSecondary}
+          name={option.icon as any}
+          size={24}
+          color={option.color}
         />
       </View>
+      <View style={styles.cardContent}>
+        <Text style={styles.cardTitle}>{option.title}</Text>
+        <Text style={styles.cardDescription}>{option.description}</Text>
+      </View>
+      <MaterialCommunityIcons
+        name="chevron-right"
+        size={20}
+        color={colors.textSecondary}
+        style={{ marginLeft: spacing.sm }}
+      />
     </TouchableOpacity>
   );
 
@@ -136,55 +143,95 @@ export const CommuterPaymentsScreen: React.FC<CommuterPaymentsScreenProps> = ({ 
   );
 
   return (
-    <View style={styles.container}>
-      {/* Hero Section with Background */}
-      <ImageBackground
-        source={CommuterHeroBackground}
-        style={styles.heroSection}
-        resizeMode="cover"
+    <View style={commonStyles.container}>
+      <ScrollView
+        style={commonStyles.scrollContainer}
+        showsVerticalScrollIndicator={false}
       >
-        <LinearGradient
-          colors={['rgba(14, 165, 233, 0.8)', 'rgba(5, 150, 105, 0.6)']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.heroGradient}
-        >
-          <View style={styles.heroContent}>
-            <Text style={styles.heroTitle}>Payment Center</Text>
-            <Text style={styles.heroSubtitle}>
-              Manage all your payment needs in one place
-            </Text>
-          </View>
-        </LinearGradient>
-      </ImageBackground>
+        {/* Hero Payment Center Header - Using consistent heroProfileCard structure */}
+        <View style={commonStyles.heroProfileCard}>
+          <ImageBackground
+            source={CommuterHeroBackground}
+            style={commonStyles.heroBackgroundImage}
+            resizeMode="cover"
+          >
+            <LinearGradient
+              colors={commuterGradientConfigs.hero.colors}
+              start={commuterGradientConfigs.hero.start}
+              end={commuterGradientConfigs.hero.end}
+              style={commonStyles.heroGradientOverlay}
+            >
+              <View style={commonStyles.heroContent}>
+                {/* Payment Center Icon */}
+                <View style={commonStyles.profileImageFrame}>
+                  <View style={[commonStyles.commuterStatusIcon, { backgroundColor: 'rgba(245, 158, 11, 0.3)' }]}>
+                    <MaterialCommunityIcons
+                      name="credit-card-multiple"
+                      size={60}
+                      color="#fff"
+                    />
+                  </View>
+                  <View style={[commonStyles.onlineIndicator, { backgroundColor: colors.success }]} />
+                </View>
 
-      <ScrollView style={styles.scrollContainer}>
-        {/* Quick Stats */}
-        <View style={styles.statsSection}>
-          <Text style={styles.sectionTitle}>Quick Overview</Text>
-          <View style={styles.statsGrid}>
-            {quickStats.map(renderQuickStat)}
-          </View>
+                {/* Payment Center Info */}
+                <View style={commonStyles.heroProfileInfo}>
+                  <Text style={commonStyles.heroName}>Payment Center</Text>
+                  <Text style={commonStyles.heroRole}>Manage all your payment needs</Text>
+
+                  {/* Payment Stats */}
+                  <View style={commonStyles.statsRow}>
+                    <View style={commonStyles.statItem}>
+                      <Text style={commonStyles.heroStatValue}>R2,450</Text>
+                      <Text style={commonStyles.heroStatLabel}>BALANCE</Text>
+                    </View>
+                    <View style={commonStyles.statDivider} />
+                    <View style={commonStyles.statItem}>
+                      <Text style={commonStyles.heroStatValue}>3</Text>
+                      <Text style={commonStyles.heroStatLabel}>PENDING</Text>
+                    </View>
+                    <View style={commonStyles.statDivider} />
+                    <View style={commonStyles.statItem}>
+                      <Text style={commonStyles.heroStatValue}>12</Text>
+                      <Text style={commonStyles.heroStatLabel}>THIS MONTH</Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </LinearGradient>
+          </ImageBackground>
         </View>
 
-        {/* Payment Options */}
-        <View style={styles.optionsSection}>
-          <Text style={styles.sectionTitle}>Payment Options</Text>
+        {/* Quick Stats Section - Using consistent section spacing */}
+        <View style={commonStyles.sectionHeader}>
+          <Text style={commonStyles.sectionTitle}>Quick Overview</Text>
+        </View>
+
+        <View style={styles.statsGrid}>
+          {quickStats.map(renderQuickStat)}
+        </View>
+
+        {/* Payment Options Section */}
+        <View style={commonStyles.sectionHeader}>
+          <Text style={commonStyles.sectionTitle}>Payment Options</Text>
+        </View>
+
+        <View style={styles.paymentOptionsContainer}>
           {paymentOptions.map(renderPaymentOption)}
         </View>
 
-        {/* Security Notice */}
-        <View style={styles.securitySection}>
-          <View style={styles.securityHeader}>
+        {/* Security Notice Section */}
+        <View style={styles.infoCard}>
+          <View style={styles.infoHeader}>
             <MaterialCommunityIcons
               name="shield-check"
-              size={20}
-              color={colors.success}
+              size={24}
+              color={colors.primary}
             />
-            <Text style={styles.securityTitle}>Secure & Protected</Text>
+            <Text style={styles.infoTitle}>Payment Information</Text>
           </View>
-          <Text style={styles.securityText}>
-            All payments are encrypted and processed through secure, certified payment gateways.
+          <Text style={styles.infoText}>
+            All payments are encrypted and processed through secure, certified payment gateways. Your financial information is protected with industry-standard security measures.
           </Text>
         </View>
       </ScrollView>
@@ -193,67 +240,24 @@ export const CommuterPaymentsScreen: React.FC<CommuterPaymentsScreenProps> = ({ 
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-
-  heroSection: {
-    height: 200,
-    width: '100%' as const,
-  },
-
-  heroGradient: {
-    flex: 1,
-    justifyContent: 'center' as const,
-    paddingHorizontal: spacing.xl,
-  },
-
-  heroContent: {
-    alignItems: 'center' as const,
-  },
-
-  heroTitle: {
-    ...typography.headlineLarge,
-    color: '#FFFFFF',
-    fontWeight: '700' as const,
-    marginBottom: spacing.sm,
-    textAlign: 'center' as const,
-  },
-
-  heroSubtitle: {
-    ...typography.bodyLarge,
-    color: '#FFFFFF',
-    textAlign: 'center' as const,
-    opacity: 0.9,
-  },
-
-  scrollContainer: {
-    flex: 1,
-    paddingHorizontal: spacing.lg,
-  },
-
-  statsSection: {
-    marginTop: spacing.xl,
-    marginBottom: spacing.lg,
-  },
-
-  sectionTitle: {
-    ...typography.titleLarge,
-    color: colors.text,
-    marginBottom: spacing.md,
-  },
-
+  // Stats grid styling - matching driver layout
   statsGrid: {
     flexDirection: 'row' as const,
     flexWrap: 'wrap' as const,
-    marginHorizontal: -spacing.sm,
+    justifyContent: 'space-between' as const,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    gap: isMobile ? spacing.md : spacing.lg,
   },
 
   statCard: {
-    width: '50%' as const,
-    paddingHorizontal: spacing.sm,
+    backgroundColor: colors.surface,
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    alignItems: 'center' as const,
+    width: isDesktop ? '22%' : isTablet ? '30%' : '47%',
     marginBottom: spacing.md,
+    ...shadows.md,
   },
 
   statIcon: {
@@ -266,38 +270,47 @@ const styles = StyleSheet.create({
   },
 
   statValue: {
-    ...typography.titleMedium,
-    color: colors.text,
+    fontSize: isMobile ? 16 : 18,
     fontWeight: '700' as const,
+    color: colors.text,
     marginBottom: spacing.xs,
   },
 
   statLabel: {
-    ...typography.bodySmall,
+    fontSize: isMobile ? 11 : 12,
     color: colors.textSecondary,
+    textAlign: 'center' as const,
+    lineHeight: isMobile ? 14 : 16,
   },
 
-  optionsSection: {
-    marginBottom: spacing.xl,
+  // Payment options container - matching driver layout
+  paymentOptionsContainer: {
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
   },
 
+  // Payment card styling with responsive design - matching driver layout
   paymentCard: {
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
-    ...shadows.sm,
+    padding: isMobile ? spacing.md : spacing.lg,
+    marginVertical: spacing.sm,
+    flexDirection: 'row' as const,
+    alignItems: 'center' as const,
+    minHeight: isMobile ? 70 : 80,
+    ...shadows.md,
   },
 
   cardHeader: {
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
+    flex: 1,
   },
 
   iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: borderRadius.md,
+    width: isMobile ? 45 : 50,
+    height: isMobile ? 45 : 50,
+    borderRadius: isMobile ? 22.5 : 25,
     justifyContent: 'center' as const,
     alignItems: 'center' as const,
     marginRight: spacing.md,
@@ -308,40 +321,44 @@ const styles = StyleSheet.create({
   },
 
   cardTitle: {
-    ...typography.bodyLarge,
-    color: colors.text,
+    fontSize: isMobile ? 14 : 16,
     fontWeight: '600' as const,
+    color: colors.text,
     marginBottom: spacing.xs,
   },
 
   cardDescription: {
-    ...typography.bodySmall,
+    fontSize: isMobile ? 12 : 14,
     color: colors.textSecondary,
+    lineHeight: isMobile ? 16 : 20,
   },
 
-  securitySection: {
+  // Security section styling - matching driver info section
+  infoCard: {
     backgroundColor: colors.surface,
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
+    marginHorizontal: spacing.lg,
     marginBottom: spacing.xl,
     ...shadows.sm,
   },
 
-  securityHeader: {
+  infoHeader: {
     flexDirection: 'row' as const,
     alignItems: 'center' as const,
-    marginBottom: spacing.sm,
+    marginBottom: spacing.md,
   },
 
-  securityTitle: {
-    ...typography.titleMedium,
+  infoTitle: {
+    fontSize: isMobile ? 14 : 16,
+    fontWeight: '600' as const,
     color: colors.text,
     marginLeft: spacing.sm,
   },
 
-  securityText: {
-    ...typography.bodySmall,
+  infoText: {
+    fontSize: isMobile ? 12 : 14,
     color: colors.textSecondary,
-    lineHeight: 20,
+    lineHeight: isMobile ? 18 : 20,
   },
 });

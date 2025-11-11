@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DashboardHeader } from '../../../components/ui';
 import { payoutHistoryScreenStyles } from '../../../styles/screens/driver/payoutHistoryScreen';
+import { driverGradientConfigs } from '../../../styles/screens/dashboards/driverDashboard';
 import { colors } from '../../../styles/theme';
 
 interface PayoutItem {
@@ -246,7 +247,9 @@ const PayoutHistoryScreen: React.FC = () => {
 
   return (
     <LinearGradient
-      colors={['#1E3A8A', '#3B82F6', '#60A5FA']}
+      colors={driverGradientConfigs.hero.colors}
+      start={driverGradientConfigs.hero.start}
+      end={driverGradientConfigs.hero.end}
       style={payoutHistoryScreenStyles.container}
     >
       <DashboardHeader
