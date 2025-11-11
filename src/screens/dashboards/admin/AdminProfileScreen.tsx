@@ -20,7 +20,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { AdminHeroBackground, AdminProfilePhoto } from '../../../../assets';
+import { AdminHeroBackground } from '../../../../assets';
 
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
@@ -124,7 +124,6 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user, onLogout:
                 <Image
                   source={{ uri: 'https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=400' }}
                   style={[styles.adminStatusIcon, { borderColor: 'rgba(255,255,255,0.3)', borderWidth: 4 }]}
-                  defaultSource={AdminProfilePhoto}
                   resizeMode="cover"
                 />
                 <View style={styles.onlineIndicator} />

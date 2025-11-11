@@ -16,7 +16,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { CommuterHeroBackground, CommuterProfilePhoto } from '../../../../assets';
+import { CommuterHeroBackground } from '../../../../assets';
 import { CommuterType } from '../../../types/User';
 import { Booking } from '../../../types/Booking';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
@@ -129,7 +129,6 @@ const CommuterHomeScreen: React.FC<CommuterScreenProps> = ({ user }) => {
                 <Image
                   source={{ uri: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=400' }}
                   style={styles.commuterStatusIcon}
-                  defaultSource={CommuterProfilePhoto}
                   resizeMode="cover"
                 />
                 <View style={[styles.onlineIndicator, { backgroundColor: colors.success }]} />

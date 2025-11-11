@@ -15,7 +15,7 @@ import {
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { DriverHeroBackground, DriverProfilePhoto } from '../../../../assets';
+import { DriverHeroBackground } from '../../../../assets';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
@@ -114,7 +114,6 @@ const DriverProfileScreen: React.FC<DriverProfileScreenProps> = ({ user, onLogou
               <View style={driverDashboardStyles.profileImageFrame}>
                 <Image
                   source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400' }}
-                  defaultSource={DriverProfilePhoto}
                   style={{
                     width: 120,
                     height: 120,

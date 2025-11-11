@@ -17,7 +17,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { DriverHeroBackground, DriverProfilePhoto } from '../../../../assets';
+import { DriverHeroBackground } from '../../../../assets';
 import { Trip } from '../../../types/Booking';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { driverDashboardStyles, driverGradientConfigs, driverTextStyles } from '../../../styles/screens/dashboards/driverDashboard';
@@ -109,7 +109,6 @@ const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
               <View style={driverDashboardStyles.profileImageFrame}>
                 <Image
                   source={{ uri: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400' }}
-                  defaultSource={DriverProfilePhoto}
                   style={{
                     width: 120,
                     height: 120,
