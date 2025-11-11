@@ -10,7 +10,8 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { colors } from '../../../utils/theme';
+import { CommuterHeroBackground } from '../../../../assets';
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { commuterDashboardStyles, commuterGradientConfigs } from '../../../styles/screens/dashboards/commuterDashboard';
 
 const CommuterTrackingScreen: React.FC = () => {
@@ -31,21 +32,19 @@ const CommuterTrackingScreen: React.FC = () => {
       <ScrollView style={styles.scrollContainer}>
         {/* Hero Live Tracking Header */}
         <View style={styles.heroProfileCard}>
-          <LinearGradient
-            colors={commuterGradientConfigs.hero.colors}
-            start={commuterGradientConfigs.hero.start}
-            end={commuterGradientConfigs.hero.end}
-            style={styles.heroGradientOverlay}
+          <ImageBackground
+            source={CommuterHeroBackground}
+            style={styles.heroBackgroundImage}
+            resizeMode="cover"
           >
+            <LinearGradient
+              colors={commuterGradientConfigs.hero.colors}
+              start={commuterGradientConfigs.hero.start}
+              end={commuterGradientConfigs.hero.end}
+              style={styles.heroGradientOverlay}
+            >
             {/* African Pattern Overlay */}
-            <View style={[styles.africanPatternOverlay, styles.goldenAfricanPattern]}>
-              <View style={styles.africanPatternDot1} />
-              <View style={styles.africanPatternDot2} />
-              <View style={styles.africanPatternDot3} />
-              <View style={styles.africanTriangle1} />
-              <View style={styles.africanTriangle2} />
-              <View style={styles.africanZigzag} />
-            </View>
+            {/* Decorative overlay removed for production compatibility */}
 
             <View style={styles.heroContent}>
               {/* Live Tracking Icon */}
@@ -85,6 +84,7 @@ const CommuterTrackingScreen: React.FC = () => {
               </View>
             </View>
           </LinearGradient>
+          </ImageBackground>
         </View>
 
         <View style={styles.emptyState}>

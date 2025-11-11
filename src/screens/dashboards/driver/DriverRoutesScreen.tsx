@@ -13,9 +13,11 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { DriverHeroBackground } from '../../../../assets';
+
 import { Route } from '../../../types/Transport';
-import { colors } from '../../../utils/theme';
-import { driverDashboardStyles, driverGradientConfigs } from '../../../styles/screens/dashboards/driverDashboard';
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
+import { driverDashboardStyles, driverGradientConfigs, driverTextStyles } from '../../../styles/screens/dashboards/driverDashboard';
 
 const DriverRoutesScreen: React.FC = () => {
   const [routes, setRoutes] = useState<Route[]>([]);
@@ -30,8 +32,8 @@ const DriverRoutesScreen: React.FC = () => {
     <View style={driverDashboardStyles.container}>
       {/* Cape Town Mountain Road Background */}
       <ImageBackground
-        source={{ uri: 'https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
-        style={driverDashboardStyles.backgroundImage}
+        source={{ uri: 'https://images.pexels.com/photos/290386/pexels-photo-290386.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={[driverDashboardStyles.premiumBackgroundContainer, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}
         resizeMode="cover"
       >
         {/* Premium Route-themed Overlay */}
@@ -46,21 +48,18 @@ const DriverRoutesScreen: React.FC = () => {
       >
         {/* Hero Route Management Header */}
         <View style={driverDashboardStyles.heroProfileCard}>
-          <LinearGradient
-            colors={driverGradientConfigs.hero.colors}
-            start={driverGradientConfigs.hero.start}
-            end={driverGradientConfigs.hero.end}
-            style={driverDashboardStyles.heroGradientOverlay}
+          <ImageBackground
+            source={DriverHeroBackground}
+            style={driverDashboardStyles.heroBackgroundImage}
+            resizeMode="cover"
           >
-            {/* African Pattern Overlay */}
-            <View style={[driverDashboardStyles.africanPatternOverlay, driverDashboardStyles.oceanAfricanPattern]}>
-              <View style={driverDashboardStyles.africanPatternDot1} />
-              <View style={driverDashboardStyles.africanPatternDot2} />
-              <View style={driverDashboardStyles.africanPatternDot3} />
-              <View style={driverDashboardStyles.africanTriangle1} />
-              <View style={driverDashboardStyles.africanTriangle2} />
-              <View style={driverDashboardStyles.africanZigzag} />
-            </View>
+            <LinearGradient
+              colors={driverGradientConfigs.hero.colors}
+              start={driverGradientConfigs.hero.start}
+              end={driverGradientConfigs.hero.end}
+              style={driverDashboardStyles.heroGradientOverlay}
+            >
+            {/* Decorative overlay removed for production compatibility */}
 
             <View style={driverDashboardStyles.heroContent}>
               {/* Route Management Icon */}
@@ -100,6 +99,7 @@ const DriverRoutesScreen: React.FC = () => {
               </View>
             </View>
           </LinearGradient>
+          </ImageBackground>
         </View>
 
         {/* Stats Overview */}

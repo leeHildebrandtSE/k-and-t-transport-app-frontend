@@ -12,6 +12,7 @@ import {
   CommuterBookingsScreen,
   CommuterTrackingScreen,
   CommuterProfileScreen,
+  CommuterPaymentsScreen,
 } from './commuter';
 
 const Tab = createBottomTabNavigator();
@@ -48,6 +49,19 @@ const CustomTabBar = (props: any) => {
           switch (route.name) {
             case 'Home':
               iconName = 'home';
+              break;
+            case 'Bookings':
+              iconName = 'calendar';
+              break;
+            case 'Payments':
+              iconName = 'credit-card';
+              break;
+            case 'Tracking':
+              iconName = 'map';
+              break;
+            case 'Profile':
+              iconName = 'account';
+              break;
               break;
             case 'Bookings':
               iconName = 'calendar-multiple';
@@ -105,6 +119,9 @@ const CommuterDashboard: React.FC<CommuterDashboardProps> = ({ route }) => {
         {() => <CommuterHomeScreen user={user} />}
       </Tab.Screen>
       <Tab.Screen name="Bookings" component={CommuterBookingsScreen} />
+      <Tab.Screen name="Payments">
+        {() => <CommuterPaymentsScreen user={user} />}
+      </Tab.Screen>
       <Tab.Screen name="Tracking" component={CommuterTrackingScreen} />
       <Tab.Screen name="Profile">
         {() => <CommuterProfileScreen user={user} onLogout={onLogout} />}

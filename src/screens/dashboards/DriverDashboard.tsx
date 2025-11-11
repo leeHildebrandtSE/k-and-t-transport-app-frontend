@@ -12,6 +12,7 @@ import {
   DriverRoutesScreen,
   DriverPassengersScreen,
   DriverProfileScreen,
+  DriverPaymentsScreen,
 } from './driver';
 
 const Tab = createBottomTabNavigator();
@@ -55,6 +56,9 @@ const CustomTabBar = (props: any) => {
             case 'Passengers':
               iconName = isFocused ? 'account-group' : 'account-group-outline';
               break;
+            case 'Earnings':
+              iconName = isFocused ? 'cash-multiple' : 'cash-outline';
+              break;
             case 'Profile':
               iconName = isFocused ? 'account' : 'account-outline';
               break;
@@ -77,7 +81,7 @@ const CustomTabBar = (props: any) => {
                 <MaterialCommunityIcons
                   name={iconName as any}
                   size={isFocused ? 26 : 24}
-                  color={isFocused ? colors.primaryLight : colors.surface}
+                  color={isFocused ? '#FFFFFF' : 'rgba(255, 255, 255, 0.8)'}
                 />
               </View>
             </TouchableOpacity>
@@ -106,6 +110,9 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ route }) => {
       </Tab.Screen>
       <Tab.Screen name="Routes" component={DriverRoutesScreen} />
       <Tab.Screen name="Passengers" component={DriverPassengersScreen} />
+      <Tab.Screen name="Earnings">
+        {() => <DriverPaymentsScreen user={user} />}
+      </Tab.Screen>
       <Tab.Screen name="Profile">
         {() => <DriverProfileScreen user={user} onLogout={onLogout} />}
       </Tab.Screen>

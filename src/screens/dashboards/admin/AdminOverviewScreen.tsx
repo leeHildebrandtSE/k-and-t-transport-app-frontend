@@ -14,7 +14,8 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { colors } from '../../../utils/theme';
+import { AdminHeroBackground } from '../../../../assets';
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
 import DashboardHeader from '../../../components/ui/DashboardHeader';
 import { AdminScreenProps, AdminStats } from '../../../types/Dashboard';
@@ -67,7 +68,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
         {/* Hero Admin Overview Header */}
         <View style={styles.heroProfileCard}>
           <ImageBackground
-            source={require('../../../../../assets/images/admin-dash-hero-header-background.png')}
+            source={AdminHeroBackground}
             style={styles.heroBackgroundImage}
             resizeMode="cover"
           >
@@ -78,16 +79,7 @@ const AdminOverviewScreen: React.FC<AdminScreenProps> = ({ user }) => {
               style={styles.heroGradientOverlay}
             >
             {/* African Pattern Overlay */}
-            <View style={[styles.africanPatternOverlay, styles.mountainAfricanPattern]}>
-              <View style={styles.africanPatternDot1} />
-              <View style={styles.africanPatternDot2} />
-              <View style={styles.africanPatternDot3} />
-              <View style={styles.africanTriangle1} />
-              <View style={styles.africanTriangle2} />
-              <View style={styles.africanZigzag} />
-              <View style={styles.africanLine1} />
-              <View style={styles.africanLine2} />
-            </View>
+            {/* Decorative overlay removed for production compatibility */}
 
             <View style={styles.heroContent}>
               {/* Admin Management Icon */}

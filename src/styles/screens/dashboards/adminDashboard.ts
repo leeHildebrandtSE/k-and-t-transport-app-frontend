@@ -35,7 +35,7 @@ export const adminDashboardStyles = StyleSheet.create({
   },
 
   heroGradientOverlay: {
-    backgroundColor: colors.tertiary, // Fallback for non-gradient usage
+    // Remove solid backgroundColor to allow gradient and background image to show
     padding: spacing.xl,
     borderBottomLeftRadius: borderRadius.xxl, // Match parent border radius
     borderBottomRightRadius: borderRadius.xxl, // Match parent border radius
@@ -43,102 +43,7 @@ export const adminDashboardStyles = StyleSheet.create({
     overflow: 'hidden',
   },
 
-    // African Pattern Overlay
-  africanPatternOverlay: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    width: '45%',
-    height: '100%',
-    opacity: 0.25,
-    transform: [{ skewX: '-8deg' }, { translateX: 30 }],
-    zIndex: 1,
-  },
-
-  // Mountain Green African Pattern (Admin Theme) - Visible but elegant
-  mountainAfricanPattern: {
-    backgroundColor: 'rgba(255, 255, 255, 0.12)',
-    borderLeftWidth: 1,
-    borderLeftColor: 'rgba(255, 255, 255, 0.25)',
-    borderStyle: 'solid',
-  },
-
-  // Elegant geometric elements - more visible
-  africanPatternDot1: {
-    position: 'absolute',
-    width: 6,
-    height: 6,
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    borderRadius: 3,
-    top: '25%',
-    left: '20%',
-  },
-
-  africanPatternDot2: {
-    position: 'absolute',
-    width: 4,
-    height: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.35)',
-    borderRadius: 2,
-    top: '45%',
-    right: '25%',
-  },
-
-  africanPatternDot3: {
-    position: 'absolute',
-    width: 5,
-    height: 5,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    borderRadius: 2.5,
-    bottom: '30%',
-    left: '30%',
-  },
-
-  // More visible lines for texture
-  africanTriangle1: {
-    position: 'absolute',
-    width: 20,
-    height: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    top: '35%',
-    left: '15%',
-  },
-
-  africanTriangle2: {
-    position: 'absolute',
-    width: 16,
-    height: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    bottom: '40%',
-    right: '20%',
-  },
-
-  africanZigzag: {
-    position: 'absolute',
-    width: 1,
-    height: 30,
-    backgroundColor: 'rgba(255, 255, 255, 0.18)',
-    top: '20%',
-    right: '30%',
-  },
-
-  africanLine1: {
-    position: 'absolute',
-    width: 1,
-    height: 25,
-    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-    top: '60%',
-    left: '25%',
-  },
-
-  africanLine2: {
-    position: 'absolute',
-    width: 15,
-    height: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.18)',
-    bottom: '25%',
-    right: '15%',
-  },
+  // Decorative patterns removed for production compatibility
 
   heroContent: {
     alignItems: 'center',

@@ -177,8 +177,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
 
           {/* UPDATED: Enhanced Registration Form - Better Contrast */}
           <Card style={[
-            authStyles.enhancedFormCard, // Using improved card (98% opacity)
-            authStyles.floatingElement
+            authStyles.enhancedFormCard // Using improved card (98% opacity)
           ]}>
             <Card.Content>
               <View style={registerScreenStyles.nameRow}>

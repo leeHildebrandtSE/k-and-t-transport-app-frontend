@@ -16,7 +16,7 @@ import {
   Divider,
 } from 'react-native-paper';
 
-import { colors, spacing, borderRadius } from '../../utils/theme';
+import { colors, spacing, borderRadius, shadows, typography } from '../../styles/theme';
 import { BookingType, RecurringSchedule } from '../../types/Booking';
 import { Route, RouteStop } from '../../types/Transport';
 

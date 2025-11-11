@@ -13,10 +13,12 @@ import {
   Avatar,
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+
+import { DriverHeroBackground } from '../../../../assets';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { colors } from '../../../utils/theme';
-import { driverDashboardStyles, driverGradientConfigs } from '../../../styles/screens/dashboards/driverDashboard';
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
+import { driverDashboardStyles, driverGradientConfigs, driverTextStyles } from '../../../styles/screens/dashboards/driverDashboard';
 import { DriverProfileScreenProps } from '../../../types/Dashboard';
 import { useAuth } from '../../../contexts/AuthContext';
 import { AuthService } from '../../../services/AuthService';
@@ -24,7 +26,7 @@ import { AuthService } from '../../../services/AuthService';
 const DriverProfileScreen: React.FC<DriverProfileScreenProps> = ({ user, onLogout: propOnLogout }) => {
   const [refreshing, setRefreshing] = useState(false);
 
-  let logout;
+  let logout: (() => Promise<void>) | null = null;
   try {
     const authContext = useAuth();
     logout = authContext.logout;
@@ -77,8 +79,8 @@ const DriverProfileScreen: React.FC<DriverProfileScreenProps> = ({ user, onLogou
     <View style={driverDashboardStyles.container}>
       {/* Cape Town Professional Background */}
       <ImageBackground
-        source={{ uri: 'https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
-        style={driverDashboardStyles.backgroundImage}
+        source={{ uri: 'https://images.pexels.com/photos/1252814/pexels-photo-1252814.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={[driverDashboardStyles.premiumBackgroundContainer, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}
         resizeMode="cover"
       >
         {/* Premium Profile-themed Overlay */}
@@ -93,23 +95,18 @@ const DriverProfileScreen: React.FC<DriverProfileScreenProps> = ({ user, onLogou
       >
         {/* Hero Profile Card */}
         <View style={driverDashboardStyles.heroProfileCard}>
-          <LinearGradient
-            colors={driverGradientConfigs.hero.colors}
-            start={driverGradientConfigs.hero.start}
-            end={driverGradientConfigs.hero.end}
-            style={driverDashboardStyles.heroGradientOverlay}
+          <ImageBackground
+            source={DriverHeroBackground}
+            style={driverDashboardStyles.heroBackgroundImage}
+            resizeMode="cover"
           >
-            {/* African Pattern Overlay */}
-            <View style={[driverDashboardStyles.africanPatternOverlay, driverDashboardStyles.oceanAfricanPattern]}>
-              <View style={driverDashboardStyles.africanPatternDot1} />
-              <View style={driverDashboardStyles.africanPatternDot2} />
-              <View style={driverDashboardStyles.africanPatternDot3} />
-              <View style={driverDashboardStyles.africanTriangle1} />
-              <View style={driverDashboardStyles.africanTriangle2} />
-              <View style={driverDashboardStyles.africanZigzag} />
-              <View style={driverDashboardStyles.africanLine1} />
-              <View style={driverDashboardStyles.africanLine2} />
-            </View>
+            <LinearGradient
+              colors={driverGradientConfigs.hero.colors}
+              start={driverGradientConfigs.hero.start}
+              end={driverGradientConfigs.hero.end}
+              style={driverDashboardStyles.heroGradientOverlay}
+            >
+            {/* Decorative overlay removed for production compatibility */}
 
             <View style={driverDashboardStyles.heroContent}>
               {/* Profile Image with Premium Frame */}
@@ -158,6 +155,7 @@ const DriverProfileScreen: React.FC<DriverProfileScreenProps> = ({ user, onLogou
               </View>
             </View>
           </LinearGradient>
+          </ImageBackground>
         </View>
 
         {/* Professional Details Card */}

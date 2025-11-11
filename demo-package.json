@@ -1,0 +1,16 @@
+{
+  "name": "payment-screens-demo",
+  "scripts": {
+    "demo": "expo start",
+    "demo:web": "expo start --web",
+    "demo:ios": "expo start --ios",
+    "demo:android": "expo start --android",
+    "setup-demo": "npm install && echo 'Demo dependencies installed. Run npm run demo to start.'",
+    "check-deps": "npm list @react-navigation/native @react-navigation/stack react-native-paper @expo/vector-icons"
+  },
+  "demoInstructions": {
+    "1": "Run 'npm run setup-demo' to install dependencies",
+    "2": "Run 'npm run demo' to start the demo",
+    "3": "Open the app and navigate through the payment screens"
+  }
+}

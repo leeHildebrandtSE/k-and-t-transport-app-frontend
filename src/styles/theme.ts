@@ -50,10 +50,10 @@ export const colors = {
   infoSoft: '#F0F9FF', // Light info bg - morning ocean mist
 
   // Text Colors - Hierarchical & Clear
-  text: '#0F172A', // Rich black - primary text
-  textSecondary: '#374151', // Dark gray - secondary
-  textTertiary: '#6B7280', // Medium gray - tertiary
-  textMuted: '#9CA3AF', // Light gray - muted
+  text: '#000000', // Pure black - maximum contrast for primary text
+  textSecondary: '#1F2937', // Very dark gray - secondary
+  textTertiary: '#374151', // Dark gray - tertiary
+  textMuted: '#6B7280', // Medium gray - muted
   textInverse: '#FFFFFF', // White text
   textOnColor: '#FFFFFF', // Text on colored backgrounds
 

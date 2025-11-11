@@ -23,6 +23,19 @@ import { useNavigation } from '@react-navigation/native';
 
 import { colors, typography, spacing, borderRadius, shadows, animations, effects, landingPageStyles } from '../styles';
 
+// Video Configuration
+const HERO_VIDEO_CONFIG = {
+  // Transportation/driving themed video - cars on highway
+  url: 'https://videos.pexels.com/video-files/2103099/2103099-hd_1920_1080_30fps.mp4',
+  // Backup transportation videos:
+  // url: 'https://videos.pexels.com/video-files/3194591/3194591-hd_1920_1080_25fps.mp4', // Suburban driving
+  // url: 'https://videos.pexels.com/video-files/3075762/3075762-hd_1920_1080_30fps.mp4', // Neighborhood roads
+  // url: 'https://videos.pexels.com/video-files/2174/2174-hd_1920_1080_30fps.mp4', // City traffic
+  // Reliable fallback if Pexels has issues:
+  // url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+  fallbackColor: colors.primary, // Color to show while loading
+};
+
 interface LandingPageProps {
   onLogin: () => void;
   onSignup: () => void;
@@ -33,6 +46,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const [scrollY] = useState(new Animated.Value(0));
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
 
   // Responsive dimensions state
@@ -519,15 +534,78 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
       >
         {/* Hero Background Video */}
         <View style={landingPageStyles.heroBackgroundVideoContainer}>
-          <Video
-            source={require('../../assets/hero-video.mp4')}
-            style={landingPageStyles.heroBackgroundVideo}
-            shouldPlay={true}
-            isLooping={true}
-            isMuted={true}
-            resizeMode={ResizeMode.COVER}
-            onError={(error: string) => console.warn('Video error:', error)}
-          />
+          {Platform.OS === 'web' ? (
+            // Use HTML5 video for web
+            <video
+              src={HERO_VIDEO_CONFIG.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                zIndex: 1,
+              }}
+              onLoadedData={() => {
+                console.log('✅ HTML5 video loaded successfully');
+                console.log('Video URL:', HERO_VIDEO_CONFIG.url);
+                setVideoLoaded(true);
+              }}
+              onCanPlay={() => {
+                console.log('✅ HTML5 video can start playing');
+              }}
+              onPlay={() => {
+                console.log('▶️ HTML5 video started playing');
+              }}
+              onError={(e) => {
+                console.error('❌ HTML5 video error:', e);
+                console.error('Video URL:', HERO_VIDEO_CONFIG.url);
+                setVideoError(true);
+              }}
+              onLoadStart={() => {
+                console.log('🔄 HTML5 video loading started');
+              }}
+            />
+          ) : (
+            // Use expo-av Video for mobile
+            !videoError && (
+              <Video
+                source={{ uri: HERO_VIDEO_CONFIG.url }}
+                style={landingPageStyles.heroBackgroundVideo}
+                shouldPlay={true}
+                isLooping={true}
+                isMuted={true}
+                resizeMode={ResizeMode.COVER}
+                onLoad={() => {
+                  console.log('Expo video loaded successfully');
+                  setVideoLoaded(true);
+                }}
+                onError={(error) => {
+                  console.warn('Expo video error:', error);
+                  setVideoError(true);
+                }}
+              />
+            )
+          )}
+
+          {/* Fallback background when video fails or isn't loaded */}
+          {(videoError || !videoLoaded) && (
+            <View style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: colors.primary,
+              opacity: 0.8,
+            }} />
+          )}
           {/* Video Overlay for opacity control */}
           <View style={landingPageStyles.videoOverlay} />
         </View>

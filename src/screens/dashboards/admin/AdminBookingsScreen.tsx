@@ -18,7 +18,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createIcon } from '../../../components/Icon';
 
-import { colors } from '../../../utils/theme';
+import { AdminHeroBackground } from '../../../../assets';
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
 import { AdminScreenProps } from '../../../types/Dashboard';
 import { Booking } from '../../../types/Booking';
@@ -280,21 +281,19 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
       >
         {/* Hero Booking Management Header */}
         <View style={styles.heroProfileCard}>
-          <LinearGradient
-            colors={adminGradientConfigs.hero.colors}
-            start={adminGradientConfigs.hero.start}
-            end={adminGradientConfigs.hero.end}
-            style={styles.heroGradientOverlay}
+          <ImageBackground
+            source={AdminHeroBackground}
+            style={styles.heroBackgroundImage}
+            resizeMode="cover"
           >
+            <LinearGradient
+              colors={adminGradientConfigs.hero.colors}
+              start={adminGradientConfigs.hero.start}
+              end={adminGradientConfigs.hero.end}
+              style={styles.heroGradientOverlay}
+            >
             {/* African Pattern Overlay */}
-            <View style={[styles.africanPatternOverlay, styles.mountainAfricanPattern]}>
-              <View style={styles.africanPatternDot1} />
-              <View style={styles.africanPatternDot2} />
-              <View style={styles.africanPatternDot3} />
-              <View style={styles.africanTriangle1} />
-              <View style={styles.africanTriangle2} />
-              <View style={styles.africanZigzag} />
-            </View>
+            {/* Decorative overlay removed for production compatibility */}
 
             <View style={styles.heroContent}>
               {/* Booking Management Icon */}
@@ -334,6 +333,7 @@ const AdminBookingsScreen: React.FC<AdminScreenProps> = ({ user }) => {
               </View>
             </View>
           </LinearGradient>
+          </ImageBackground>
         </View>
 
         {/* Booking List */}

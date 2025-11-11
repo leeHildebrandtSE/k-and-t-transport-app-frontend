@@ -16,9 +16,10 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { DriverHeroBackground } from '../../../../assets';
 import { Trip } from '../../../types/Booking';
-import { colors } from '../../../utils/theme';
-import { driverDashboardStyles, driverGradientConfigs } from '../../../styles/screens/dashboards/driverDashboard';
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
+import { driverDashboardStyles, driverGradientConfigs, driverTextStyles } from '../../../styles/screens/dashboards/driverDashboard';
 import { DriverScreenProps, DashboardStats } from '../../../types/Dashboard';
 
 const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
@@ -72,7 +73,7 @@ const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
       {/* Cape Town Ocean Scenic Background */}
       <ImageBackground
         source={{ uri: 'https://images.pexels.com/photos/259447/pexels-photo-259447.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
-        style={driverDashboardStyles.backgroundImage}
+        style={[driverDashboardStyles.premiumBackgroundContainer, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}
         resizeMode="cover"
       >
         {/* Premium Gradient Overlay */}
@@ -92,7 +93,7 @@ const DriverHomeScreen: React.FC<DriverScreenProps> = ({ user }) => {
         {/* Hero Driver Status Header */}
         <View style={driverDashboardStyles.heroProfileCard}>
           <ImageBackground
-            source={require('../../../../assets/images/driver-dash-hero-header-background.png')}
+            source={DriverHeroBackground}
             style={driverDashboardStyles.heroBackgroundImage}
             resizeMode="cover"
           >

@@ -13,6 +13,7 @@ import AdminOverviewScreen from './admin/AdminOverviewScreen';
 import AdminUsersScreen from './admin/AdminUsersScreen';
 import AdminBookingsScreen from './admin/AdminBookingsScreen';
 import AdminProfileScreen from './admin/AdminProfileScreen';
+import { AdminFinanceScreen } from './admin/AdminFinanceScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -51,6 +52,8 @@ const CustomTabBar = (props: any) => {
             iconName = isFocused ? 'account-group' : 'account-group-outline';
           } else if (route.name === 'Bookings') {
             iconName = isFocused ? 'calendar-check' : 'calendar-check-outline';
+          } else if (route.name === 'Finance') {
+            iconName = isFocused ? 'chart-line' : 'chart-line-variant';
           } else if (route.name === 'Profile') {
             iconName = isFocused ? 'account-circle' : 'account-circle-outline';
           } else {
@@ -104,6 +107,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ route }) => {
       </Tab.Screen>
       <Tab.Screen name="Bookings">
         {() => <AdminBookingsScreen user={user} />}
+      </Tab.Screen>
+      <Tab.Screen name="Finance">
+        {() => <AdminFinanceScreen user={user} />}
       </Tab.Screen>
       <Tab.Screen name="Profile">
         {() => <AdminProfileScreen user={user} onLogout={onLogout} />}

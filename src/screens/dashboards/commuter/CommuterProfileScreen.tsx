@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   ScrollView,
@@ -14,7 +14,9 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { colors } from '../../../utils/theme';
+import { CommuterHeroBackground } from '../../../../assets';
+
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { commuterDashboardStyles, commuterGradientConfigs } from '../../../styles/screens/dashboards/commuterDashboard';
 import { CommuterProfileScreenProps } from '../../../types/Dashboard';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -23,7 +25,10 @@ import { AuthService } from '../../../services/AuthService';
 const CommuterProfileScreen: React.FC<CommuterProfileScreenProps> = ({ user, onLogout: propOnLogout }) => {
   const styles = commuterDashboardStyles;
 
-  let logout;
+  const [darkMode, setDarkMode] = useState(false);
+  const [autoBackup, setAutoBackup] = useState(true);
+
+  let logout: (() => Promise<void>) | null = null;
   try {
     const authContext = useAuth();
     logout = authContext.logout;
@@ -85,21 +90,18 @@ const CommuterProfileScreen: React.FC<CommuterProfileScreenProps> = ({ user, onL
       >
         {/* Hero Profile Card */}
         <View style={styles.heroProfileCard}>
-          <LinearGradient
-            colors={commuterGradientConfigs.hero.colors}
-            start={commuterGradientConfigs.hero.start}
-            end={commuterGradientConfigs.hero.end}
-            style={styles.heroGradientOverlay}
+          <ImageBackground
+            source={CommuterHeroBackground}
+            style={styles.heroBackgroundImage}
+            resizeMode="cover"
           >
-            {/* African Pattern Overlay */}
-            <View style={[styles.africanPatternOverlay, styles.goldenAfricanPattern]}>
-              <View style={styles.africanPatternDot1} />
-              <View style={styles.africanPatternDot2} />
-              <View style={styles.africanPatternDot3} />
-              <View style={styles.africanTriangle1} />
-              <View style={styles.africanTriangle2} />
-              <View style={styles.africanZigzag} />
-            </View>
+            <LinearGradient
+              colors={commuterGradientConfigs.hero.colors}
+              start={commuterGradientConfigs.hero.start}
+              end={commuterGradientConfigs.hero.end}
+              style={styles.heroGradientOverlay}
+            >
+            {/* Decorative overlay removed for production compatibility */}
 
             <View style={styles.heroContent}>
               {/* Profile Image with Premium Frame */}
@@ -138,6 +140,7 @@ const CommuterProfileScreen: React.FC<CommuterProfileScreenProps> = ({ user, onL
               </View>
             </View>
           </LinearGradient>
+          </ImageBackground>
         </View>
 
         {/* Premium Quick Actions */}

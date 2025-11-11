@@ -278,7 +278,7 @@ export const landingPageStyles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: colors.primary,
-    opacity: 0.6, // Adjust this value to control video opacity (0.4-0.7 works well)
+    opacity: 0.3, // Reduced from 0.6 to make video more visible
     zIndex: 2,
   },
 

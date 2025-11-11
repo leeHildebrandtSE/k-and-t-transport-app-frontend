@@ -19,7 +19,9 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { colors } from '../../../utils/theme';
+import { AdminHeroBackground } from '../../../../assets';
+
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
 import { AdminProfileScreenProps } from '../../../types/Dashboard';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -31,7 +33,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user, onLogout:
   const [darkMode, setDarkMode] = useState(false);
   const [autoBackup, setAutoBackup] = useState(true);
 
-  let logout;
+  let logout: (() => Promise<void>) | null = null;
   try {
     const authContext = useAuth();
     logout = authContext.logout;
@@ -101,21 +103,19 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user, onLogout:
       >
         {/* Hero Admin Profile Card */}
         <View style={styles.heroProfileCard}>
-          <LinearGradient
-            colors={adminGradientConfigs.hero.colors}
-            start={adminGradientConfigs.hero.start}
-            end={adminGradientConfigs.hero.end}
-            style={styles.heroGradientOverlay}
+          <ImageBackground
+            source={AdminHeroBackground}
+            style={styles.heroBackgroundImage}
+            resizeMode="cover"
           >
+            <LinearGradient
+              colors={adminGradientConfigs.hero.colors}
+              start={adminGradientConfigs.hero.start}
+              end={adminGradientConfigs.hero.end}
+              style={styles.heroGradientOverlay}
+            >
             {/* African Pattern Overlay */}
-            <View style={[styles.africanPatternOverlay, styles.mountainAfricanPattern]}>
-              <View style={styles.africanPatternDot1} />
-              <View style={styles.africanPatternDot2} />
-              <View style={styles.africanPatternDot3} />
-              <View style={styles.africanTriangle1} />
-              <View style={styles.africanTriangle2} />
-              <View style={styles.africanZigzag} />
-            </View>
+            {/* Decorative overlay removed for production compatibility */}
 
             <View style={styles.heroContent}>
               {/* Profile Image with Premium Frame */}
@@ -154,6 +154,7 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user, onLogout:
               </View>
             </View>
           </LinearGradient>
+          </ImageBackground>
         </View>
 
         {/* Account Information */}

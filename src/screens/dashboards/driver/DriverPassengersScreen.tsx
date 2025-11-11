@@ -13,10 +13,12 @@ import {
   Avatar,
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+
+import { DriverHeroBackground } from '../../../../assets';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { colors } from '../../../utils/theme';
-import { driverDashboardStyles, driverGradientConfigs } from '../../../styles/screens/dashboards/driverDashboard';
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
+import { driverDashboardStyles, driverGradientConfigs, driverTextStyles } from '../../../styles/screens/dashboards/driverDashboard';
 import { PassengerStats } from '../../../types/Dashboard';
 
 const DriverPassengersScreen: React.FC = () => {
@@ -39,8 +41,8 @@ const DriverPassengersScreen: React.FC = () => {
     <View style={driverDashboardStyles.container}>
       {/* Cape Town Community Background */}
       <ImageBackground
-        source={{ uri: 'https://images.pexels.com/photos/708440/pexels-photo-708440.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
-        style={driverDashboardStyles.backgroundImage}
+        source={{ uri: 'https://images.pexels.com/photos/935737/pexels-photo-935737.jpeg?auto=compress&cs=tinysrgb&w=1600' }}
+        style={[driverDashboardStyles.premiumBackgroundContainer, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}
         resizeMode="cover"
       >
         {/* Premium Passengers-themed Overlay */}
@@ -55,21 +57,18 @@ const DriverPassengersScreen: React.FC = () => {
       >
         {/* Hero Passenger Management Header */}
         <View style={driverDashboardStyles.heroProfileCard}>
-          <LinearGradient
-            colors={driverGradientConfigs.hero.colors}
-            start={driverGradientConfigs.hero.start}
-            end={driverGradientConfigs.hero.end}
-            style={driverDashboardStyles.heroGradientOverlay}
+          <ImageBackground
+            source={DriverHeroBackground}
+            style={driverDashboardStyles.heroBackgroundImage}
+            resizeMode="cover"
           >
-            {/* African Pattern Overlay */}
-            <View style={[driverDashboardStyles.africanPatternOverlay, driverDashboardStyles.oceanAfricanPattern]}>
-              <View style={driverDashboardStyles.africanPatternDot1} />
-              <View style={driverDashboardStyles.africanPatternDot2} />
-              <View style={driverDashboardStyles.africanPatternDot3} />
-              <View style={driverDashboardStyles.africanTriangle1} />
-              <View style={driverDashboardStyles.africanTriangle2} />
-              <View style={driverDashboardStyles.africanZigzag} />
-            </View>
+            <LinearGradient
+              colors={driverGradientConfigs.hero.colors}
+              start={driverGradientConfigs.hero.start}
+              end={driverGradientConfigs.hero.end}
+              style={driverDashboardStyles.heroGradientOverlay}
+            >
+            {/* Decorative overlay removed for production compatibility */}
 
             <View style={driverDashboardStyles.heroContent}>
               {/* Passenger Management Icon */}
@@ -109,6 +108,7 @@ const DriverPassengersScreen: React.FC = () => {
               </View>
             </View>
           </LinearGradient>
+          </ImageBackground>
         </View>
 
         {/* Passenger Stats */}

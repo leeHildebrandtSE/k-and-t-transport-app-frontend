@@ -14,9 +14,10 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+import { CommuterHeroBackground } from '../../../../assets';
 import { CommuterType } from '../../../types/User';
 import { Booking } from '../../../types/Booking';
-import { colors } from '../../../utils/theme';
+import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { commuterDashboardStyles, commuterGradientConfigs } from '../../../styles/screens/dashboards/commuterDashboard';
 import { CommuterScreenProps, QuickAction } from '../../../types/Dashboard';
 
@@ -100,7 +101,7 @@ const CommuterHomeScreen: React.FC<CommuterScreenProps> = ({ user }) => {
         {/* Hero Commuter Status Header */}
         <View style={styles.heroProfileCard}>
           <ImageBackground
-            source={require('../../../../assets/images/cummuter-dash-hero-header-background.png')}
+            source={CommuterHeroBackground}
             style={styles.heroBackgroundImage}
             resizeMode="cover"
           >
@@ -111,16 +112,7 @@ const CommuterHomeScreen: React.FC<CommuterScreenProps> = ({ user }) => {
               style={styles.heroGradientOverlay}
             >
             {/* African Pattern Overlay */}
-            <View style={[styles.africanPatternOverlay, styles.goldenAfricanPattern]}>
-              <View style={styles.africanPatternDot1} />
-              <View style={styles.africanPatternDot2} />
-              <View style={styles.africanPatternDot3} />
-              <View style={styles.africanTriangle1} />
-              <View style={styles.africanTriangle2} />
-              <View style={styles.africanZigzag} />
-              <View style={styles.africanLine1} />
-              <View style={styles.africanLine2} />
-            </View>
+            {/* Decorative overlay removed for production compatibility */}
 
             <View style={styles.heroContent}>
               {/* Commuter Status Icon */}

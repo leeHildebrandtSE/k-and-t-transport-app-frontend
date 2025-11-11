@@ -262,9 +262,9 @@ const EnhancedInput: React.FC<EnhancedInputProps> = ({
           visible={true}
           style={[
             styles.helperText,
-            displayError && styles.errorText,
-            displaySuccess && styles.successText,
-          ]}
+            displayError ? styles.errorText : null,
+            displaySuccess ? styles.successText : null,
+          ].filter(Boolean)}
         >
           {displayError || displaySuccess || displayHelp}
         </HelperText>

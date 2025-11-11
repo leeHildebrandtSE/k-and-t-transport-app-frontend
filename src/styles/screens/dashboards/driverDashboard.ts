@@ -87,7 +87,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   welcomeText: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '500',
     marginBottom: spacing.xs,
     fontSize: isTablet ? 18 : 16,
@@ -95,7 +95,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   driverNameHome: {
     ...(isDesktop ? typography.displaySmall : typography.headlineLarge),
-    color: colors.text,
+    color: '#000000',
     fontWeight: '700',
     letterSpacing: -0.5,
     // Cape Town ocean blue accent
@@ -106,7 +106,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   // Cape Town Ocean-Inspired Duty Status Card
   dutyStatusCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: '#FFFFFF',
     borderRadius: isDesktop ? 32 : 24,
     marginHorizontal: getResponsiveCardMargin(),
     marginTop: spacing.xl, // Add gap between hero header and content
@@ -116,11 +116,11 @@ export const driverDashboardStyles = StyleSheet.create({
     elevation: 8,
     // Cape Town ocean gradient border
     borderWidth: 2,
-    borderColor: colors.primary + '15',
+    borderColor: 'rgba(0, 0, 0, 0.1)',
     // Ocean wave shadow effect
-    shadowColor: colors.primary,
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.3,
     shadowRadius: 16,
   },
 
@@ -138,7 +138,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   dutyStatusLabel: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '600',
     marginBottom: spacing.xs,
     fontSize: isTablet ? 16 : 14,
@@ -187,14 +187,14 @@ export const driverDashboardStyles = StyleSheet.create({
 
   driverName: {
     ...typography.headlineMedium,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '600',
     marginBottom: spacing.xs,
   },
 
   driverId: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: '#000000',
     marginBottom: spacing.xs,
   },
 
@@ -205,19 +205,26 @@ export const driverDashboardStyles = StyleSheet.create({
 
   ratingText: {
     ...typography.bodyMedium,
-    color: colors.text,
+    color: '#000000',
     marginLeft: spacing.xs,
   },
 
   // Status Card
   statusCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: '#FFFFFF',
     borderRadius: borderRadius.lg,
     padding: spacing.lg,
     marginBottom: spacing.lg,
     // Enhanced 3D effect
     ...shadows.lg,
     transform: [{ translateY: -2 }],
+    borderWidth: 2,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 12,
+    elevation: 8,
   },
 
   statusHeader: {
@@ -229,8 +236,11 @@ export const driverDashboardStyles = StyleSheet.create({
 
   statusTitle: {
     ...typography.titleLarge,
-    color: colors.text,
-    fontWeight: '600',
+    color: '#000000',
+    fontWeight: '700',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 
   statusToggle: {
@@ -273,8 +283,11 @@ export const driverDashboardStyles = StyleSheet.create({
 
   routeTitle: {
     ...typography.titleLarge,
-    color: colors.text,
-    fontWeight: '600',
+    color: '#000000',
+    fontWeight: '700',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 
   routeDetails: {
@@ -297,13 +310,13 @@ export const driverDashboardStyles = StyleSheet.create({
 
   stopText: {
     ...typography.bodyLarge,
-    color: colors.text,
+    color: '#000000',
     flex: 1,
   },
 
   stopTime: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: '#000000',
   },
 
   // Cape Town Inspired Responsive Stats Grid
@@ -362,7 +375,7 @@ export const driverDashboardStyles = StyleSheet.create({
   statValue: {
     ...(isDesktop ? typography.headlineLarge : typography.headlineMedium),
     fontWeight: '900',
-    color: colors.text,
+    color: '#000000',
     marginTop: spacing.sm,
     marginBottom: spacing.xs,
     letterSpacing: -1,
@@ -371,7 +384,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   statLabel: {
     ...(isDesktop ? typography.bodyMedium : typography.bodySmall),
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '700',
     textAlign: 'center',
     textTransform: 'uppercase',
@@ -381,20 +394,20 @@ export const driverDashboardStyles = StyleSheet.create({
 
   // Cape Town Ocean-Inspired Premium Cards
   premiumCard: {
-    backgroundColor: colors.surface,
+    backgroundColor: '#FFFFFF',
     borderRadius: isDesktop ? 32 : 24,
     marginHorizontal: getResponsiveCardMargin(),
     marginBottom: spacing.lg,
     ...shadows.xl,
     elevation: 12,
     // Cape Town ocean gradient border
-    borderWidth: 1.5,
-    borderColor: colors.primary + '15',
+    borderWidth: 2,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
     overflow: 'hidden',
     // Atlantic Ocean shadow effect
-    shadowColor: colors.primary,
+    shadowColor: '#000000',
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.12,
+    shadowOpacity: 0.3,
     shadowRadius: 20,
   },
 
@@ -411,14 +424,14 @@ export const driverDashboardStyles = StyleSheet.create({
 
   premiumCardTitle: {
     ...(isDesktop ? typography.headlineSmall : typography.titleLarge),
-    color: colors.text,
+    color: '#000000',
     fontWeight: '800',
     marginLeft: spacing.md,
     letterSpacing: -0.5,
-    // Cape Town mountain text shadow
-    textShadowColor: `${colors.tertiary}15`,
+    // Enhanced text shadow for better readability
+    textShadowColor: 'rgba(255, 255, 255, 0.8)',
     textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    textShadowRadius: 3,
   },
 
   cardIconContainer: {
@@ -449,7 +462,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   tripRouteText: {
     ...typography.headlineSmall,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '700',
     letterSpacing: -0.3,
   },
@@ -479,7 +492,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   tripDetailText: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: '#000000',
     marginLeft: spacing.sm,
     fontWeight: '500',
   },
@@ -512,7 +525,10 @@ export const driverDashboardStyles = StyleSheet.create({
 
   noTripTitle: {
     ...typography.titleLarge,
-    color: colors.textSecondary,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '600',
     marginTop: spacing.md,
     marginBottom: spacing.xs,
@@ -520,7 +536,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   noTripSubtitle: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: '#000000',
     textAlign: 'center',
     opacity: 0.7,
   },
@@ -555,7 +571,7 @@ export const driverDashboardStyles = StyleSheet.create({
   scheduleTime: {
     ...typography.titleMedium,
     fontSize: width < 768 ? 16 : 18,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '700',
     letterSpacing: -0.3,
     marginRight: width < 768 ? spacing.sm : 0,
@@ -564,7 +580,7 @@ export const driverDashboardStyles = StyleSheet.create({
   scheduleAmPm: {
     ...typography.bodySmall,
     fontSize: width < 768 ? 12 : 14,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '600',
   },
 
@@ -577,7 +593,10 @@ export const driverDashboardStyles = StyleSheet.create({
   scheduleTitle: {
     ...typography.titleMedium,
     fontSize: width < 768 ? 14 : 16,
-    color: colors.text,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '600',
     marginBottom: spacing.xs,
   },
@@ -585,7 +604,7 @@ export const driverDashboardStyles = StyleSheet.create({
   scheduleRoute: {
     ...typography.bodyMedium,
     fontSize: width < 768 ? 12 : 14,
-    color: colors.textSecondary,
+    color: '#000000',
     marginBottom: spacing.sm,
   },
 
@@ -604,7 +623,7 @@ export const driverDashboardStyles = StyleSheet.create({
   scheduleMetricText: {
     ...typography.bodySmall,
     fontSize: width < 768 ? 11 : 12,
-    color: colors.textSecondary,
+    color: '#000000',
     marginLeft: spacing.xs,
   },
 
@@ -649,7 +668,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   vehicleStatusLabel: {
     ...typography.bodySmall,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '600',
     marginTop: spacing.sm,
     marginBottom: spacing.xs,
@@ -658,7 +677,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   vehicleStatusValue: {
     ...typography.titleMedium,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '700',
     letterSpacing: -0.3,
   },
@@ -671,7 +690,10 @@ export const driverDashboardStyles = StyleSheet.create({
 
   quickActionsTitle: {
     ...typography.titleLarge,
-    color: colors.text,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '700',
     marginBottom: spacing.lg,
     letterSpacing: -0.3,
@@ -698,7 +720,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   quickActionText: {
     ...typography.bodyMedium,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '600',
     marginTop: spacing.sm,
     textAlign: 'center',
@@ -728,7 +750,10 @@ export const driverDashboardStyles = StyleSheet.create({
 
   routesTitle: {
     ...typography.headlineLarge,
-    color: colors.text,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '700',
     marginBottom: spacing.xs,
     letterSpacing: -0.5,
@@ -736,7 +761,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   routesSubtitle: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '500',
   },
 
@@ -762,7 +787,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   routeStatValue: {
     ...typography.headlineMedium,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '800',
     marginBottom: spacing.xs,
     letterSpacing: -0.5,
@@ -770,7 +795,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   routeStatLabel: {
     ...typography.bodySmall,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '600',
     textAlign: 'center',
   },
@@ -811,7 +836,10 @@ export const driverDashboardStyles = StyleSheet.create({
 
   premiumRouteTitle: {
     ...typography.titleLarge,
-    color: colors.text,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '700',
     marginBottom: spacing.xs,
     letterSpacing: -0.3,
@@ -819,7 +847,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   routeSubtitle: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '500',
   },
 
@@ -848,7 +876,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   routeDetailText: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: '#000000',
     marginLeft: spacing.sm,
     fontWeight: '500',
   },
@@ -918,7 +946,10 @@ export const driverDashboardStyles = StyleSheet.create({
 
   passengersTitle: {
     ...typography.headlineLarge,
-    color: colors.text,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '700',
     marginBottom: spacing.xs,
     letterSpacing: -0.5,
@@ -926,7 +957,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   passengersSubtitle: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '500',
   },
 
@@ -955,7 +986,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   filterTabText: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '600',
   },
 
@@ -1006,7 +1037,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   passengerName: {
     ...typography.titleMedium,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '700',
     marginBottom: spacing.xs,
     letterSpacing: -0.3,
@@ -1014,7 +1045,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   passengerDetails: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '500',
   },
 
@@ -1041,7 +1072,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   passengerContact: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: '#000000',
     marginLeft: spacing.sm,
     flex: 1,
   },
@@ -1069,7 +1100,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   passengerStatValue: {
     ...typography.headlineSmall,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '800',
     marginTop: spacing.sm,
     marginBottom: spacing.xs,
@@ -1077,7 +1108,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   passengerStatLabel: {
     ...typography.bodySmall,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '500',
     textAlign: 'center',
   },
@@ -1116,7 +1147,10 @@ export const driverDashboardStyles = StyleSheet.create({
 
   routeSectionTitle: {
     ...typography.titleMedium,
-    color: colors.text,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '600',
     marginLeft: spacing.sm,
     flex: 1,
@@ -1124,7 +1158,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   routeSectionCount: {
     ...typography.bodySmall,
-    color: colors.textSecondary,
+    color: '#000000',
     backgroundColor: `${colors.primary}15`,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
@@ -1154,14 +1188,14 @@ export const driverDashboardStyles = StyleSheet.create({
 
   premiumPassengerName: {
     ...typography.bodyLarge,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '600',
     marginBottom: spacing.xs,
   },
 
   premiumPassengerDetails: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: '#000000',
     marginBottom: spacing.sm,
   },
 
@@ -1177,7 +1211,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   passengerMetricText: {
     ...typography.bodySmall,
-    color: colors.textSecondary,
+    color: '#000000',
     marginLeft: spacing.xs,
   },
 
@@ -1189,7 +1223,10 @@ export const driverDashboardStyles = StyleSheet.create({
 
   profileTitle: {
     ...typography.headlineLarge,
-    color: colors.text,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '700',
     marginBottom: spacing.xl,
     letterSpacing: -0.5,
@@ -1225,7 +1262,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   profileName: {
     ...typography.headlineMedium,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '700',
     marginBottom: spacing.sm,
     letterSpacing: -0.5,
@@ -1233,7 +1270,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   profileRole: {
     ...typography.titleMedium,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -1253,14 +1290,14 @@ export const driverDashboardStyles = StyleSheet.create({
 
   profileInfoLabel: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '600',
     flex: 1,
   },
 
   profileInfoValue: {
     ...typography.bodyLarge,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '500',
     flex: 2,
   },
@@ -1271,7 +1308,10 @@ export const driverDashboardStyles = StyleSheet.create({
 
   emergencyContactsTitle: {
     ...typography.titleLarge,
-    color: colors.text,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '700',
     marginBottom: spacing.lg,
     letterSpacing: -0.3,
@@ -1303,14 +1343,14 @@ export const driverDashboardStyles = StyleSheet.create({
 
   contactName: {
     ...typography.titleMedium,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '600',
     marginBottom: spacing.xs,
   },
 
   contactNumber: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: '#000000',
     fontWeight: '500',
   },
 
@@ -1467,7 +1507,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   navigationDetails: {
     ...typography.bodyLarge,
-    color: colors.text,
+    color: '#000000',
   },
 
   // Vehicle Info
@@ -1493,7 +1533,10 @@ export const driverDashboardStyles = StyleSheet.create({
 
   vehicleTitle: {
     ...typography.titleLarge,
-    color: colors.text,
+    color: '#000000',
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
     fontWeight: '600',
   },
 
@@ -1511,13 +1554,13 @@ export const driverDashboardStyles = StyleSheet.create({
 
   detailLabel: {
     ...typography.bodyMedium,
-    color: colors.textSecondary,
+    color: '#000000',
     marginBottom: spacing.xs,
   },
 
   detailValue: {
     ...typography.bodyLarge,
-    color: colors.text,
+    color: '#000000',
     fontWeight: '500',
   },
 
@@ -1548,7 +1591,7 @@ export const driverDashboardStyles = StyleSheet.create({
 
   loadingText: {
     ...typography.bodyLarge,
-    color: colors.textSecondary,
+    color: '#000000',
     marginTop: spacing.md,
   },
 
@@ -1584,7 +1627,7 @@ export const driverDashboardStyles = StyleSheet.create({
   },
 
   heroGradientOverlay: {
-    backgroundColor: colors.primary, // Fallback for non-gradient usage
+    // Remove solid backgroundColor to allow gradient and background image to show
     padding: spacing.xl,
     borderBottomLeftRadius: borderRadius.xxl, // Match parent border radius
     borderBottomRightRadius: borderRadius.xxl, // Match parent border radius
@@ -1598,21 +1641,48 @@ export const driverDashboardStyles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  // African pattern image container with CSS background
-  africanPatternImage: {
+  // Background overlays
+  premiumBackgroundOverlay: {
     position: 'absolute',
     top: 0,
+    left: 0,
     right: 0,
-    width: '100%',
-    height: '100%',
-    opacity: 0.6,
-    transform: [{ skewX: '-8deg' }, { translateX: 20 }],
-    // CSS background image for web (will be ignored on native)
-    backgroundImage: 'url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgMzAwIiBmaWxsPSJub25lIj4KPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9InRyYW5zcGFyZW50Ii8+CjxnIG9wYWNpdHk9IjAuNCI+CjxwYXRoIGQ9Ik01MCA1MCBMOCA4MCBMNTBI0MTEwIEwyMCA4MFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjYiLz4KPHBhdGggZD0iTTEyMCAzMCBMMTYwIDcwIEwxMjAgMTEwIEw4MCA3MFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjQiLz4KPHBhdGggZD0iTTIwMCA2MCBMMjMwIDkwIEwyMDAgMTIwIEwxNzAgOTBaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC41Ii8+CjxwYXRoIGQ9Ik0zMDAgNDAgTDM0MCA4MCBMM8ADEgxMjAgTDI2MCA4MFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjMiLz4KPHBhdGggZD0iTTcwIDE1MCBMOTA1IDEgNzAgTTcwIDE5MCBMNTAgMTcwWiIgZmlsbD0id2hpdGUiIG9wYWNpdHk9IjAuNCIvPgo8cGF0aCBkPSJNMTUwIDE0MCBMMTGWIDE3MCBMMTU5IDIwMCBMMTIwIDE3MFoiIGZpbGw9IndoaXRlIiBvcGFjaXR5PSIwLjMiLz4KPHBhdGggZD0iTTI1MCAxNjAgTDI3MCAxODAgTDI1MCAyMDAgTDIzMCAxODBaIiBmaWxsPSJ3aGl0ZSIgb3BhY2l0eT0iMC40Ii8+CjwvZz4KPGcgb3BhY2l0eT0iMC4zIj4KPHJlY3QgeD0iMTAiIHk9Ijk1IiB3aWR0aD0iNjAiIGhlaWdodD0iMiIgZmlsbD0id2hpdGUiLz4KPHJlY3QgeD0iMTUwIiB5PSI5NSIgd2lkdGg9IjcwIiBoZWlnaHQ9IjIiIGZpbGw9IndoaXRlIi8+CjxyZWN0IHg9IjMxMCIgeT0iOTUiIHdpZHRoPSI4MCIgaGVpZ2h0PSIyIiBmaWxsPSJ3aGl0ZSIvPgo8L2c+Cjwvc3ZnPg==")',
-    backgroundRepeat: 'repeat',
-    backgroundSize: '200px 150px',
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 1,
   },
 
+  routesBackgroundOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(34, 197, 94, 0.2)',
+    zIndex: 1,
+  },
+
+  passengersBackgroundOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+    zIndex: 1,
+  },
+
+  profileBackgroundOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(139, 69, 19, 0.2)',
+    zIndex: 1,
+  },
+
+  // Profile components
   profileImageFrame: {
     position: 'relative',
     marginBottom: spacing.lg,
@@ -1620,9 +1690,9 @@ export const driverDashboardStyles = StyleSheet.create({
 
   premiumAvatar: {
     backgroundColor: 'rgba(255,255,255,0.2)',
+    borderRadius: 60,
     borderWidth: 4,
     borderColor: 'rgba(255,255,255,0.3)',
-    ...shadows.lg,
   },
 
   dutyStatusIcon: {
@@ -1632,396 +1702,165 @@ export const driverDashboardStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 4,
-    borderColor: 'rgba(255,255,255,0.3)',
-    ...shadows.lg,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
 
-  // Details Grid
-  detailsGrid: {
-    gap: spacing.md,
-  },
-
-  detailItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.backgroundSecondary,
-    padding: spacing.md,
-    borderRadius: borderRadius.lg,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-
-  detailIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primarySoft,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: spacing.md,
-  },
-
-  detailContent: {
-    flex: 1,
-  },
-
-  premiumDetailLabel: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    marginBottom: spacing.xs,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-    fontWeight: '500',
-  },
-
-  premiumDetailValue: {
-    ...typography.bodyLarge,
-    color: colors.text,
-    fontWeight: '600',
-  },
-
-  // Contact Grid
-  contactGrid: {
-    gap: spacing.md,
-  },
-
-  contactItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.backgroundSecondary,
-    padding: spacing.lg,
-    borderRadius: borderRadius.lg,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-
-  contactContent: {
-    flex: 1,
-  },
-
-  contactLabel: {
-    ...typography.bodyMedium,
-    color: colors.textSecondary,
-    marginBottom: spacing.xs,
-  },
-
-  contactValue: {
-    ...typography.titleMedium,
-    color: colors.text,
-    fontWeight: '600',
-  },
-
-  // Action Grid
-  actionGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.lg,
-    gap: spacing.md,
-  },
-
-  actionCard: {
-    flex: 1,
-    minWidth: '46%',
-    backgroundColor: colors.surface,
-    borderRadius: borderRadius.xl,
-    padding: spacing.lg,
-    alignItems: 'center',
-    ...shadows.md,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-
-  premiumPrimaryAction: {
-    backgroundColor: colors.primary,
-    borderColor: colors.primary,
-  },
-
-  premiumSecondaryAction: {
-    backgroundColor: colors.surface,
-  },
-
-  logoutAction: {
-    backgroundColor: colors.errorSoft,
-    borderColor: colors.error + '30',
-  },
-
-  actionIcon: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: colors.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: spacing.md,
-    ...shadows.md,
-  },
-
-  actionTitle: {
-    ...typography.titleMedium,
-    color: colors.text,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: spacing.xs,
-  },
-
-  actionSubtitle: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    textAlign: 'center',
-  },
-
-  // App Footer
-  appFooter: {
-    alignItems: 'center',
-    paddingVertical: spacing.xl,
-    marginBottom: spacing.lg,
-  },
-
-  footerText: {
-    ...typography.titleMedium,
-    color: colors.text,
-    fontWeight: '600',
-    marginBottom: spacing.xs,
-  },
-
-  versionText: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-  },
-
-  // Premium Tab Bar Styles
-  premiumTabBar: {
-    backgroundColor: colors.primary, // Fallback for non-gradient usage
-    borderTopWidth: 0,
-    height: 70,
-    paddingBottom: 10,
-    paddingTop: 10,
-    ...shadows.xl,
-    borderTopLeftRadius: borderRadius.xl,
-    borderTopRightRadius: borderRadius.xl,
-  },
-
-  tabBarLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-    marginTop: 4,
-    color: colors.surface, // White text by default
-  },
-
-  tabBarItem: {
-    paddingVertical: 5,
-  },
-
-  activeTabIcon: {
-    backgroundColor: colors.secondary + '30', // Orange background for active state
-    borderRadius: 12,
-    padding: 8,
-    ...shadows.md,
-  },
-
-  inactiveTabIcon: {
-    backgroundColor: 'transparent',
-    borderRadius: 12,
-    padding: 8,
-  },
-
-  // Responsive Adjustments
-  ...(width > 768 && {
-    heroProfileCard: {
-      width: '100%', // Full width on larger screens
-      alignSelf: 'stretch', // Stretch to full width
-    },
-    premiumCard: {
-      maxWidth: 600,
-      alignSelf: 'center',
-    },
-    actionGrid: {
-      maxWidth: 600,
-      alignSelf: 'center',
-    },
-  }),
-
-  // Section Container Styles
-  sectionContainer: {
-    marginHorizontal: spacing.lg,
-    marginBottom: spacing.xl,
-  },
-
+  // Section components
   sectionHeader: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing.lg,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.md,
-    backgroundColor: `${colors.primary}08`,
-    borderRadius: borderRadius.lg,
-    borderLeftWidth: 4,
-    borderLeftColor: colors.primary,
-    ...shadows.sm,
+    marginBottom: spacing.md,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: borderRadius.sm,
   },
 
   sectionTitle: {
-    ...typography.titleLarge,
-    color: colors.text,
-    fontWeight: '600',
-    marginLeft: spacing.md,
-    letterSpacing: -0.3,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'left',
   },
 
   enhancedPassengerCard: {
-    backgroundColor: colors.surface,
-    borderRadius: borderRadius.xxl,
-    marginHorizontal: spacing.lg,
-    marginTop: spacing.xl, // Add gap between hero header and content
-    marginBottom: spacing.xl,
-    ...shadows.lg,
-    elevation: 8,
-    borderWidth: 1,
-    borderColor: colors.borderLight,
-    overflow: 'hidden',
-  },
-
-  // Enhanced Trip Container Styles
-  enhancedTripContainer: {
-    backgroundColor: colors.surface,
+    backgroundColor: '#FFFFFF',
     borderRadius: borderRadius.lg,
-    padding: 0,
-  },
-
-  enhancedTripHeader: {
-    marginBottom: spacing.md,
-  },
-
-  enhancedTripDetails: {
-    marginBottom: spacing.lg,
-    gap: spacing.md,
-  },
-
-  tripDetailCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.surfaceVariant,
-    borderRadius: borderRadius.lg,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.lg,
-    borderWidth: 1,
-    borderColor: `${colors.primary}15`,
-    ...shadows.sm,
-    elevation: 2,
-  },
-
-  tripDetailContent: {
-    flex: 1,
-    marginLeft: spacing.md,
-  },
-
-  tripDetailLabel: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    fontWeight: '500',
-    textTransform: 'uppercase',
-    letterSpacing: 0.8,
-    marginBottom: spacing.xs,
-  },
-
-  tripDetailValue: {
-    ...typography.bodyLarge,
-    color: colors.text,
-    fontWeight: '600',
-  },
-
-  // Enhanced No Trip Container
-  enhancedNoTripContainer: {
-    alignItems: 'center',
-    paddingVertical: spacing.xl,
-    paddingHorizontal: spacing.lg,
-  },
-
-  noTripIconContainer: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: `${colors.secondary}15`,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: spacing.lg,
-    ...shadows.md,
-  },
-
-  // Enhanced Route Card Styles
-  enhancedRouteCard: {
-    backgroundColor: colors.surfaceVariant,
-    borderRadius: borderRadius.lg,
-    marginBottom: spacing.lg,
     padding: spacing.lg,
+    marginVertical: spacing.sm,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.primary,
     borderWidth: 1,
-    borderColor: `${colors.primary}20`,
-    ...shadows.md,
-    elevation: 4,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
   },
 
-  // Premium Background Image Styles
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    width: '100%',
-    height: '100%',
+  // Footer components
+  appFooter: {
+    alignItems: 'center',
+    padding: spacing.lg,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.2)',
   },
 
-  premiumBackgroundOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: colors.primary + '60', // Ocean blue overlay to match hero header and navbar theme
+  footerText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '500',
   },
 
-  // Route-specific background overlays
-  routesBackgroundOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(14, 165, 233, 0.05)', // Ocean blue tint
+  versionText: {
+    color: 'rgba(255, 255, 255, 0.7)',
+    fontSize: 12,
+    marginTop: spacing.xs,
   },
 
-  passengersBackgroundOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(245, 158, 11, 0.05)', // Warm sunset tint
+  // Tab bar styles
+  premiumTabBar: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.2)',
+    paddingTop: spacing.xs,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 10,
   },
 
-  profileBackgroundOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(5, 150, 105, 0.05)', // Mountain green tint
+  activeTabIcon: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: borderRadius.md,
+    padding: spacing.xs,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+
+  inactiveTabIcon: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: borderRadius.md,
+    padding: spacing.xs,
+  },
+});
+
+// Enhanced text styles for better contrast over background images
+export const driverTextStyles = StyleSheet.create({
+  // Card titles with enhanced contrast
+  enhancedCardTitle: {
+    ...(isDesktop ? typography.headlineSmall : typography.titleLarge),
+    color: colors.textInverse,
+    fontWeight: '800',
+    marginLeft: spacing.md,
+    letterSpacing: -0.5,
+    textShadowColor: 'rgba(0, 0, 0, 0.6)',
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+
+  // Body text with enhanced readability
+  enhancedBodyText: {
+    ...typography.bodyMedium,
+    color: colors.textInverse,
+    fontWeight: '500',
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
+  },
+
+  // Secondary text with contrast enhancement
+  enhancedSecondaryText: {
+    ...typography.bodySmall,
+    color: 'rgba(255, 255, 255, 0.9)',
+    fontWeight: '400',
+    textShadowColor: 'rgba(0, 0, 0, 0.4)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+
+  // Status text with high visibility
+  enhancedStatusText: {
+    ...typography.labelLarge,
+    color: colors.textInverse,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    textShadowColor: 'rgba(0, 0, 0, 0.7)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 3,
+  },
+
+  // Card content with solid background for better readability
+  enhancedCardBackground: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: borderRadius.lg,
+    padding: spacing.lg,
+    marginHorizontal: spacing.md,
+    marginVertical: spacing.sm,
+    ...shadows.lg,
   },
 });
 
 // Gradient configurations for LinearGradient components
 export const driverGradientConfigs = {
   hero: {
-    colors: ['rgba(2, 132, 199, 0.6)', 'rgba(14, 165, 233, 0.5)'], // Semi-transparent to show background image
+    colors: ['rgba(34, 197, 94, 0.6)', 'rgba(21, 128, 61, 0.5)'], // Driver theme greens
     start: { x: 0, y: 0 },
     end: { x: 1, y: 1 }, // Diagonal gradient top-left to bottom-right
   },
   navbar: {
-    colors: ['#0284c7', colors.primary], // Keep navbar solid
+    colors: [colors.primary, colors.secondary], // Keep navbar solid
     start: { x: 0, y: 0 },
     end: { x: 1, y: 0 }, // Horizontal gradient left to right
   }
 };
 
 export default driverDashboardStyles;
+
