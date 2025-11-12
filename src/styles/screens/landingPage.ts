@@ -43,6 +43,10 @@ export const landingPageStyles = StyleSheet.create({
     justifyContent: 'center',
     marginRight: spacing.sm,
   },
+  logoImage: {
+    width: 36,
+    height: 36,
+  },
   logoText: {
     ...typography.titleMedium,
     color: colors.textOnColor,
@@ -1094,6 +1098,11 @@ export const landingPageStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: spacing.sm,
+  },
+
+  footerLogoImage: {
+    width: 28,
+    height: 28,
   },
 
   footerCompanyName: {

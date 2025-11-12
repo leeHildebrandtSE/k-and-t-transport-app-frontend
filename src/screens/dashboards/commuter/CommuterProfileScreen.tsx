@@ -24,7 +24,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useAuth } from '../../../contexts/AuthContext';
 import { User } from '../../../types/User';
 import { AuthService } from '../../../services/AuthService';
-import { CommuterHeroBackground } from '../../../../assets';
+import { CommuterHeroBackground, KTLogo } from '../../../../assets';
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { commuterDashboardStyles, commuterGradientConfigs } from '../../../styles/screens/dashboards/commuterDashboard';
 
@@ -305,7 +305,14 @@ const CommuterProfileScreen: React.FC<CommuterProfileScreenProps> = ({ user, onL
 
         {/* App Version Footer */}
         <View style={styles.appFooter}>
-          <Text style={styles.footerText}>K&T Transport Commuter App</Text>
+          <View style={styles.footerLogoContainer}>
+            <Image
+              source={KTLogo}
+              style={styles.footerLogoIcon}
+              resizeMode="contain"
+            />
+            <Text style={styles.footerText}>K&T Transport Commuter App</Text>
+          </View>
           <Text style={styles.versionText}>Version 2.1.0</Text>
         </View>
 

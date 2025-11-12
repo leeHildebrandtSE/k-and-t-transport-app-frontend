@@ -1749,6 +1749,18 @@ export const driverDashboardStyles = StyleSheet.create({
     borderTopColor: 'rgba(255, 255, 255, 0.2)',
   },
 
+  footerLogoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
+  },
+
+  footerLogoIcon: {
+    width: 20,
+    height: 20,
+    marginRight: spacing.sm,
+  },
+
   footerText: {
     color: '#ffffff',
     fontSize: 14,

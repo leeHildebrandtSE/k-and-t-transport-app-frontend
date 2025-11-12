@@ -17,7 +17,7 @@ import {
 } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { DriverHeroBackground } from '../../../../assets';
+import { DriverHeroBackground, KTLogo } from '../../../../assets';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
@@ -442,7 +442,14 @@ const DriverProfileScreen: React.FC<DriverProfileScreenProps> = ({ user, onLogou
 
         {/* App Version Footer */}
         <View style={driverDashboardStyles.appFooter}>
-          <Text style={driverDashboardStyles.footerText}>K&T Transport Driver App</Text>
+          <View style={driverDashboardStyles.footerLogoContainer}>
+            <Image
+              source={KTLogo}
+              style={driverDashboardStyles.footerLogoIcon}
+              resizeMode="contain"
+            />
+            <Text style={driverDashboardStyles.footerText}>K&T Transport Driver App</Text>
+          </View>
           <Text style={driverDashboardStyles.versionText}>Version 2.1.0</Text>
         </View>
 

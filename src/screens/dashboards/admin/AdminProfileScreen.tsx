@@ -21,7 +21,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { AdminHeroBackground } from '../../../../assets';
+import { AdminHeroBackground, KTLogo } from '../../../../assets';
 
 import { colors, spacing, borderRadius, shadows, typography } from '../../../styles/theme';
 import { adminDashboardStyles, adminGradientConfigs } from '../../../styles/screens/dashboards/adminDashboard';
@@ -479,7 +479,14 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user, onLogout:
 
         {/* App Version Footer */}
         <View style={styles.appFooter}>
-          <Text style={styles.footerText}>K&T Transport Admin App</Text>
+          <View style={styles.footerLogoContainer}>
+            <Image
+              source={KTLogo}
+              style={styles.footerLogoIcon}
+              resizeMode="contain"
+            />
+            <Text style={styles.footerText}>K&T Transport Admin App</Text>
+          </View>
           <Text style={styles.versionText}>Version 2.1.0</Text>
         </View>
 

@@ -5,10 +5,10 @@
     "version": "1.0.0",
     "sdkVersion": "50.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/kt-logo.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/kt-logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#1E3A8A"
     },
@@ -35,8 +35,8 @@
       ]
     },
     "web": {
-      "favicon": "./assets/favicon.png",
-      "bundler": "webpack"
+      "favicon": "./assets/kt-logo.png",
+      "bundler": "metro"
     },
     "plugins": [
       "expo-location",

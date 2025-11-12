@@ -865,6 +865,18 @@ export const commuterDashboardStyles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
 
+  footerLogoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.xs,
+  },
+
+  footerLogoIcon: {
+    width: 20,
+    height: 20,
+    marginRight: spacing.sm,
+  },
+
   footerText: {
     ...typography.titleMedium,
     color: colors.text,

@@ -24,6 +24,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
 import { colors, typography, spacing, borderRadius, shadows, animations, effects, landingPageStyles } from '../styles';
+import { KTLogo } from '../../assets';
 
 // Video Configuration
 const HERO_VIDEO_CONFIG = {
@@ -391,7 +392,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
               }
             ]}
           >
-            <Text style={landingPageStyles.logoText}>K&T</Text>
+            <Image
+              source={KTLogo}
+              style={landingPageStyles.logoImage}
+              resizeMode="contain"
+            />
           </Animated.View>
           <Text style={landingPageStyles.logoTitle}>Transport</Text>
         </View>
@@ -907,7 +912,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
           <View style={landingPageStyles.footerSection}>
             <View style={landingPageStyles.footerLogo}>
               <View style={landingPageStyles.footerLogoIcon}>
-                <MaterialCommunityIcons name="car" size={24} color={colors.primary} />
+                <Image
+                  source={KTLogo}
+                  style={landingPageStyles.footerLogoImage}
+                  resizeMode="contain"
+                />
               </View>
               <Text style={landingPageStyles.footerCompanyName}>K&T Transport</Text>
             </View>
