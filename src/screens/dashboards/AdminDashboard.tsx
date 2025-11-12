@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -90,31 +90,38 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ route }) => {
   const { user, onLogout } = route.params;
 
   return (
-    <Tab.Navigator
-      initialRouteName="Overview"
-      tabBar={props => <CustomTabBar {...props} />}
-      screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: colors.tertiaryLight,
-        tabBarInactiveTintColor: colors.surface,
-      }}
-    >
-      <Tab.Screen name="Overview">
-        {() => <AdminOverviewScreen user={user} />}
-      </Tab.Screen>
-      <Tab.Screen name="Users">
-        {() => <AdminUsersScreen user={user} />}
-      </Tab.Screen>
-      <Tab.Screen name="Bookings">
-        {() => <AdminBookingsScreen user={user} />}
-      </Tab.Screen>
-      <Tab.Screen name="Finance">
-        {() => <AdminFinanceScreen user={user} />}
-      </Tab.Screen>
-      <Tab.Screen name="Profile">
-        {() => <AdminProfileScreen user={user} onLogout={onLogout} />}
-      </Tab.Screen>
-    </Tab.Navigator>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <Tab.Navigator
+        initialRouteName="Overview"
+        tabBar={props => <CustomTabBar {...props} />}
+        screenOptions={{
+          headerShown: false,
+          tabBarActiveTintColor: colors.tertiaryLight,
+          tabBarInactiveTintColor: colors.surface,
+        }}
+      >
+        <Tab.Screen name="Overview">
+          {() => <AdminOverviewScreen user={user} />}
+        </Tab.Screen>
+        <Tab.Screen name="Users">
+          {() => <AdminUsersScreen user={user} />}
+        </Tab.Screen>
+        <Tab.Screen name="Bookings">
+          {() => <AdminBookingsScreen user={user} />}
+        </Tab.Screen>
+        <Tab.Screen name="Finance">
+          {() => <AdminFinanceScreen user={user} />}
+        </Tab.Screen>
+        <Tab.Screen name="Profile">
+          {() => <AdminProfileScreen user={user} onLogout={onLogout} />}
+        </Tab.Screen>
+      </Tab.Navigator>
+    </SafeAreaView>
   );
 };
 

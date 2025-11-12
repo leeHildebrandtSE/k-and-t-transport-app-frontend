@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -97,26 +97,33 @@ const DriverDashboard: React.FC<DriverDashboardProps> = ({ route }) => {
   const { user, onLogout } = route.params;
 
   return (
-    <Tab.Navigator
-      tabBar={props => <CustomTabBar {...props} />}
-      screenOptions={{
-        tabBarActiveTintColor: colors.primaryLight,
-        tabBarInactiveTintColor: colors.surface,
-        headerShown: false,
-      }}
-    >
-      <Tab.Screen name="Home">
-        {() => <DriverHomeScreen user={user} />}
-      </Tab.Screen>
-      <Tab.Screen name="Routes" component={DriverRoutesScreen} />
-      <Tab.Screen name="Passengers" component={DriverPassengersScreen} />
-      <Tab.Screen name="Earnings">
-        {() => <DriverPaymentsScreen user={user} />}
-      </Tab.Screen>
-      <Tab.Screen name="Profile">
-        {() => <DriverProfileScreen user={user} onLogout={onLogout} />}
-      </Tab.Screen>
-    </Tab.Navigator>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <Tab.Navigator
+        tabBar={props => <CustomTabBar {...props} />}
+        screenOptions={{
+          tabBarActiveTintColor: colors.primaryLight,
+          tabBarInactiveTintColor: colors.surface,
+          headerShown: false,
+        }}
+      >
+        <Tab.Screen name="Home">
+          {() => <DriverHomeScreen user={user} />}
+        </Tab.Screen>
+        <Tab.Screen name="Routes" component={DriverRoutesScreen} />
+        <Tab.Screen name="Passengers" component={DriverPassengersScreen} />
+        <Tab.Screen name="Earnings">
+          {() => <DriverPaymentsScreen user={user} />}
+        </Tab.Screen>
+        <Tab.Screen name="Profile">
+          {() => <DriverProfileScreen user={user} onLogout={onLogout} />}
+        </Tab.Screen>
+      </Tab.Navigator>
+    </SafeAreaView>
   );
 };
 

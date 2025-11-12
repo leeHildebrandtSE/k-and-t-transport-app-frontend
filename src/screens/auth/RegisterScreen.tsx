@@ -7,6 +7,8 @@ import {
   Alert,
   Image,
   Pressable,
+  SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import {
   TextInput,
@@ -115,10 +117,16 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={registerScreenStyles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <KeyboardAvoidingView
+        style={registerScreenStyles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
       {/* Background Image */}
       <Image
         source={require('../../../assets/login_screen_background.jpg')}
@@ -328,6 +336,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ route }) => {
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 

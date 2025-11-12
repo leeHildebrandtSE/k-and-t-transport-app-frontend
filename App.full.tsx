@@ -3,9 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
-import { Platform, AppRegistry } from 'react-native';
+import { Platform, AppState, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { registerRootComponent } from 'expo';
 
 // Import icon configuration
 import { configurePaperIcons } from './src/utils/iconConfig';
@@ -51,25 +50,41 @@ export default function App() {
 
   const initializeApp = async () => {
     try {
-      // Configure icons for web
-      configurePaperIcons();
+      // Add a small delay to ensure all modules are loaded
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Initialize notification service
+      // Configure icons for web only
+      if (Platform.OS === 'web') {
+        configurePaperIcons();
+      }
+
+      // Initialize notification service with error handling
       if (Platform.OS !== 'web') {
-        await NotificationService.initialize();
+        try {
+          await NotificationService.initialize();
+        } catch (notificationError) {
+          console.warn('Notification service initialization failed:', notificationError);
+          // Continue without notifications
+        }
       }
 
       // Check if user is already logged in
-      const token = await AsyncStorage.getItem('authToken');
-      if (token) {
-        const userData = await AuthService.getCurrentUser(token);
-        if (userData) {
-          setUser(userData);
-          setShowLanding(false); // Skip landing if user is already logged in
+      try {
+        const token = await AsyncStorage.getItem('authToken');
+        if (token) {
+          const userData = await AuthService.getCurrentUser(token);
+          if (userData) {
+            setUser(userData);
+            setShowLanding(false); // Skip landing if user is already logged in
+          }
         }
+      } catch (storageError) {
+        console.warn('Storage access failed:', storageError);
+        // Continue without auto-login
       }
     } catch (error) {
       console.error('Error initializing app:', error);
+      // App can still function without full initialization
     } finally {
       setIsLoading(false);
     }
@@ -99,8 +114,20 @@ export default function App() {
   };
 
   if (isLoading) {
-    // You can replace this with a proper loading screen component
-    return null;
+    // Return a simple loading view instead of null
+    return (
+      <CustomPaperProvider theme={theme}>
+        <StatusBar style="light" backgroundColor={theme.colors.primary} />
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: theme.colors.primary
+        }}>
+          {/* Simple loading indicator */}
+        </View>
+      </CustomPaperProvider>
+    );
   }
 
   return (
@@ -191,7 +218,3 @@ export default function App() {
     </CustomPaperProvider>
   );
 }
-
-// Register root component with both methods to ensure compatibility
-AppRegistry.registerComponent('main', () => App);
-registerRootComponent(App);

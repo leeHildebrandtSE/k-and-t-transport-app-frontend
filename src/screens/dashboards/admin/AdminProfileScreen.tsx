@@ -7,6 +7,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Image,
+  Platform,
 } from 'react-native';
 import {
   Card,
@@ -53,8 +54,26 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user, onLogout:
     console.log('Logout button clicked'); // Debug log
     console.log('Available logout methods:', { logout: !!logout, propOnLogout: !!propOnLogout });
 
-    // Use web-compatible confirmation instead of Alert.alert
-    const shouldLogout = window.confirm('Are you sure you want to sign out?');
+    // Use native Alert for mobile compatibility
+    const showLogoutConfirmation = () => {
+      return new Promise<boolean>((resolve) => {
+        if (Platform.OS === 'web') {
+          resolve(window.confirm('Are you sure you want to sign out?'));
+        } else {
+          Alert.alert(
+            'Sign Out',
+            'Are you sure you want to sign out?',
+            [
+              { text: 'Cancel', style: 'cancel', onPress: () => resolve(false) },
+              { text: 'Sign Out', style: 'destructive', onPress: () => resolve(true) }
+            ],
+            { cancelable: true }
+          );
+        }
+      });
+    };
+
+    const shouldLogout = await showLogoutConfirmation();
 
     if (!shouldLogout) {
       console.log('Logout cancelled by user');
@@ -74,15 +93,26 @@ const AdminProfileScreen: React.FC<AdminProfileScreenProps> = ({ user, onLogout:
       } else {
         console.log('Using AuthService logout as fallback');
         await AuthService.logout();
-        // Manually trigger app logout since AuthService won't call the context
-        window.alert('You have been logged out. Please refresh the page.');
+        // Show platform-appropriate success message
+        if (Platform.OS === 'web') {
+          window.alert('You have been logged out. Please refresh the page.');
+        } else {
+          Alert.alert('Logged Out', 'You have been logged out successfully.');
+        }
       }
     } catch (error) {
       console.error('Logout error:', error);
       const errorMessage = error instanceof Error ? error.message : 'Please try again.';
-      window.alert(`Failed to sign out: ${errorMessage}`);
+
+      if (Platform.OS === 'web') {
+        window.alert(`Failed to sign out: ${errorMessage}`);
+      } else {
+        Alert.alert('Logout Failed', `Failed to sign out: ${errorMessage}`);
+      }
     }
-  };  const styles = adminDashboardStyles;
+  };
+
+  const styles = adminDashboardStyles;
 
   return (
     <View style={styles.container}>

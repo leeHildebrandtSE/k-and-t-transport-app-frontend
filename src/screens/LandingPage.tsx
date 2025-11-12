@@ -4,11 +4,12 @@ import {
   Text,
   StyleSheet,
   ScrollView,
-  Dimensions,
   Platform,
   Animated,
   Pressable,
   Image,
+  SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import {
@@ -18,6 +19,7 @@ import {
   Surface,
 } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useResponsive } from '../hooks/useResponsive';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
@@ -50,18 +52,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const [videoError, setVideoError] = useState(false);
   const scrollViewRef = useRef<ScrollView>(null);
 
-  // Responsive dimensions state
-  const [dimensions, setDimensions] = useState(() => {
-    const { width, height } = Dimensions.get('window');
-    return { width, height };
-  });
-
-  // Responsive breakpoints
-  const isTablet = dimensions.width >= 768;
-  const isDesktop = dimensions.width >= 1024;
-  const isMobile = dimensions.width < 768;
-
-
+  // Responsive dimensions from hook
+  const { width, height, mobile, tablet, desktop } = useResponsive();
 
   // Enhanced Animation values
   const fadeAnim = useState(new Animated.Value(0))[0];
@@ -99,15 +91,6 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-
-  // Responsive dimensions listener
-  useEffect(() => {
-    const subscription = Dimensions.addEventListener('change', ({ window }) => {
-      setDimensions({ width: window.width, height: window.height });
-    });
-
-    return () => subscription?.remove();
-  }, []);
 
   // Animation initialization
   useEffect(() => {
@@ -309,10 +292,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
     if (targetY === 0) {
       const fallbackPositions = {
         home: 0,
-        features: dimensions.height * 0.85, // Account for hero section
-        services: dimensions.height * 1.7,
-        about: dimensions.height * 2.5,
-        contact: dimensions.height * 3.3,
+        features: height * 0.85, // Account for hero section
+        services: height * 1.7,
+        about: height * 2.5,
+        contact: height * 3.3,
       };
       targetY = fallbackPositions[sectionName];
       console.log(`🎯 Using fallback position for ${sectionName}: ${targetY}`);
@@ -414,7 +397,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         </View>
 
         {/* Desktop Navigation */}
-        {Platform.OS === 'web' && isTablet && (
+        {Platform.OS === 'web' && (tablet || desktop) && (
           <View style={landingPageStyles.navLinks}>
             {['Home', 'Features', 'Services', 'About', 'Contact'].map((item) => (
               <Pressable
@@ -440,7 +423,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         )}
 
         {/* Mobile Menu Button */}
-        {(Platform.OS !== 'web' || isMobile) && (
+        {(Platform.OS !== 'web' || mobile) && (
           <Pressable onPress={toggleMobileMenu} style={landingPageStyles.mobileMenuButton}>
             <MaterialCommunityIcons
               name={mobileMenuOpen ? 'close' : 'menu'}
@@ -451,7 +434,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         )}
 
         {/* Desktop Auth Buttons */}
-        {Platform.OS === 'web' && isTablet && (
+        {Platform.OS === 'web' && (tablet || desktop) && (
           <View style={landingPageStyles.authButtons}>
             <Button
               mode="outlined"
@@ -474,7 +457,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
       </View>
 
       {/* Mobile Navigation Menu */}
-      {(Platform.OS !== 'web' || isMobile) && mobileMenuOpen && (
+      {(Platform.OS !== 'web' || mobile) && mobileMenuOpen && (
         <Surface style={landingPageStyles.mobileMenu} elevation={4}>
           <View style={landingPageStyles.mobileMenuContent}>
             {['Home', 'Features', 'Services', 'About', 'Contact'].map((item) => (
@@ -645,15 +628,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
           </View>
         </View>
 
-        <Animated.View
+        <View
           style={[
             landingPageStyles.heroContent,
             {
-              opacity: heroFadeAnim,
-              transform: [
-                { translateY: heroSlideAnim },
-                { scale: buttonScaleAnim }
-              ]
+              opacity: 1, // Remove animation, make always visible
+              // Remove transform animations for now
             }
           ]}
         >
@@ -756,7 +736,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
               </View>
             </View>
           </View>
-        </Animated.View>
+        </View>
       </LinearGradient>
     </View>
   );
@@ -1290,7 +1270,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
   );
 
   return (
-    <View style={[landingPageStyles.container, { overflow: 'hidden' }]}>
+    <SafeAreaView style={[landingPageStyles.container, { flex: 1 }]}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
       <NavigationBar />
 
       <Animated.ScrollView
@@ -1357,7 +1342,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onLogin, onSignup }) => {
         <CTASection />
         <FooterSection />
       </Animated.ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

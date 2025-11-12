@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -107,26 +107,33 @@ const CommuterDashboard: React.FC<CommuterDashboardProps> = ({ route }) => {
   const { user, onLogout } = route.params;
 
   return (
-    <Tab.Navigator
-      tabBar={props => <CustomTabBar {...props} />}
-      screenOptions={{
-        tabBarActiveTintColor: colors.secondaryLight,
-        tabBarInactiveTintColor: colors.surface,
-        headerShown: false,
-      }}
-    >
-      <Tab.Screen name="Home">
-        {() => <CommuterHomeScreen user={user} />}
-      </Tab.Screen>
-      <Tab.Screen name="Bookings" component={CommuterBookingsScreen} />
-      <Tab.Screen name="Payments">
-        {() => <CommuterPaymentsScreen user={user} />}
-      </Tab.Screen>
-      <Tab.Screen name="Tracking" component={CommuterTrackingScreen} />
-      <Tab.Screen name="Profile">
-        {() => <CommuterProfileScreen user={user} onLogout={onLogout} />}
-      </Tab.Screen>
-    </Tab.Navigator>
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent={true}
+      />
+      <Tab.Navigator
+        tabBar={props => <CustomTabBar {...props} />}
+        screenOptions={{
+          tabBarActiveTintColor: colors.secondaryLight,
+          tabBarInactiveTintColor: colors.surface,
+          headerShown: false,
+        }}
+      >
+        <Tab.Screen name="Home">
+          {() => <CommuterHomeScreen user={user} />}
+        </Tab.Screen>
+        <Tab.Screen name="Bookings" component={CommuterBookingsScreen} />
+        <Tab.Screen name="Payments">
+          {() => <CommuterPaymentsScreen user={user} />}
+        </Tab.Screen>
+        <Tab.Screen name="Tracking" component={CommuterTrackingScreen} />
+        <Tab.Screen name="Profile">
+          {() => <CommuterProfileScreen user={user} onLogout={onLogout} />}
+        </Tab.Screen>
+      </Tab.Navigator>
+    </SafeAreaView>
   );
 };
 

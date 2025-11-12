@@ -14,10 +14,7 @@ export const landingPageStyles = StyleSheet.create({
 
   // Navigation Styles
   navbar: {
-    position: 'fixed' as any, // Fixed position for sticky navbar
-    top: 0,
-    left: 0,
-    right: 0,
+    position: 'relative' as any, // Use relative positioning to respect SafeAreaView
     zIndex: 1000,
     backgroundColor: colors.surface,
     ...shadows.sm,
@@ -157,8 +154,8 @@ export const landingPageStyles = StyleSheet.create({
     flex: 1,
   },
   heroContainer: {
-    minHeight: '90vh' as any, // Use viewport height instead of static calculations
-    marginTop: 70, // Account for navbar
+    minHeight: 600, // Fixed height instead of viewport height for mobile
+    marginTop: 0, // Remove margin since we're using SafeAreaView now
     width: '100%',
     position: 'relative',
   },
@@ -168,75 +165,80 @@ export const landingPageStyles = StyleSheet.create({
     alignItems: 'center',
   },
   heroContent: {
-    flexDirection: width > 768 ? 'row' : 'column',
+    flexDirection: 'column', // Always stack on mobile
     alignItems: 'center',
     maxWidth: 1200,
     width: '100%',
     paddingHorizontal: spacing.xl,
-    gap: spacing.huge,
-    zIndex: 2, // Ensure content is above background vehicle
+    gap: spacing.xl,
+    zIndex: 10, // Much higher z-index to ensure content is above all backgrounds
     position: 'relative',
   },
   heroTextContainer: {
     flex: 1,
-    alignItems: width > 768 ? 'flex-start' : 'center',
+    alignItems: 'center', // Center align for better mobile experience
+    width: '100%',
   },
   heroTitle: {
     ...typography.displayLarge,
-    fontSize: width > 768 ? 48 : width > 480 ? 36 : 28,
-    lineHeight: width > 768 ? 56 : width > 480 ? 42 : 34,
+    fontSize: 24, // More manageable size for mobile
+    lineHeight: 32,
     color: colors.textOnColor,
-    textAlign: width > 768 ? 'left' : 'center',
+    textAlign: 'center', // Always center on mobile
     marginBottom: spacing.lg,
+    paddingHorizontal: spacing.md,
   },
   heroTitleAccent: {
     color: colors.secondaryLight,
   },
   heroSubtitle: {
     ...typography.bodyLarge,
-    fontSize: width > 768 ? 18 : 16,
-    lineHeight: width > 768 ? 28 : 24,
+    fontSize: 16,
+    lineHeight: 24,
     color: colors.textOnColor,
     opacity: 0.9,
-    textAlign: width > 768 ? 'left' : 'center',
+    textAlign: 'center', // Always center on mobile
     marginBottom: spacing.xl,
-    paddingHorizontal: width <= 768 ? spacing.md : 0,
+    paddingHorizontal: spacing.lg,
   },
   heroCTAContainer: {
-    flexDirection: width > 768 ? 'row' : 'column',
-    gap: width > 768 ? spacing.md : spacing.sm,
+    flexDirection: 'column', // Stack buttons vertically on mobile
+    gap: spacing.md,
     marginBottom: spacing.xl,
-    width: width <= 768 ? '100%' : 'auto',
-    paddingHorizontal: width <= 768 ? spacing.lg : 0,
+    width: '100%',
+    paddingHorizontal: spacing.lg,
   },
   primaryCTA: {
     backgroundColor: colors.secondary,
     paddingHorizontal: spacing.xl,
     minHeight: 48, // Ensure touch-friendly size
-    height: 'auto',
+    height: 48,
     borderRadius: borderRadius.lg,
+    width: '100%', // Full width on mobile
   },
   primaryCTAText: {
     ...typography.labelLarge,
     color: colors.textOnColor,
-    fontSize: width <= 768 ? 16 : 18,
+    fontSize: 16,
   },
   secondaryCTA: {
     borderColor: colors.textOnColor,
     paddingHorizontal: spacing.xl,
     minHeight: 48, // Ensure touch-friendly size
-    height: 'auto',
+    height: 48,
     borderRadius: borderRadius.lg,
+    width: '100%', // Full width on mobile
   },
   secondaryCTAText: {
     color: colors.textOnColor,
-    fontSize: width <= 768 ? 16 : 18,
+    fontSize: 16,
   },
   trustIndicators: {
-    flexDirection: width > 480 ? 'row' : 'column',
-    gap: width > 480 ? spacing.xl : spacing.md,
-    justifyContent: width > 768 ? 'flex-start' : 'center',
+    flexDirection: 'row', // Keep horizontal on mobile if space allows
+    gap: spacing.md,
+    justifyContent: 'center',
     alignItems: 'center',
+    flexWrap: 'wrap', // Allow wrapping on small screens
   },
   trustItem: {
     alignItems: 'center',
@@ -278,8 +280,8 @@ export const landingPageStyles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: colors.primary,
-    opacity: 0.3, // Reduced from 0.6 to make video more visible
-    zIndex: 2,
+    opacity: 0.6, // Increase opacity to ensure better text contrast
+    zIndex: 1, // Lower z-index so content is above it
   },
 
   // Hero Background Vehicle Styles (Fallback)
@@ -521,20 +523,20 @@ export const landingPageStyles = StyleSheet.create({
   },
   sectionTitle: {
     ...typography.headlineLarge,
-    fontSize: width > 768 ? 36 : width > 480 ? 28 : 24,
-    lineHeight: width > 768 ? 44 : width > 480 ? 36 : 32,
+    fontSize: 24,
+    lineHeight: 32,
     color: colors.text,
     textAlign: 'center',
     marginBottom: spacing.md,
-    paddingHorizontal: width <= 768 ? spacing.md : 0,
+    paddingHorizontal: spacing.md,
   },
   sectionSubtitle: {
     ...typography.bodyLarge,
-    fontSize: width > 768 ? 18 : 16,
-    lineHeight: width > 768 ? 28 : 24,
+    fontSize: 16,
+    lineHeight: 24,
     color: colors.textSecondary,
     textAlign: 'center',
-    paddingHorizontal: width <= 768 ? spacing.lg : 0,
+    paddingHorizontal: spacing.lg,
   },
   featuresGrid: {
     flexDirection: 'row',
@@ -545,7 +547,9 @@ export const landingPageStyles = StyleSheet.create({
     alignSelf: 'center',
   },
   featureCard: {
-    width: width > 768 ? (width > 1024 ? 350 : 300) : width - spacing.xl * 2,
+    flex: 1,
+    maxWidth: 350,
+    minWidth: 280,
     backgroundColor: colors.surface,
     ...shadows.md,
   },
@@ -576,11 +580,11 @@ export const landingPageStyles = StyleSheet.create({
 
   // Services Section
   servicesContainer: {
-    paddingVertical: width <= 768 ? spacing.huge : spacing.massive,
-    paddingHorizontal: width <= 768 ? spacing.md : spacing.xl,
+    paddingVertical: spacing.huge,
+    paddingHorizontal: spacing.md,
   },
   servicesGrid: {
-    flexDirection: width > 768 ? 'row' : 'column',
+    flexDirection: 'column', // Always column on mobile
     gap: spacing.xl,
     maxWidth: 1200,
     alignSelf: 'center',
@@ -710,8 +714,8 @@ export const landingPageStyles = StyleSheet.create({
   // About Section Styles
   aboutContainer: {
     backgroundColor: colors.surface,
-    paddingVertical: width <= 768 ? spacing.huge : spacing.massive,
-    paddingHorizontal: width <= 768 ? spacing.md : spacing.lg,
+    paddingVertical: spacing.huge,
+    paddingHorizontal: spacing.md,
   },
   aboutContent: {
     maxWidth: 1200,
@@ -719,18 +723,16 @@ export const landingPageStyles = StyleSheet.create({
     width: '100%',
   },
   aboutGrid: {
-    flexDirection: width > 768 ? 'row' : 'column',
-    flexWrap: 'wrap',
+    flexDirection: 'column',
     gap: spacing.xl,
     marginVertical: spacing.xxl,
-    justifyContent: 'space-between',
   },
   aboutCard: {
     backgroundColor: colors.background,
     padding: spacing.xl,
     borderRadius: borderRadius.lg,
     alignItems: 'center',
-    width: width > 768 ? '48%' : '100%',
+    width: '100%',
     ...shadows.md,
   },
   aboutIconContainer: {
